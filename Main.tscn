@@ -1,0 +1,78 @@
+[gd_scene load_steps=9 format=3 uid="uid://3ujj6oc0alnj"]
+
+[ext_resource type="PackedScene" path="res://Player.tscn" id="1"]
+[ext_resource type="Script" path="res://Main.gd" id="2"]
+[ext_resource type="FontFile" uid="uid://bk54s7whpf7ee" path="res://themes/Baloo Black/fonts/Baloo2-Medium.ttf" id="3"]
+[ext_resource type="Texture2D" uid="uid://ccj8ieu78rrjx" path="res://backs/Brownz.png" id="4"]
+[ext_resource type="PackedScene" path="res://Track_L.tscn" id="5"]
+[ext_resource type="AudioStream" uid="uid://dh8i2eoajwhcp" path="res://loops/intro.wav" id="6"]
+[ext_resource type="TileSet" path="res://gravel.tres" id="7"]
+
+[sub_resource type="FontFile" id="1"]
+fallbacks = Array[Font]([ExtResource("3")])
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/16/0/kerning_overrides/16/0 = Vector2(0, 0)
+
+[node name="Main" type="Node2D"]
+script = ExtResource("2")
+Track_L = ExtResource("5")
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+scroll_limit_begin = Vector2(-100000, -100000)
+scroll_limit_end = Vector2(100000, 100000)
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+texture_repeat = 2
+motion_mirroring = Vector2(2560, 1280)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+texture = ExtResource("4")
+centered = false
+
+[node name="Player" parent="." instance=ExtResource("1")]
+z_index = 500
+
+[node name="Camera3D" type="Camera2D" parent="."]
+
+[node name="Canvas" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="Canvas"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 30.0
+offset_top = 20.0
+offset_right = 30.0
+offset_bottom = 20.0
+
+[node name="Label" type="Label" parent="Canvas/Control"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 14.0
+theme_override_fonts/font = SubResource("1")
+text = "Text line 1
+Text line 2"
+
+[node name="intro" type="AudioStreamPlayer" parent="Canvas"]
+stream = ExtResource("6")
+autoplay = true
+
+[node name="DrawTrack" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+
+[node name="Statics" type="Node2D" parent="."]
+position = Vector2(680, 271)
+
+[node name="TileMap" type="TileMap" parent="Statics"]
+tile_set = ExtResource("7")
+rendering_quadrant_size = 8
+format = 2
+layer_0/tile_data = PackedInt32Array(-65537, 12, 0, -131072, 13, 0, -131071, 14, 0, -131070, 15, 0, -2, 3, 0, -1, 0, 0, -65536, 1, 0, -65535, 2, 0, -65534, 3, 0, -65533, 0, 0, 65534, 7, 0, 65535, 4, 0, 0, 5, 0, 1, 6, 0, 2, 7, 0, 3, 4, 0, 131070, 11, 0, 131071, 8, 0, 65536, 9, 0, 65537, 10, 0, 65538, 11, 0, 65539, 8, 0, 196606, 15, 0, 196607, 12, 0, 131072, 13, 0, 131073, 14, 0, 131074, 15, 0, 131075, 12, 0, 262143, 0, 0, 196608, 1, 0, 196609, 2, 0, 196610, 3, 0)
+
+[connection signal="set_draw_timer" from="Player" to="." method="_on_Player_set_draw_timer"]
+[connection signal="set_hud" from="Player" to="." method="_on_Player_set_hud"]
+[connection signal="timeout" from="DrawTrack" to="." method="_on_DrawTrack_timeout"]
