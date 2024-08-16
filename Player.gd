@@ -31,7 +31,7 @@ func _physics_process(delta):
 	set_velocity(velocity)
 	move_and_slide()
 	velocity = velocity
-	emit_signal("set_hud")
+	set_hud.emit()
 
 
 func get_input():
@@ -86,7 +86,7 @@ func get_physics(speed_to, steer_to):
 
 
 	if abs(speed) > min_speed:
-		emit_signal("set_draw_timer")
+		set_draw_timer.emit()
 
 func draw_truck_timer_formula():
 	if sqrt(abs(speed))!=0:

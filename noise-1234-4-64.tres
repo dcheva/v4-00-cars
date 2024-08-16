@@ -1,5 +1,0 @@
-[gd_resource type="FastNoiseLite" format=2]
-
-[resource]
-seed = 1234
-octaves = 4
