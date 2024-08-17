@@ -13,6 +13,11 @@ var zeros: int
 var cente: float = 0.333
 var noise_array: Array
 
+var source_id = 0
+var gravel_atlas = Vector2i(0, 1)
+var bushes_atlas = Vector2i(0, 1)
+var ground_atlas = Vector2i(0, 1)
+
 func _ready() -> void:
 	noise = noise_height_texture.noise
 	generate_world()
@@ -23,18 +28,21 @@ func generate_world() -> void:
 		for y in range(height):
 			noise_val = noise.get_noise_2d(x,y)
 			noise_array.append(noise_val)
-			if noise_val > cente:
-				mores += 1
-			elif noise_val < -cente:
+			if noise_val < -cente:
 				leses += 1
+				# gravel
+			elif noise_val > cente:
+				mores += 1
+				# bushes
 			else:
 				zeros += 1
+				# ground
 		
-	var str = "-cente : %s\n cente : %s\n+cente : %s\n" % [leses, mores, zeros]
+	var s = "-cente(gravel) : %s\n cente(ground) : %s\n+cente(bushes) : %s\n" % [leses, zeros, mores]
 	print("Min: %s" % noise_array.min())
 	print("Max: %s" % noise_array.max())
 	print("Med: %s" % med(noise_array))
-	print(str)
+	print(s)
 
 # Math
 func sum(arr:Array):
