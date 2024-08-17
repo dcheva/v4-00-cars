@@ -29,9 +29,12 @@ func generate_world() -> void:
 	var noise_val
 	for x in range(-width/2,width/2):
 		for y in range(-height/2,height/2):
+			
 			var vpos = Vector2i(posmod(x,4),posmod(y,4))
+			
 			noise_val = noise.get_noise_2d(x,y)
 			noise_array.append(noise_val)
+			
 			if noise_val < 0:
 				if noise_val < -cente:
 					gravel += 1
@@ -56,10 +59,6 @@ func generate_world() -> void:
 	print("Max: %s" % noise_array.max())
 	print("Med: %s" % med(noise_array))
 	print(s)
-	
-	#for x in range(10):
-		#for y in range(10):
-			#print($TileMapLayer.get_cell_atlas_coords(Vector2i(x,y)))
 		
 # Math
 func sum(arr:Array):
