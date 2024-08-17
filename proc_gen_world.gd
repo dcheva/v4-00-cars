@@ -5,9 +5,7 @@ extends Node2D
 var noise: Noise
 
 var chunk_size: int = 512
-var half_chunk = int(chunk_size / 2)
-var width:  int = chunk_size
-var height: int = chunk_size
+var half_chunk: int = 256
 
 var gravel: int
 var ground: int

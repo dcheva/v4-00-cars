@@ -67,6 +67,13 @@ wait_time = 10.0
 one_shot = true
 
 [node name="proc_gen_world" parent="." instance=ExtResource("6_t37np")]
+process_priority = 2
+process_thread_group = 2
+process_thread_group_order = 2
+process_thread_messages = 0
+editor_description = "
+Process Priority 2 (less)
+Thread Group Order 2 (less)"
 
 [connection signal="set_draw_timer" from="Player" to="." method="_on_Player_set_draw_timer"]
 [connection signal="set_hud" from="Player" to="." method="_on_Player_set_hud"]
