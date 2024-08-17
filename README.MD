@@ -14,3 +14,5 @@
 # v4-00-cars Github repo 
 ## Godot 4 restarted Cars 2d with Autogen prototype
 - import, test and fix in Godot 4
+- start generate procedural world using NoiseTexture2D
+- create TileMapLayer in Godot4 to connect to generator
