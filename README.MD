@@ -17,3 +17,5 @@
 - start generate procedural world using NoiseTexture2D
 - create TileMapLayer in Godot4 to connect to generator
 - New tilemap with 4 atlases for gravel, ground, grass-dry grass-green
+- Autogen 512x512(32x32kPix) map with 4 Atlas tilemaps
+
