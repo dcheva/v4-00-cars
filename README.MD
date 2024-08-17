@@ -16,3 +16,4 @@
 - import, test and fix in Godot 4
 - start generate procedural world using NoiseTexture2D
 - create TileMapLayer in Godot4 to connect to generator
+- New tilemap with 4 atlases for gravel, ground, grass-dry grass-green
