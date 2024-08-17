@@ -17,40 +17,50 @@ var noise_array: Array
 var source_id = 0
 var gravel_atlas = Vector2i( 0, 0)
 var ground_atlas = Vector2i( 4, 0)
-var grassd_atlas = Vector2i( 8, 1)
-var grassg_atlas = Vector2i(12, 1)
+var grassd_atlas = Vector2i( 8, 0)
+var grassg_atlas = Vector2i(12, 0)
 
 func _ready() -> void:
 	noise = noise_height_texture.noise
 	generate_world()
 	
 func generate_world() -> void:
+
 	var noise_val
-	for x in range(width):
-		for y in range(height):
+	for x in range(-width/2,width/2):
+		for y in range(-height/2,height/2):
+			var vpos = Vector2i(posmod(x,4),posmod(y,4))
 			noise_val = noise.get_noise_2d(x,y)
 			noise_array.append(noise_val)
 			if noise_val < 0:
 				if noise_val < -cente:
 					gravel += 1
 					# gravel
+					$TileMapLayer.set_cell(Vector2i(x, y), source_id, gravel_atlas + vpos)
 				else:
 					ground += 1
 					# ground
+					$TileMapLayer.set_cell(Vector2i(x, y), source_id, ground_atlas + vpos)
 			else:
 				if noise_val > cente:
 					grassg += 1
 					# grassg
+					$TileMapLayer.set_cell(Vector2i(x, y), source_id, grassg_atlas + vpos)
 				else:
 					grassd += 1
 					# grassd
+					$TileMapLayer.set_cell(Vector2i(x, y), source_id, grassd_atlas + vpos)
 		
 	var s = "gravel : %s\nground : %s\ngrassd : %s\ngrassg : %s\n" % [gravel, ground, grassg, grassd]
 	print("Min: %s" % noise_array.min())
 	print("Max: %s" % noise_array.max())
 	print("Med: %s" % med(noise_array))
 	print(s)
-
+	
+	#for x in range(10):
+		#for y in range(10):
+			#print($TileMapLayer.get_cell_atlas_coords(Vector2i(x,y)))
+		
 # Math
 func sum(arr:Array):
 	var result = 0

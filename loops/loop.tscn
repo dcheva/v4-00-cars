@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://ofwomkpyoijd"]
+
+[ext_resource type="AudioStream" uid="uid://n8tmclo0i7kg" path="res://loops/j01.wav" id="1_kss16"]
+
+[node name="loop" type="AudioStreamPlayer"]
+stream = ExtResource("1_kss16")
+volume_db = -12.0
+autoplay = true
