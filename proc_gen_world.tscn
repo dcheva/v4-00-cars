@@ -1,8 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://c43engym5lupy"]
+[gd_scene load_steps=4 format=3 uid="uid://c43engym5lupy"]
 
 [ext_resource type="Script" path="res://proc_gen_world.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://dfpghkyb58hew" path="res://noise_height.tres" id="2_3vmfj"]
+[ext_resource type="PackedScene" uid="uid://bw3pu5nictu11" path="res://tile_map_layer.tscn" id="3_flt1i"]
 
 [node name="proc_gen_world" type="Node2D"]
 script = ExtResource("1")
 noise_height_texture = ExtResource("2_3vmfj")
+
+[node name="TileMapLayer" parent="." instance=ExtResource("3_flt1i")]
