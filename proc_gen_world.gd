@@ -1,11 +1,12 @@
 extends Node2D
 
-@export var noise_height_texture: NoiseTexture2D
+# @TODO preload settings
+@export var chunk_size: int = 512
+var half_chunk: int = chunk_size / 2
 
+@export var noise_height_texture: NoiseTexture2D
 var noise: Noise
 
-var chunk_size: int = 512
-var half_chunk: int = 256
 
 var gravel: int
 var ground: int

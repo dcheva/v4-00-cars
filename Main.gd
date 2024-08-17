@@ -1,5 +1,8 @@
 extends Node
 
+# @TODO preload settings
+@export var cam_sensitivity = 0.05
+@export var cam_distance = 1
 var cam = Vector2()
 
 @export var Track_S = preload("res://Track_S.tscn")
@@ -22,9 +25,10 @@ func _on_Player_set_hud():
 	var speed = $Player.speed
 	var steer = $Player.steer
 	var trk = get_tree().get_nodes_in_group("track").size()
-	cam = pos + Vector2(int(vel.x),int(vel.y/2))
-	set_label([pos,rot,vel,speed,steer,cam,trk])
+	var cam_to = pos + Vector2(int(vel.x * 2 * cam_distance),int(vel.y * cam_distance))
+	cam = lerp(cam, cam_to, cam_sensitivity)
 	$Camera3D.position = cam
+	set_label([pos,rot,vel,speed,steer,cam,trk])
 
 
 func set_label(args):

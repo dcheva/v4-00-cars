@@ -1,17 +1,17 @@
 extends CharacterBody2D
 
-#var velocity = Vector2()
+# @TODO preload settings
+@export var rot_speed = 0.15
+@export var max_steer = 15
+@export var max_speed = 300
+@export var opt_speed = 80
+@export var min_speed = 20
+@export var breaking = -0.5
+@export var acceleration = 1.2
+@export var truck_l_speed = 145
+@export var truck_k_speed = 3
 var steer = 0
 var speed = 0
-var rot_speed = 0.15
-var max_steer = 15
-var max_speed = 300
-var opt_speed = 80
-var min_speed = 20
-var breaking = -0.5
-var acceleration = 1.2
-var truck_l_speed = 145
-var truck_k_speed = 3
 
 signal set_hud
 signal set_draw_timer

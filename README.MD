@@ -23,3 +23,6 @@
 1. Roads: A-star to find path in height range on noisemap: increase range to find path
 2. Statics: tilemap layer with stones/bushes/... based on height masks (23 in 0.1234)
 3. Threaded generation of chunks: generate chunks on triggered distance, delete old
+4. Preload settings
+### Continue 
+- Juicy Smooth camera and @TODO preload settings
