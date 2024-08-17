@@ -4,8 +4,10 @@ extends Node2D
 
 var noise: Noise
 
-var width:  int = 512
-var height: int = 512
+var chunk_size: int = 512
+var half_chunk = int(chunk_size / 2)
+var width:  int = chunk_size
+var height: int = chunk_size
 
 var gravel: int
 var ground: int
@@ -15,10 +17,11 @@ var cente: float = 0.25
 var noise_array: Array
 
 var source_id = 0
-var gravel_atlas = Vector2i( 0, 0)
-var ground_atlas = Vector2i( 4, 0)
-var grassd_atlas = Vector2i( 8, 0)
-var grassg_atlas = Vector2i(12, 0)
+var atlas_size = 8
+var gravel_atlas = Vector2i(atlas_size * 0, 0)
+var ground_atlas = Vector2i(atlas_size * 1, 0)
+var grassd_atlas = Vector2i(atlas_size * 2, 0)
+var grassg_atlas = Vector2i(atlas_size * 3, 0)
 
 func _ready() -> void:
 	noise = noise_height_texture.noise
@@ -27,10 +30,10 @@ func _ready() -> void:
 func generate_world() -> void:
 
 	var noise_val
-	for x in range(-width/2,width/2):
-		for y in range(-height/2,height/2):
+	for x in range(-half_chunk, half_chunk):
+		for y in range(-half_chunk, half_chunk):
 			
-			var vpos = Vector2i(posmod(x,4),posmod(y,4))
+			var vpos = Vector2i(posmod(x, atlas_size),posmod(y, atlas_size))
 			
 			noise_val = noise.get_noise_2d(x,y)
 			noise_array.append(noise_val)

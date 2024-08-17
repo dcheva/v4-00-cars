@@ -9,3 +9,4 @@ script = ExtResource("1")
 noise_height_texture = ExtResource("2_3vmfj")
 
 [node name="TileMapLayer" parent="." instance=ExtResource("3_flt1i")]
+rendering_quadrant_size = 32
