@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://dq83bbgjp2u0q" path="res://Player.tscn" id="1"]
 [ext_resource type="Script" path="res://Main.gd" id="2"]
-[ext_resource type="FontFile" uid="uid://bk54s7whpf7ee" path="res://themes/Baloo Black/fonts/Baloo2-Medium.ttf" id="3"]
+[ext_resource type="FontFile" uid="uid://dpc5p460kn52e" path="res://fonts/Baloo2-Medium.ttf" id="3"]
 [ext_resource type="PackedScene" path="res://Track_L.tscn" id="5"]
 [ext_resource type="AudioStream" uid="uid://dh8i2eoajwhcp" path="res://loops/intro.wav" id="6"]
 [ext_resource type="PackedScene" uid="uid://c43engym5lupy" path="res://proc_gen_world.tscn" id="6_t37np"]
