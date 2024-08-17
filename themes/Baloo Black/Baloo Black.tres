@@ -1,7 +1,7 @@
 [gd_resource type="Theme" load_steps=55 format=3 uid="uid://bcv2ny2u6crhk"]
 
-[ext_resource type="FontFile" uid="uid://c88sr3uxmenup" path="res://Themes/Baloo Black/fonts/Baloo2-Medium.ttf" id="1_ghfd7"]
-[ext_resource type="Texture2D" uid="uid://c5cm57ixbe3ky" path="res://Themes/Baloo Black/icons.svg" id="2_ofa5c"]
+[ext_resource type="FontFile" uid="uid://c88sr3uxmenup" path="res://themes/Baloo Black/fonts/Baloo2-Medium.ttf" id="1_ghfd7"]
+[ext_resource type="Texture2D" uid="uid://c5cm57ixbe3ky" path="res://themes/Baloo Black/icons.svg" id="2_ofa5c"]
 
 [sub_resource type="StyleBoxFlat" id="1"]
 bg_color = Color(0, 0, 0, 1)
