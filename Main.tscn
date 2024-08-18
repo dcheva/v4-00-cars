@@ -27,7 +27,6 @@ Track_L = ExtResource("5")
 z_index = 500
 
 [node name="DrawTrack" type="Timer" parent="Player"]
-wait_time = 10.0
 one_shot = true
 
 [node name="NPC" parent="." instance=ExtResource("7_3qrdf")]
@@ -35,7 +34,6 @@ z_index = 500
 position = Vector2(1, 112)
 
 [node name="DrawTrack" type="Timer" parent="NPC"]
-wait_time = 10.0
 one_shot = true
 
 [node name="Canvas" type="CanvasLayer" parent="."]
@@ -71,5 +69,5 @@ Thread Group Order 2 (less)"
 
 [connection signal="set_draw_timer" from="Player" to="." method="_on_Player_set_draw_timer"]
 [connection signal="set_hud" from="Player" to="." method="_on_Player_set_hud"]
-[connection signal="timeout" from="Player/DrawTrack" to="." method="_on_DrawTrack_timeout" binds= [NodePath("..")]]
-[connection signal="timeout" from="NPC/DrawTrack" to="." method="_on_DrawTrack_timeout" binds= [NodePath("..")]]
+[connection signal="timeout" from="Player/DrawTrack" to="." method="_on_draw_track_timeout" binds= ["Main/Player"]]
+[connection signal="timeout" from="NPC/DrawTrack" to="." method="_on_draw_track_timeout" binds= ["Main/NPC"]]

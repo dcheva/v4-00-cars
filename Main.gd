@@ -43,19 +43,6 @@ func set_label(args):
 	l.text += "Tracks   : %s\n" % args[6]
 
 
-func _on_DrawTrack_timeout(author):
-	# Instantiate and draw tracks on the main scene
-	var track
-	if abs($Player.speed) > $Player.truck_l_speed:
-		track = Track_L.instantiate()
-	else:
-		track = Track_S.instantiate()
-	track.position = $Player.position
-	track.rotation = $Player.rotation
-	track.z_index = $Player.z_index - 1
-	add_child(track)
-	_set_draw_timer($Player)
-
 func _on_Player_set_draw_timer():
 	_set_draw_timer($Player)
 		
@@ -64,3 +51,22 @@ func _set_draw_timer(author: CharacterBody2D):
 	var DrawTrack = author.find_child("DrawTrack")
 	if DrawTrack.is_stopped() or DrawTrack.time_left > 1:
 		DrawTrack.start(DrawTime)
+
+
+
+func _on_draw_track_timeout(extra_arg_0: String) -> void:
+	# Instantiate and draw tracks on the main scene
+	var author = get_tree().get_root().get_node(extra_arg_0)
+	print(extra_arg_0)
+	print(author)
+	print(author.speed)
+	var track
+	if abs(author.speed) > author.truck_l_speed:
+		track = Track_L.instantiate()
+	else:
+		track = Track_S.instantiate()
+	track.position = author.position
+	track.rotation = author.rotation
+	track.z_index = author.z_index - 1
+	add_child(track)
+	_set_draw_timer(author)

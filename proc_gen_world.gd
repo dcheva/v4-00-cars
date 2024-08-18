@@ -27,7 +27,7 @@ func _ready() -> void:
 	generate_world()
 	
 func generate_world() -> void:
-	var piles = 0
+	#var piles
 	var noise_val
 	for x in range(-half_chunk, half_chunk):
 		for y in range(-half_chunk, half_chunk):
@@ -60,17 +60,17 @@ func generate_world() -> void:
 			var kk = noise_val * 9999
 			if abs(x * 2) < half_chunk and abs(y * 2) < half_chunk: # 64x64 piles on 32x32 TileMap
 				if posmod(kk,  103) > 100: # 2%
-					piles += 1
+					#piles += 1
 					$StaticTileMapLayer.set_cell(Vector2i(x, y), source_id, Vector2i(0, posmod(kk,  16)))
 					# Vector2i(0, randi() % 15))
 					# Vector2i(0, posmod(kk,  16))
 
-	var s = "gravel : %s\nground : %s\ngrassd : %s\ngrassg : %s" % [gravel, ground, grassg, grassd]
-	print("Min : %s" % noise_array.min())
-	print("Max : %s" % noise_array.max())
-	print("Med : %s" % med(noise_array))
-	print(s)
-	print("+piles : %s" % piles)
+	#var s = "gravel : %s\nground : %s\ngrassd : %s\ngrassg : %s" % [gravel, ground, grassg, grassd]
+	#print("Min : %s" % noise_array.min())
+	#print("Max : %s" % noise_array.max())
+	#print("Med : %s" % med(noise_array))
+	#print(s)
+	#print("+piles : %s" % piles)
 		
 # Math
 func sum(arr:Array):
