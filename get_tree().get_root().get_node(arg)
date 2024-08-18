@@ -2,3 +2,12 @@
 C:\Projects\v4-00-cars>git add -A 
 
 C:\Projects\v4-00-cars>git commit -am "It works! Signals with ExtraCallArgument arg:string Main/NodeName-  " 
+[npc 2fae1a8] It works! Signals with ExtraCallArgument arg:string Main/NodeName-
+ 4 files changed, 33 insertions(+), 25 deletions(-)
+ create mode 100644 get_tree().get_root().get_node(arg)
+
+C:\Projects\v4-00-cars>git fetch 
+
+C:\Projects\v4-00-cars>git merge -X theirs 
+
+C:\Projects\v4-00-cars>git commit -am "merged theirs" 
