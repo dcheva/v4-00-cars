@@ -10,7 +10,8 @@ var cam = Vector2()
 
 
 func _ready():
-	$DrawTrack.start()
+	$Player/DrawTrack.start()
+	$NPC/DrawTrack.start()
 
 
 func _process(_delta):
@@ -53,12 +54,13 @@ func _on_DrawTrack_timeout():
 	track.rotation = $Player.rotation
 	track.z_index = $Player.z_index - 1
 	add_child(track)
-	_set_draw_timer()
+	_set_draw_timer($Player)
 
 func _on_Player_set_draw_timer():
-	_set_draw_timer()
+	_set_draw_timer($Player)
 		
-func _set_draw_timer():
-	var w = $Player.draw_truck_timer_formula()
-	if $DrawTrack.is_stopped() or $DrawTrack.time_left > 1:
-		$DrawTrack.start(w)
+func _set_draw_timer(author: CharacterBody2D):
+	var DrawTime = author.draw_truck_timer_formula()
+	var DrawTrack = author.find_child("DrawTrack")
+	if DrawTrack.is_stopped() or DrawTrack.time_left > 1:
+		DrawTrack.start(DrawTime)
