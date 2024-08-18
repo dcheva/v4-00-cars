@@ -16,8 +16,11 @@ var speed = 0
 signal set_hud
 signal set_draw_timer
 
-@export var Track_L_scene: PackedScene
-@export var Track_S_scene: PackedScene
+@export var Track_L1_scene: PackedScene
+@export var Track_S1_scene: PackedScene
+
+@export var Track_S = preload("res://Track_S1.tscn")
+@export var Track_L = preload("res://Track_L1.tscn")
 
 
 func _ready():

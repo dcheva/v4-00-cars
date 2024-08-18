@@ -5,8 +5,6 @@ extends Node
 @export var cam_distance = 1
 var cam = Vector2()
 
-@export var Track_S = preload("res://Track_S.tscn")
-@export var Track_L = preload("res://Track_S.tscn")
 
 
 func _ready():
@@ -42,9 +40,6 @@ func set_label(args):
 	l.text += "Camera3D   : %s, %s\n" % [int(args[5][0]), int(args[5][1])]
 	l.text += "Tracks   : %s\n" % args[6]
 
-
-func _on_Player_set_draw_timer():
-	_set_draw_timer($Player)
 		
 func _set_draw_timer(author: CharacterBody2D):
 	var DrawTime = author.draw_truck_timer_formula()
@@ -53,20 +48,24 @@ func _set_draw_timer(author: CharacterBody2D):
 		DrawTrack.start(DrawTime)
 
 
-
-func _on_draw_track_timeout(extra_arg_0: String) -> void:
+func _on_draw_track_timeout(arg: String) -> void:
 	# Instantiate and draw tracks on the main scene
-	var author = get_tree().get_root().get_node(extra_arg_0)
-	print(extra_arg_0)
-	print(author)
-	print(author.speed)
 	var track
+	var author = get_tree().get_root().get_node(arg)
 	if abs(author.speed) > author.truck_l_speed:
-		track = Track_L.instantiate()
+		track = author.Track_L.instantiate()
 	else:
-		track = Track_S.instantiate()
+		track = author.Track_S.instantiate()
 	track.position = author.position
 	track.rotation = author.rotation
 	track.z_index = author.z_index - 1
 	add_child(track)
 	_set_draw_timer(author)
+
+
+func _on_npc_set_draw_timer() -> void:
+	_set_draw_timer($NPC)
+
+
+func _on_Player_set_draw_timer() -> void:
+	_set_draw_timer($Player)

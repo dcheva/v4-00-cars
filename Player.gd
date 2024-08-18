@@ -19,6 +19,9 @@ signal set_draw_timer
 @export var Track_L_scene: PackedScene
 @export var Track_S_scene: PackedScene
 
+@export var Track_S = preload("res://Track_S.tscn")
+@export var Track_L = preload("res://Track_L.tscn")
+
 
 func _ready():
 	pass
