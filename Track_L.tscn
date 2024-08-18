@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://art/track-01.png" type="Texture2D" id=1]
+[ext_resource path="res://art/track-00-01.png" type="Texture2D" id=1]
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 23, 32 )
