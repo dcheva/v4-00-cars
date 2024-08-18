@@ -28,3 +28,5 @@
 - Juicy Smooth camera and @TODO preload settings
 - Fixed import and export errors
 - Add 16 static piles on separate TileMapLayer (without collision!?)
+- Lern Howto create collisions on TileMapLayer
+
