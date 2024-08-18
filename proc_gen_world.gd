@@ -61,8 +61,9 @@ func generate_world() -> void:
 			if abs(x * 2) < half_chunk and abs(y * 2) < half_chunk: # 64x64 piles on 32x32 TileMap
 				if posmod(kk,  103) > 100: # 2%
 					piles += 1
-					$StaticTileMapLayer.set_cell(Vector2i(x, y), source_id, Vector2i(0, randi() % 15))
-					 # Vector2i(0, posmod(kk,  16))
+					$StaticTileMapLayer.set_cell(Vector2i(x, y), source_id, Vector2i(0, posmod(kk,  16)))
+					# Vector2i(0, randi() % 15))
+					# Vector2i(0, posmod(kk,  16))
 
 	var s = "gravel : %s\nground : %s\ngrassd : %s\ngrassg : %s" % [gravel, ground, grassg, grassd]
 	print("Min : %s" % noise_array.min())
