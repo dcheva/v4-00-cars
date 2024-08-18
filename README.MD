@@ -40,3 +40,4 @@
 - It works! \_on_timer_timeout(author)
 - It works! Signals with ExtraCallArgument arg:string Main/NodeName->get_tree().get_root().get_node(arg)
 - Implement NPC car with tracks. Now it needts to be refactored!
+- Tested Sync racing and now Ready to implement Follow-me AI
