@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://rh3n6flnu668"]
 
-[ext_resource type="Texture2D" uid="uid://bxkwv0bnjg04t" path="res://art/track-01-01.png" id="1_2a54u"]
+[ext_resource type="Texture2D" uid="uid://d1shyshgab3ef" path="res://art/track-01-02.png" id="1_b42xw"]
 
 [sub_resource type="RectangleShape2D" id="1"]
 size = Vector2(46, 32)
@@ -11,7 +11,7 @@ collision_layer = 0
 collision_mask = 0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_2a54u")
+texture = ExtResource("1_b42xw")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false

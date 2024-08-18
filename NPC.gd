@@ -3,8 +3,8 @@ extends CharacterBody2D
 # @TODO preload settings
 @export var rot_speed = 0.15
 @export var max_steer = 15
-@export var max_speed = 300
-@export var opt_speed = 80
+@export var max_speed = 400
+@export var opt_speed = 100
 @export var min_speed = 20
 @export var breaking = -0.5
 @export var acceleration = 1.2
@@ -16,8 +16,8 @@ var speed = 0
 signal set_hud
 signal set_draw_timer
 
-@export var Track_L1_scene: PackedScene
 @export var Track_S1_scene: PackedScene
+@export var Track_L1_scene: PackedScene
 
 @export var Track_S = preload("res://Track_S1.tscn")
 @export var Track_L = preload("res://Track_L1.tscn")
@@ -95,4 +95,4 @@ func draw_truck_timer_formula():
 	if sqrt(abs(speed))!=0:
 		return truck_k_speed / sqrt(abs(speed))
 	else:
-		return 0.2
+		return
