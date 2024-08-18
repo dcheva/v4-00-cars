@@ -71,5 +71,5 @@ Thread Group Order 2 (less)"
 
 [connection signal="set_draw_timer" from="Player" to="." method="_on_Player_set_draw_timer"]
 [connection signal="set_hud" from="Player" to="." method="_on_Player_set_hud"]
-[connection signal="timeout" from="Player/DrawTrack" to="." method="_on_DrawTrack_timeout"]
-[connection signal="timeout" from="NPC/DrawTrack" to="." method="_on_DrawTrack_timeout"]
+[connection signal="timeout" from="Player/DrawTrack" to="." method="_on_DrawTrack_timeout" binds= [NodePath("..")]]
+[connection signal="timeout" from="NPC/DrawTrack" to="." method="_on_DrawTrack_timeout" binds= [NodePath("..")]]

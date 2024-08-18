@@ -43,7 +43,7 @@ func set_label(args):
 	l.text += "Tracks   : %s\n" % args[6]
 
 
-func _on_DrawTrack_timeout():
+func _on_DrawTrack_timeout(author):
 	# Instantiate and draw tracks on the main scene
 	var track
 	if abs($Player.speed) > $Player.truck_l_speed:
