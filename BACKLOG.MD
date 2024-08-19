@@ -12,8 +12,8 @@ NPC follower - add the car with input interface the NPC driver class:
 1. Create obs_arr instead of rocks
 2. Implement create_obs_layer with lines (walls) and points (rocks, trees, ...)
 3. Implement NPC logic:
-3.a. Find the player on the minimap and draw the route A*
-3.b. When the player becomes visible - run one of the FollowMe algorithms:
-3.b.1. Interception
-3.b.2. Approach
-3.b.3. Pursuit
+  1. Find the player on the minimap and draw the route A*
+  2. When the player becomes visible - run one of the FollowMe algorithms:
+    1. Interception
+    2. Approach
+    3. Pursuit
