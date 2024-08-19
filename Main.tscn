@@ -1,25 +1,16 @@
-[gd_scene load_steps=8 format=3 uid="uid://3ujj6oc0alnj"]
+[gd_scene load_steps=7 format=3 uid="uid://3ujj6oc0alnj"]
 
 [ext_resource type="PackedScene" uid="uid://dq83bbgjp2u0q" path="res://Player.tscn" id="1"]
 [ext_resource type="Script" path="res://Main.gd" id="2"]
-[ext_resource type="FontFile" uid="uid://doqkvq4nwgsa6" path="res://fonts/Baloo2-Medium.ttf" id="3"]
+[ext_resource type="FontFile" uid="uid://dpg4p4medli5t" path="res://fonts/Habbo.ttf" id="4_mff2c"]
 [ext_resource type="AudioStream" uid="uid://bypx8lp5fdsl1" path="res://loops/intro.wav" id="6"]
 [ext_resource type="PackedScene" uid="uid://c43engym5lupy" path="res://proc_gen_world.tscn" id="6_t37np"]
 [ext_resource type="PackedScene" uid="uid://dclwvh1bc0tvq" path="res://NPC.tscn" id="7_3qrdf"]
 
-[sub_resource type="FontFile" id="1"]
-fallbacks = Array[Font]([ExtResource("3")])
-cache/0/16/0/ascent = 0.0
-cache/0/16/0/descent = 0.0
-cache/0/16/0/underline_position = 0.0
-cache/0/16/0/underline_thickness = 0.0
-cache/0/16/0/scale = 1.0
-cache/0/16/0/kerning_overrides/16/0 = Vector2(0, 0)
-
 [node name="Main" type="Node2D"]
 script = ExtResource("2")
 
-[node name="Camera3D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="Player" parent="." instance=ExtResource("1")]
 z_index = 500
@@ -50,7 +41,8 @@ offset_bottom = 20.0
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 14.0
-theme_override_fonts/font = SubResource("1")
+theme_override_fonts/font = ExtResource("4_mff2c")
+theme_override_font_sizes/font_size = 32
 text = "Text line 1
 Text line 2"
 

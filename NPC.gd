@@ -22,6 +22,8 @@ signal set_draw_timer
 @export var Track_S = preload("res://Track_S1.tscn")
 @export var Track_L = preload("res://Track_L1.tscn")
 
+var printed = ""
+var target_vector_length = 0
 
 func _ready():
 	pass
@@ -40,29 +42,38 @@ func _physics_process(delta):
 func get_input():
 	var speed_to = 0
 	var steer_to = steer
+
 	var player = get_tree().get_root().get_node("Main/Player")
 	var target_vector = Vector2(position - player.position)
-	var target_side = ""
-	var dir = to_local(player.global_transform.origin).normalized() #direction to player
-	if dir.y > 0:
-		print("is in front")
-	else:
-		print("is behind")
-	if dir.x > 0:
-		print("is right")
-	else:
-		print("is left")
-	
-	if Input.is_action_pressed("right_arrow"):
+	target_vector_length = int(target_vector.length()/10)
+	var target_direction = to_local(player.global_transform.origin).normalized() #direction to player
+
+	# \\ Start AI inputs
+	var t = "%s m. " % target_vector_length
+	if target_direction.y < 0:
+		t += "ahead, "
+		if target_vector.length() > 200:
+			speed_to = max_speed * acceleration
+		elif target_vector.length() < 100:
+			get_drift()
+	elif target_direction.y > 0:
+		t += "behind, "
+		if target_vector.length() > 400:
+			speed_to = max_speed * acceleration
+		elif target_vector.length() > 200:
+			speed_to = max_speed * breaking
+		elif target_vector.length() < 100:
+			get_drift()
+	if target_direction.x > 0.1:
+		t += "in the right, " 
 		steer_to = max_steer
-	if Input.is_action_pressed("left_arrow"):
+	elif target_direction.x < -0.1:
+		t += "in the left, "
 		steer_to = -max_steer
-	if Input.is_action_pressed("up_arrow"):
-		speed_to = max_speed * acceleration
-	if Input.is_action_pressed("down_arrow"):
-		speed_to = max_speed * breaking
-	if Input.is_action_pressed("space"):
-		get_drift()
+	# // End AI inputs
+	t = t.trim_suffix(", ")
+	if printed != t:
+		printed = t
 		
 	get_physics(speed_to, steer_to)
 
@@ -99,10 +110,9 @@ func get_physics(speed_to, steer_to):
 		if speed_to == 0:
 			speed = lerpf(speed, 0, 0.1)
 
-
 	if abs(speed) > min_speed:
 		set_draw_timer.emit()
-		
+
 
 func draw_track_timer_formula() -> float:
 	if sqrt(abs(speed))!=0:

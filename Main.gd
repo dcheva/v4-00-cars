@@ -24,10 +24,13 @@ func _on_Player_set_hud():
 	var speed = $Player.speed
 	var steer = $Player.steer
 	var trk = get_tree().get_nodes_in_group("track").size()
+	var npc = $NPC.target_vector_length
+	var plr = $NPC.printed
+	# Set camera position @TODO move this code
 	var cam_to = pos + Vector2(int(vel.x * 2 * cam_distance),int(vel.y * cam_distance))
 	cam = lerp(cam, cam_to, cam_sensitivity)
-	$Camera3D.position = cam
-	set_label([pos,rot,vel,speed,steer,cam,trk])
+	$Camera2D.position = cam
+	set_label([pos,rot,vel,speed,steer,cam,trk,npc,plr])
 
 
 func set_label(args):
@@ -37,8 +40,10 @@ func set_label(args):
 	l.text += "Steering : %s\n" % int(args[4])
 	l.text += "Rotation : %s\n" % int(args[1])
 	l.text += "Velocity : %s, %s\n" % [int(args[2][0]), int(args[2][1])]
-	l.text += "Camera3D   : %s, %s\n" % [int(args[5][0]), int(args[5][1])]
+	l.text += "Camera   : %s, %s\n" % [int(args[5][0]), int(args[5][1])]
 	l.text += "Tracks   : %s\n" % args[6]
+	#l.text += "NPC dist : %s\n" % args[7]
+	l.text += "Player   : %s\n" % args[8]
 
 		
 func _set_draw_timer(author: CharacterBody2D):
