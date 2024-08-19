@@ -42,9 +42,11 @@ func set_label(args):
 
 		
 func _set_draw_timer(author: CharacterBody2D):
-	var DrawTime = author.draw_truck_timer_formula()
+	var DrawTime = author.draw_track_timer_formula()
 	var DrawTrack = author.find_child("DrawTrack")
 	if DrawTrack.is_stopped() or DrawTrack.time_left > 1:
+		#print(author)
+		#print(DrawTime)
 		DrawTrack.start(DrawTime)
 
 
@@ -52,7 +54,7 @@ func _on_draw_track_timeout(arg: String) -> void:
 	# Instantiate and draw tracks on the main scene
 	var track
 	var author = get_tree().get_root().get_node(arg)
-	if abs(author.speed) > author.truck_l_speed:
+	if abs(author.speed) > author.track_l_speed:
 		track = author.Track_L.instantiate()
 	else:
 		track = author.Track_S.instantiate()

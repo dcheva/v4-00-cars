@@ -8,8 +8,8 @@ extends CharacterBody2D
 @export var min_speed = 20
 @export var breaking = -0.5
 @export var acceleration = 1.2
-@export var truck_l_speed = 145
-@export var truck_k_speed = 3
+@export var track_l_speed = 145
+@export var track_k_speed = 3
 var steer = 0
 var speed = 0
 
@@ -40,6 +40,18 @@ func _physics_process(delta):
 func get_input():
 	var speed_to = 0
 	var steer_to = steer
+	var player = get_tree().get_root().get_node("Main/Player")
+	var target_vector = Vector2(position - player.position)
+	var target_side = ""
+	var dir = to_local(player.global_transform.origin).normalized() #direction to player
+	if dir.y > 0:
+		print("is in front")
+	else:
+		print("is behind")
+	if dir.x > 0:
+		print("is right")
+	else:
+		print("is left")
 	
 	if Input.is_action_pressed("right_arrow"):
 		steer_to = max_steer
@@ -90,9 +102,10 @@ func get_physics(speed_to, steer_to):
 
 	if abs(speed) > min_speed:
 		set_draw_timer.emit()
+		
 
-func draw_truck_timer_formula():
+func draw_track_timer_formula() -> float:
 	if sqrt(abs(speed))!=0:
-		return truck_k_speed / sqrt(abs(speed))
+		return track_k_speed / sqrt(abs(speed))
 	else:
-		return
+		return 0.2

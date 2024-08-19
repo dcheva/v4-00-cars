@@ -25,6 +25,7 @@ script = ExtResource("2")
 z_index = 500
 
 [node name="DrawTrack" type="Timer" parent="Player"]
+wait_time = 10.0
 one_shot = true
 
 [node name="NPC" parent="." instance=ExtResource("7_3qrdf")]
@@ -32,6 +33,7 @@ z_index = 500
 position = Vector2(1, 112)
 
 [node name="DrawTrack" type="Timer" parent="NPC"]
+wait_time = 10.0
 one_shot = true
 
 [node name="Canvas" type="CanvasLayer" parent="."]
