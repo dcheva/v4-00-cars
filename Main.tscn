@@ -2,8 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://dq83bbgjp2u0q" path="res://Player.tscn" id="1"]
 [ext_resource type="Script" path="res://Main.gd" id="2"]
-[ext_resource type="FontFile" uid="uid://dpg4p4medli5t" path="res://fonts/Habbo.ttf" id="4_mff2c"]
-[ext_resource type="AudioStream" uid="uid://bypx8lp5fdsl1" path="res://loops/intro.wav" id="6"]
+[ext_resource type="FontFile" uid="uid://bbptpvwa5bu46" path="res://fonts/Habbo.ttf" id="4_mff2c"]
+[ext_resource type="AudioStream" uid="uid://bq0dt2arhuv7v" path="res://loops/intro.wav" id="6"]
 [ext_resource type="PackedScene" uid="uid://c43engym5lupy" path="res://proc_gen_world.tscn" id="6_t37np"]
 [ext_resource type="PackedScene" uid="uid://dclwvh1bc0tvq" path="res://NPC.tscn" id="7_3qrdf"]
 
