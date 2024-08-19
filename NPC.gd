@@ -4,7 +4,7 @@ extends CharacterBody2D
 @export var rot_speed = 0.15
 @export var max_steer = 15
 @export var max_speed = 400
-@export var opt_speed = 100
+@export var opt_speed = 150
 @export var min_speed = 20
 @export var breaking = -0.5
 @export var acceleration = 1.2
@@ -119,3 +119,7 @@ func draw_track_timer_formula() -> float:
 		return track_k_speed / sqrt(abs(speed))
 	else:
 		return 0.2
+
+
+func _on_draw_track_timeout() -> void:
+	get_tree().get_root().get_node("Main")._on_draw_track_timeout("Main/NPC")

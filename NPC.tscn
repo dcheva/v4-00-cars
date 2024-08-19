@@ -16,3 +16,9 @@ texture = ExtResource("2_geuje")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -16.5)
 shape = SubResource("1")
+
+[node name="DrawTrack" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+
+[connection signal="timeout" from="DrawTrack" to="." method="_on_draw_track_timeout"]

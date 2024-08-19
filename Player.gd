@@ -91,8 +91,13 @@ func get_physics(speed_to, steer_to):
 	if abs(speed) > min_speed:
 		set_draw_timer.emit()
 
+
 func draw_track_timer_formula():
 	if sqrt(abs(speed))!=0:
 		return track_k_speed / sqrt(abs(speed))
 	else:
 		return 0.2
+
+
+func _on_draw_track_timeout() -> void:
+	get_tree().get_root().get_node("Main")._on_draw_track_timeout("Main/Player")
