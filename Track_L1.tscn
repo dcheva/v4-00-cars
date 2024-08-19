@@ -1,6 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://dvmbe6117j6rx"]
+[gd_scene load_steps=3 format=3 uid="uid://byfal3u5exrp1"]
 
-[ext_resource type="Texture2D" uid="uid://dljig7n4qgusp" path="res://art/track-00-01.png" id="1"]
+[ext_resource type="Texture2D" uid="uid://bxkwv0bnjg04t" path="res://art/track-01-01.png" id="1_scicl"]
 
 [sub_resource type="RectangleShape2D" id="2"]
 size = Vector2(46, 64)
@@ -11,7 +11,7 @@ collision_layer = 0
 collision_mask = 0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1")
+texture = ExtResource("1_scicl")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false

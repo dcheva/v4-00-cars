@@ -1,44 +1,31 @@
-[gd_scene load_steps=9 format=3 uid="uid://3ujj6oc0alnj"]
+[gd_scene load_steps=7 format=3 uid="uid://3ujj6oc0alnj"]
 
 [ext_resource type="PackedScene" uid="uid://dq83bbgjp2u0q" path="res://Player.tscn" id="1"]
 [ext_resource type="Script" path="res://Main.gd" id="2"]
-[ext_resource type="FontFile" uid="uid://doqkvq4nwgsa6" path="res://fonts/Baloo2-Medium.ttf" id="3"]
-[ext_resource type="PackedScene" path="res://Track_L.tscn" id="5"]
+[ext_resource type="FontFile" uid="uid://dpg4p4medli5t" path="res://fonts/Habbo.ttf" id="4_mff2c"]
 [ext_resource type="AudioStream" uid="uid://bypx8lp5fdsl1" path="res://loops/intro.wav" id="6"]
 [ext_resource type="PackedScene" uid="uid://c43engym5lupy" path="res://proc_gen_world.tscn" id="6_t37np"]
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_x6wpk"]
-
-[sub_resource type="FontFile" id="1"]
-fallbacks = Array[Font]([ExtResource("3")])
-cache/0/16/0/ascent = 0.0
-cache/0/16/0/descent = 0.0
-cache/0/16/0/underline_position = 0.0
-cache/0/16/0/underline_thickness = 0.0
-cache/0/16/0/scale = 1.0
-cache/0/16/0/kerning_overrides/16/0 = Vector2(0, 0)
+[ext_resource type="PackedScene" uid="uid://dclwvh1bc0tvq" path="res://NPC.tscn" id="7_3qrdf"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("2")
-Track_L = ExtResource("5")
 
-[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
-visible = false
-scroll_limit_begin = Vector2(-100000, -100000)
-scroll_limit_end = Vector2(100000, 100000)
-
-[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
-texture_repeat = 2
-motion_mirroring = Vector2(2560, 1280)
-
-[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
-texture = SubResource("CompressedTexture2D_x6wpk")
-centered = false
+[node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="Player" parent="." instance=ExtResource("1")]
 z_index = 500
 
-[node name="Camera3D" type="Camera2D" parent="."]
+[node name="DrawTrack" type="Timer" parent="Player"]
+wait_time = 10.0
+one_shot = true
+
+[node name="NPC" parent="." instance=ExtResource("7_3qrdf")]
+z_index = 500
+position = Vector2(1, 112)
+
+[node name="DrawTrack" type="Timer" parent="NPC"]
+wait_time = 10.0
+one_shot = true
 
 [node name="Canvas" type="CanvasLayer" parent="."]
 
@@ -54,17 +41,14 @@ offset_bottom = 20.0
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 14.0
-theme_override_fonts/font = SubResource("1")
+theme_override_fonts/font = ExtResource("4_mff2c")
+theme_override_font_sizes/font_size = 32
 text = "Text line 1
 Text line 2"
 
 [node name="intro" type="AudioStreamPlayer" parent="Canvas"]
 stream = ExtResource("6")
 autoplay = true
-
-[node name="DrawTrack" type="Timer" parent="."]
-wait_time = 10.0
-one_shot = true
 
 [node name="proc_gen_world" parent="." instance=ExtResource("6_t37np")]
 process_priority = 2
@@ -77,4 +61,6 @@ Thread Group Order 2 (less)"
 
 [connection signal="set_draw_timer" from="Player" to="." method="_on_Player_set_draw_timer"]
 [connection signal="set_hud" from="Player" to="." method="_on_Player_set_hud"]
-[connection signal="timeout" from="DrawTrack" to="." method="_on_DrawTrack_timeout"]
+[connection signal="timeout" from="Player/DrawTrack" to="." method="_on_draw_track_timeout" binds= ["Main/Player"]]
+[connection signal="set_draw_timer" from="NPC" to="." method="_on_npc_set_draw_timer"]
+[connection signal="timeout" from="NPC/DrawTrack" to="." method="_on_draw_track_timeout" binds= ["Main/NPC"]]
