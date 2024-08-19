@@ -32,4 +32,7 @@
 - Implement NPC car with tracks. Now it needts to be refactored!
 - Tested Sync racing and now Ready to implement Follow-me AI
 - Tested Follow-me 
-- AI Start Collisions physics and Avoidance logic
+- AI Start 
+- AI tested
+- Simple Collisions physics tested
+- Begin Statics and Avoidance logic
