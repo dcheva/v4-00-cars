@@ -8,6 +8,7 @@ extends CharacterBody2D
 @export var min_speed = 20
 @export var breaking = -0.5
 @export var acceleration = 1.2
+@export var collision_k = 4
 @export var track_l_speed = 145
 @export var track_k_speed = 3
 var steer = 0
@@ -109,11 +110,13 @@ func get_physics(speed_to, steer_to):
 		steer = 0
 		if speed_to == 0:
 			speed = lerpf(speed, 0, 0.1)
-
+	
 	# Collisions
 	if get_slide_collision_count() > 0:
-		speed = - speed / 2
-
+		var normal = get_last_slide_collision().get_normal()
+		speed = - normal.length() * speed / collision_k
+		position = position + normal * collision_k
+	
 	if abs(speed) > min_speed:
 		set_draw_timer.emit()
 
