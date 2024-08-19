@@ -87,6 +87,9 @@ func get_physics(speed_to, steer_to):
 		if speed_to == 0:
 			speed = lerpf(speed, 0, 0.1)
 
+	# Collisions
+	if get_slide_collision_count() > 0:
+		speed = - speed / 2
 
 	if abs(speed) > min_speed:
 		set_draw_timer.emit()
