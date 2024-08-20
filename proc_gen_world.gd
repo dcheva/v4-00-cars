@@ -57,20 +57,24 @@ func generate_world() -> void:
 					# grassd
 					$TileMapLayer.set_cell(Vector2i(x, y), source_id, grassd_atlas + vpos)
 			
+			
 			# Add statics 
 			var kk = noise_val * 9999
 			if abs(x * 2) < half_chunk and abs(y * 2) < half_chunk: # 64x64 piles on 32x32 TileMap
+				## Add Piles
 				if posmod(kk,  103) > 100: # 2%
 					piles += 1
 					$StaticTileMapLayer.set_cell(Vector2i(x, y), source_id, Vector2i(0, posmod(kk,  16)))
+				## Add Walls
+				# Must overwrite piles
 				elif posmod(kk, 102) > 100: # 1%
 					# Draw lines in 4 directions (SW to N), length from 3 to 6
-					# Must overwrite piles
 					if x > -half_chunk + 6 and y > -half_chunk + 6:
 						walls += 1
 						var wall_length = posmod(get_byte(kk, 2), 3) + 3
 						var wall_direction = posmod(get_byte(kk, 3), 4)
 						prints(wall_length, wall_direction)
+						# Now draw the wall
 				
 			
 
