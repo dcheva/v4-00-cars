@@ -9,7 +9,6 @@ metadata/_snap_enabled = true
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_lg752"]
 noise_type = 0
 seed = 1234
-frequency = 0.02
 
 [resource]
 generate_mipmaps = false

@@ -27,7 +27,8 @@ func _ready() -> void:
 	generate_world()
 	
 func generate_world() -> void:
-	#var piles
+	var piles = 0
+	var walls = 0
 	var noise_val
 	for x in range(-half_chunk, half_chunk):
 		for y in range(-half_chunk, half_chunk):
@@ -60,19 +61,42 @@ func generate_world() -> void:
 			var kk = noise_val * 9999
 			if abs(x * 2) < half_chunk and abs(y * 2) < half_chunk: # 64x64 piles on 32x32 TileMap
 				if posmod(kk,  103) > 100: # 2%
-					#piles += 1
+					piles += 1
 					$StaticTileMapLayer.set_cell(Vector2i(x, y), source_id, Vector2i(0, posmod(kk,  16)))
-					# Vector2i(0, randi() % 15))
-					# Vector2i(0, posmod(kk,  16))
+				elif posmod(kk, 102) > 100: # 1%
+					# Draw lines in 4 directions (SW to N), length from 3 to 6
+					# Must overwrite piles
+					if x > -half_chunk + 6 and y > -half_chunk + 6:
+						walls += 1
+						var wall_length = posmod(get_byte(kk, 2), 3) + 3
+						var wall_direction = posmod(get_byte(kk, 3), 4)
+						prints(wall_length, wall_direction)
+				
+			
 
-	#var s = "gravel : %s\nground : %s\ngrassd : %s\ngrassg : %s" % [gravel, ground, grassg, grassd]
-	#print("Min : %s" % noise_array.min())
-	#print("Max : %s" % noise_array.max())
-	#print("Med : %s" % med(noise_array))
-	#print(s)
-	#print("+piles : %s" % piles)
-		
+	var s = "gravel : %s\nground : %s\ngrassd : %s\ngrassg : %s" % [gravel, ground, grassg, grassd]
+	print("Min : %s" % noise_array.min())
+	print("Max : %s" % noise_array.max())
+	print("Med : %s" % med(noise_array))
+	print(s)
+	print("+piles : %s" % piles)
+	print("+walls : %s" % walls)
+
+
+func add_lines(): 
+	pass
+
+
+func draw_lines():
+	pass
+
+
 # Math
+func get_byte(num: int, pos: int):
+	for i in range (1, pos):
+		num = int(num/10)
+	return posmod(num, 10)	
+
 func sum(arr:Array):
 	var result = 0
 	for i in arr:
