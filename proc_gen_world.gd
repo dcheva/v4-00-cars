@@ -62,23 +62,18 @@ func generate_world() -> void:
 			var kk = noise_val * 9999
 			if abs(x * 2) < half_chunk and abs(y * 2) < half_chunk: # 64x64 piles on 32x32 TileMap
 				## Add Piles
-				if posmod(kk,  103) > 100: # 2%
+				if posmod(kk,  102) > 100: # 2%
 					piles += 1
 					$StaticTileMapLayer.set_cell(Vector2i(x, y), source_id, Vector2i(0, posmod(kk,  16)))
 				## Add Walls
 				# Must overwrite piles
-				elif posmod(kk, 102) > 100: # 1%
+				elif posmod(kk, 202) > 200: # 1/2%
 					# Draw lines in 4 directions (SW to N), length from 3 to 6
 					if x > -half_chunk + 6 and y > -half_chunk + 6:
 						walls += 1
 						var wall_length = posmod(get_byte(kk, 2), 3) + 3
 						var wall_direction = posmod(get_byte(kk, 3), 4)
-						prints(wall_length, wall_direction)
-						# Now draw the wall
-						#$StaticTileMapLayer.set_cell(Vector2i(x, y), source_id, Vector2i(0, posmod(kk,  16)))
-						#var current_cell_data = $StaticTileMapLayer.get_cell_tile_data(Vector2i(x, y))
-						#print(current_cell_data)
-						#TileData
+						draw_wall(Vector2i(x, y), wall_direction, wall_length)
 			
 
 	var s = "gravel : %s\nground : %s\ngrassd : %s\ngrassg : %s" % [gravel, ground, grassg, grassd]
@@ -90,18 +85,49 @@ func generate_world() -> void:
 	print("+walls : %s" % walls)
 
 
-func add_lines(): 
-	pass
+func draw_wall(coords: Vector2i, wall_direction, wall_length): 
+	wall_direction = 0
+	var _id = wall_direction + 1
+	var shift: Vector2i
+	var _coords: Vector2i
+	var tiles = []
+	var tiles_end = []
 
-
-func draw_lines():
-	pass
-
+	if wall_direction == 0:
+		shift = Vector2i(-1,1)
+		# start tiles (3,0) (3,1) (2,0)
+		tiles = [Vector2i(0,0), Vector2i(0,1), Vector2i(-1,0)]
+		# end tiles (0,2) (0,3) (1,3) (1,2)  
+		tiles_end = [Vector2i(0,-1), Vector2i(0,0), Vector2i(1,0), Vector2i(1,-1)]
+	if wall_direction == 1:
+		shift = Vector2i(-1,0)
+	if wall_direction == 2:
+		shift = Vector2i(-1,-1)
+	if wall_direction == 3:
+		shift = Vector2i(0,-1)
+	
+	# start tiles
+	_coords = Vector2i(3,0)
+	for n in tiles.size():
+		$StaticTileMapLayer.set_cell(coords + tiles[n], _id, _coords + tiles[n])
+	
+	# repeat in range
+	_coords = Vector2i(2,1)
+	for i in range(1, wall_length - 1):
+		for n in tiles.size():
+			$StaticTileMapLayer.set_cell(coords + tiles[n] + shift * i, _id, _coords + tiles[n] + shift)
+	
+	# end tiles
+	_coords = Vector2i(0,3)
+	for n in tiles_end.size():
+		$StaticTileMapLayer.set_cell(coords + tiles_end[n] + shift * wall_length, _id, _coords + tiles_end[n])
+	
+	
 
 # Math
 func get_byte(num: int, pos: int):
 	for i in range (1, pos):
-		num = int(num/10)
+		num = num % 10
 	return posmod(num, 10)	
 
 func sum(arr:Array):
