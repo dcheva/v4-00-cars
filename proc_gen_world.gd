@@ -75,7 +75,10 @@ func generate_world() -> void:
 						var wall_direction = posmod(get_byte(kk, 3), 4)
 						prints(wall_length, wall_direction)
 						# Now draw the wall
-				
+						#$StaticTileMapLayer.set_cell(Vector2i(x, y), source_id, Vector2i(0, posmod(kk,  16)))
+						#var current_cell_data = $StaticTileMapLayer.get_cell_tile_data(Vector2i(x, y))
+						#print(current_cell_data)
+						#TileData
 			
 
 	var s = "gravel : %s\nground : %s\ngrassd : %s\ngrassg : %s" % [gravel, ground, grassg, grassd]
