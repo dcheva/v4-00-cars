@@ -4,7 +4,7 @@ extends CharacterBody2D
 @export var rot_speed = 0.15
 @export var max_steer = 15
 @export var max_speed = 400
-@export var opt_speed = 150
+@export var opt_speed = 140
 @export var min_speed = 20
 @export var breaking = -0.5
 @export var acceleration = 1.2

@@ -31,13 +31,18 @@ func generate_world() -> void:
 	var walls = 0
 	var drawn = 0
 	var noise_val
+	var kk
+	var vpos
+	var margin
+	
+	# Pass 1 - Draw ground tiles
 	for x in range(-half_chunk, half_chunk):
 		for y in range(-half_chunk, half_chunk):
 			
-			var vpos = Vector2i(posmod(x, atlas_size),posmod(y, atlas_size))
-			
 			noise_val = noise.get_noise_2d(x, y)
+			kk = noise_val * 999999
 			noise_array.append(noise_val)
+			vpos = Vector2i(posmod(x, atlas_size),posmod(y, atlas_size))
 			
 			if noise_val < 0:
 				if noise_val < -cente:
@@ -59,23 +64,29 @@ func generate_world() -> void:
 					$TileMapLayer.set_cell(Vector2i(x, y), source_id, grassd_atlas + vpos)
 			
 			
-			# Add statics 
-			var kk = noise_val * 9999
-			if abs(x * 2) < half_chunk and abs(y * 2) < half_chunk: # 64x64 piles on 32x32 TileMap
-				## Add Piles
-				if posmod(kk,  103) > 101: # 1%
-					piles += 1
-					$StaticTileMapLayer.set_cell(Vector2i(x, y), source_id, Vector2i(0, posmod(kk,  16)))
-				## Add Walls
-				# Must overwrite piles
-				elif posmod(kk, 102) > 100: # 1%
-					# Draw lines in 4 directions (SW to N), length from 3 to 6
-					if x > -half_chunk + 6 and y > -half_chunk + 6:
-						walls += 1
-						var wall_length = posmod($loader.get_byte(kk, 2), 5) + 2
-						var wall_direction = posmod($loader.get_byte(kk, 3), 4)
-						drawn += draw_wall(Vector2i(x, y), wall_direction, wall_length)
-			
+	# Pass 2 Add piles 
+	margin = 1
+	for x in range(-half_chunk/2 + margin, half_chunk/2 - margin):
+		for y in range(-half_chunk/2 + margin, half_chunk/2 - margin):
+			noise_val = noise.get_noise_2d(x, y)
+			kk = noise_val * 999999
+			if posmod(kk,  103) > 101: # 1%
+				piles += 1
+				$StaticTileMapLayer.set_cell(Vector2i(x, y), source_id, Vector2i(0, posmod(kk,  16)))
+	
+	# Pass 3 Add walls 
+	margin = 6
+	for x in range(-half_chunk/2 + margin, half_chunk/2 - margin):
+		for y in range(-half_chunk/2 + margin, half_chunk/2 - margin):
+			noise_val = noise.get_noise_2d(x, y)
+			kk = noise_val * 999999
+			if posmod(kk, 102) > 100: # 1%
+				# Draw lines in 4 directions (SW to N), length from 2 to 7
+				var wall_length = posmod($loader.get_byte(kk, 3), 5) + 2
+				var wall_direction = posmod($loader.get_byte(kk, 4), 4)
+				walls += 1
+				drawn += draw_wall(Vector2i(x, y), wall_direction, wall_length)
+
 
 	var s = "gravel : %s\nground : %s\ngrassd : %s\ngrassg : %s" % [gravel, ground, grassg, grassd]
 	print("Min : %s" % noise_array.min())
