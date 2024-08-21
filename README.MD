@@ -32,3 +32,4 @@
 - Implement NPC car with tracks. Now it needts to be refactored!
 ## Separate MD's for Branches: "statics", "physics" and "npc"
 - Continue Avoidence in NPC branch
+- Start implement ray-casting navigation
