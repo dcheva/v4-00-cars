@@ -3,6 +3,7 @@ extends Node
 # @TODO preload settings
 @export var cam_sensitivity = 0.05
 @export var cam_distance = 1
+@export var cam_x_speed = 1.4
 var cam = Vector2()
 
 
@@ -27,7 +28,7 @@ func _on_Player_set_hud():
 	var npc = $NPC.target_vector_length
 	var plr = $NPC.printed
 	# Set camera position @TODO move this code
-	var cam_to = pos + Vector2(int(vel.x * 2 * cam_distance),int(vel.y * cam_distance))
+	var cam_to = pos + Vector2(int(vel.x * cam_x_speed * cam_distance),int(vel.y * cam_distance))
 	cam = lerp(cam, cam_to, cam_sensitivity)
 	$Camera2D.position = cam
 	set_label([pos,rot,vel,speed,steer,cam,trk,npc,plr])

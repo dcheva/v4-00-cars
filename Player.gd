@@ -3,14 +3,16 @@ extends CharacterBody2D
 # @TODO preload settings
 @export var rot_speed = 0.15
 @export var max_steer = 15
-@export var max_speed = 300
-@export var opt_speed = 80
+@export var max_speed_shift = 600
+@export var max_speed_drive = 300
+@export var opt_speed = 120
 @export var min_speed = 20
 @export var breaking = -0.5
 @export var acceleration = 1.2
 @export var collision_k = 4
 @export var track_l_speed = 145
 @export var track_k_speed = 3
+var max_speed = 0
 var steer = 0
 var speed = 0
 
@@ -42,14 +44,18 @@ func get_input():
 	var speed_to = 0
 	var steer_to = steer
 	
-	if Input.is_action_pressed("right_arrow"):
-		steer_to = max_steer
-	if Input.is_action_pressed("left_arrow"):
-		steer_to = -max_steer
+	if Input.is_action_pressed("shift"):
+		max_speed = max_speed_shift
+	else: 
+		max_speed = max_speed_drive
 	if Input.is_action_pressed("up_arrow"):
 		speed_to = max_speed * acceleration
 	if Input.is_action_pressed("down_arrow"):
 		speed_to = max_speed * breaking
+	if Input.is_action_pressed("right_arrow"):
+		steer_to = max_steer
+	if Input.is_action_pressed("left_arrow"):
+		steer_to = -max_steer
 	if Input.is_action_pressed("space"):
 		get_drift()
 		
@@ -73,13 +79,14 @@ func get_physics(speed_to, steer_to):
 
 	# Speed ​​steering
 	if speed > 0:
+		speed = speed - 0.001 * abs(steer) * speed
 		if abs(speed) < opt_speed:
 			steer = steer * ((abs(speed) + opt_speed) / (2 * opt_speed))
 		if abs(speed) > opt_speed:
 			steer = steer * (max_speed - sqrt(abs(speed))) / max_speed
-
+			
 	# Speed limits
-	steer  = clamp(steer, -max_steer, max_steer)
+	steer = clamp(steer, -max_steer, max_steer)
 	speed = clamp(speed, -max_speed/2.0, max_speed)
 
 	# Autobrake
@@ -93,7 +100,6 @@ func get_physics(speed_to, steer_to):
 		var normal = get_last_slide_collision().get_normal()
 		speed = - normal.length() * speed / collision_k
 		position = position + normal * collision_k
-		# @TODO what aboun bounce vector?
 
 	if abs(speed) > min_speed:
 		set_draw_timer.emit()
