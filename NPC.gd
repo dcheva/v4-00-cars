@@ -98,12 +98,12 @@ func get_physics(speed_to, steer_to):
 	if speed > 0:
 		speed = speed - 0.001 * abs(steer) * speed
 		if abs(speed) < opt_speed:
-			steer = steer * ((abs(speed) + opt_speed / 2) / opt_speed)
+			steer = steer * ((abs(speed) + opt_speed) / (2 * opt_speed))
 		if abs(speed) > opt_speed:
 			steer = steer * (max_speed - sqrt(abs(speed))) / max_speed
 
 	# Speed limits
-	steer  = clamp(steer, -max_steer, max_steer)
+	steer = clamp(steer, -max_steer, max_steer)
 	speed = clamp(speed, -max_speed/2.0, max_speed)
 
 	# Autobrake
@@ -122,7 +122,7 @@ func get_physics(speed_to, steer_to):
 		set_draw_timer.emit()
 
 
-func draw_track_timer_formula() -> float:
+func draw_track_timer_formula():
 	if sqrt(abs(speed))!=0:
 		return track_k_speed / sqrt(abs(speed))
 	else:

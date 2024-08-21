@@ -77,14 +77,14 @@ func get_physics(speed_to, steer_to):
 	speed = lerpf(speed, speed_to, 0.01)
 	steer = lerpf(steer, steer_to, 0.1)
 
-	print_debug(max_steer)
 	# Speed ​​steering
 	if speed > 0:
 		speed = speed - 0.001 * abs(steer) * speed
 		if abs(speed) < opt_speed:
-			steer = steer * ((abs(speed) + opt_speed / 2) / opt_speed)
+			steer = steer * ((abs(speed) + opt_speed) / (2 * opt_speed))
 		if abs(speed) > opt_speed:
 			steer = steer * (max_speed - sqrt(abs(speed))) / max_speed
+			
 	# Speed limits
 	steer = clamp(steer, -max_steer, max_steer)
 	speed = clamp(speed, -max_speed/2.0, max_speed)
@@ -100,7 +100,6 @@ func get_physics(speed_to, steer_to):
 		var normal = get_last_slide_collision().get_normal()
 		speed = - normal.length() * speed / collision_k
 		position = position + normal * collision_k
-		# @TODO what aboun bounce vector?
 
 	if abs(speed) > min_speed:
 		set_draw_timer.emit()

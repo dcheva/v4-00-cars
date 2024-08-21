@@ -8,19 +8,6 @@ size = Vector2(42, 58)
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("2")
-rot_speed = null
-max_steer = null
-max_speed_shift = null
-max_speed_drive = null
-opt_speed = null
-min_speed = null
-breaking = null
-acceleration = null
-collision_k = null
-track_l_speed = null
-track_k_speed = null
-Track_S = null
-Track_L = null
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -17)

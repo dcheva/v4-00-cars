@@ -1,7 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://3ujj6oc0alnj"]
+[gd_scene load_steps=9 format=3 uid="uid://3ujj6oc0alnj"]
 
 [ext_resource type="PackedScene" uid="uid://dq83bbgjp2u0q" path="res://Player.tscn" id="1"]
 [ext_resource type="Script" path="res://Main.gd" id="2"]
+[ext_resource type="PackedScene" path="res://Track_S.tscn" id="3_pbd02"]
+[ext_resource type="PackedScene" path="res://Track_L.tscn" id="4_htgqc"]
 [ext_resource type="FontFile" uid="uid://bbptpvwa5bu46" path="res://fonts/Habbo.ttf" id="4_mff2c"]
 [ext_resource type="AudioStream" uid="uid://bq0dt2arhuv7v" path="res://loops/intro.wav" id="6"]
 [ext_resource type="PackedScene" uid="uid://c43engym5lupy" path="res://proc_gen_world.tscn" id="6_t37np"]
@@ -14,6 +16,19 @@ script = ExtResource("2")
 
 [node name="Player" parent="." instance=ExtResource("1")]
 z_index = 500
+rot_speed = 0.15
+max_steer = 15
+max_speed_shift = 600
+max_speed_drive = 300
+opt_speed = 120
+min_speed = 20
+breaking = -0.5
+acceleration = 1.2
+collision_k = 4
+track_l_speed = 145
+track_k_speed = 3
+Track_S = ExtResource("3_pbd02")
+Track_L = ExtResource("4_htgqc")
 
 [node name="NPC" parent="." instance=ExtResource("7_3qrdf")]
 z_index = 500
