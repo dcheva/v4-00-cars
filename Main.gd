@@ -11,6 +11,7 @@ var cam = Vector2()
 func _ready():
 	$Player/DrawTrack.start()
 	$NPC/DrawTrack.start()
+	$Mark.hide()
 
 
 func _process(_delta):

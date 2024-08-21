@@ -31,7 +31,7 @@ var printed = ""
 var printed_distance = ""
 var target_vector_length
 var player_last_seen
-var player_last_dir
+var player_global_transform
 var player_invisible
 var player
 var mark
@@ -83,13 +83,15 @@ func get_rays():
 			printed += "Ray hits %s: %s\n->%s\n" % [text,pos2i,col_obj]
 			# Remember player las seen
 			if i == -PI:
-				player_invisible = false
 				if col_obj == player:
-					player_last_seen = Vector2(player.global_position)
+					player_invisible = false
+					mark.hide()
+					player_last_seen = player.global_position
 					mark.global_position = player_last_seen
-					player_last_dir = Vector2(to_local(player.global_transform.origin).normalized())
+					player_global_transform = player.global_transform
 				else:
 					player_invisible = true
+					mark.show()
 
 func get_input():
 	var speed_to = 0
@@ -102,7 +104,7 @@ func get_input():
 
 	if player_invisible:
 		_player_global_position = player_last_seen
-		_player_target_dir = player_last_dir
+		_player_target_dir = to_local(player_global_transform.origin).normalized()
 	else: 
 		_player_global_position = player.global_position
 		_player_target_dir = to_local(player.global_transform.origin).normalized()
