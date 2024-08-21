@@ -2,6 +2,8 @@ extends CharacterBody2D
 
 # @TODO preload settings
 @export var rot_speed = 0.15
+@export var speed_change = 0.01
+@export var steer_change = 0.1
 @export var max_steer = 15
 @export var max_speed_shift = 600
 @export var max_speed_drive = 300
@@ -12,6 +14,7 @@ extends CharacterBody2D
 @export var collision_k = 4
 @export var track_l_speed = 145
 @export var track_k_speed = 3
+@export var track_k_time = 0.2
 var max_speed = 0
 var steer = 0
 var speed = 0
@@ -45,9 +48,9 @@ func get_input():
 	var steer_to = steer
 	
 	if Input.is_action_pressed("shift"):
-		max_speed = max_speed_shift
+		max_speed = lerpf(max_speed, max_speed_shift, speed_change * 4)
 	else: 
-		max_speed = max_speed_drive
+		max_speed = lerpf(max_speed, max_speed_drive, speed_change * 4)
 	if Input.is_action_pressed("up_arrow"):
 		speed_to = max_speed * acceleration
 	if Input.is_action_pressed("down_arrow"):
@@ -63,8 +66,8 @@ func get_input():
 
 
 func get_drift():
-	speed = lerpf(speed, 0, 0.1)
-	steer = steer * 2
+	speed = lerpf(speed, 0, speed_change * 4)
+	steer = steer * steer_change * 8
 
 
 func get_physics(speed_to, steer_to):
@@ -74,8 +77,8 @@ func get_physics(speed_to, steer_to):
 		steer_to = -steer_to
 
 	# Physics with LERP
-	speed = lerpf(speed, speed_to, 0.01)
-	steer = lerpf(steer, steer_to, 0.1)
+	speed = lerpf(speed, speed_to, speed_change)
+	steer = lerpf(steer, steer_to, steer_change)
 
 	# Speed ​​steering
 	if speed > 0:
@@ -93,7 +96,7 @@ func get_physics(speed_to, steer_to):
 	if abs(speed) < min_speed:
 		steer = 0
 		if speed_to == 0:
-			speed = lerpf(speed, 0, 0.1)
+			speed = lerpf(speed, 0, speed_change)
 
 	# Collisions
 	if get_slide_collision_count() > 0:
@@ -109,7 +112,7 @@ func draw_track_timer_formula():
 	if sqrt(abs(speed))!=0:
 		return track_k_speed / sqrt(abs(speed))
 	else:
-		return 0.2
+		return track_k_time
 
 
 func _on_draw_track_timeout() -> void:
