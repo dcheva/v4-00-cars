@@ -5,3 +5,4 @@
 - AI Start 
 - AI tested
 - Start ¶Ray-casting
+- Something wrong with NPC to Player direction if player_invisible
