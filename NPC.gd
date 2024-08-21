@@ -14,6 +14,7 @@ extends CharacterBody2D
 @export var track_k_speed = 3
 @export var track_k_time = 0.2
 @export var ray_length = 1000
+@export var ray_avoid = 250
 var steer = 0
 var speed = 0
 
@@ -35,6 +36,7 @@ var player_global_transform
 var player_invisible
 var player
 var mark
+var avoid = {fwd = 999, left = 999, right = 999}
 
 
 func _ready():
@@ -61,7 +63,8 @@ func get_rays():
 	var query: PhysicsRayQueryParameters2D
 	var result: Dictionary
 	# trace rays
-	var rays_rotated = [-PI, 0, -PI/10, PI/10]
+	var rays_rotated = [-PI, 0, -PI/9, -PI/7, -PI/5, PI/9, PI/7, PI/5]
+	avoid = {fwd = 999, left = 999, right = 999}
 	printed = ""
 	for i in rays_rotated:
 		if i == -PI:
@@ -74,13 +77,23 @@ func get_rays():
 		query.exclude = [self]
 		result = space_state.intersect_ray(query)
 		if result:
-			var pos2i = Vector2i(result.get("position"))
+			var pos2i = result.get("position")
+			var pos2v = global_position - pos2i
+			var pos2l = int(pos2v.length())
 			var col_obj = result.get("collider")
-			if i == -PI: text = "PLAYER"
-			if i == 0: text = "forwd"
-			if i == -PI/10: text = "left"
-			if i == PI/10: text = "right"
-			printed += "Ray hits %s: %s\n->%s\n" % [text,pos2i,col_obj]
+			if i <= -PI/9:
+				text = "<<-"
+				if col_obj != player:
+					avoid.left = min(avoid.left, pos2l)
+			if i >= PI/9:
+				text = "->>"
+				if col_obj != player:
+					avoid.right = min(avoid.right, pos2l)
+			if i == 0    : 
+				text = "^|^"
+				if col_obj != player:
+					avoid.fwd = pos2l
+			#printed += "Ray hits %s: %s\n->%s\n[!]: %s\n" % [text,Vector2i(pos2i),col_obj,avoid]
 			# Remember player las seen
 			if i == -PI:
 				if col_obj == player:
@@ -114,12 +127,14 @@ func get_input():
 	target_vector_length = int(target_vector.length())
 	
 	# \\ Start AI inputs
-	if target_direction.y < 0:
+	if target_direction.y < 0 and (avoid.fwd > ray_avoid):
 		t += "ahead, "
 		if target_vector.length() > 200:
 			speed_to = max_speed * acceleration
 		elif target_vector.length() < 100:
 			get_drift()
+	elif target_direction.y < 0 and (avoid.fwd < ray_avoid):
+			speed_to = max_speed * breaking
 	elif target_direction.y > 0:
 		t += "behind, "
 		if target_vector.length() > 400:
@@ -128,12 +143,13 @@ func get_input():
 			speed_to = max_speed * breaking
 		elif target_vector.length() < 100:
 			get_drift()
-	if target_direction.x > 0.1:
+	if target_direction.x > 0.1 or (avoid.left < avoid.right and avoid.left < ray_avoid):
 		t += "in the right, " 
 		steer_to = max_steer
-	elif target_direction.x < -0.1:
+	elif target_direction.x < -0.1 or (avoid.right < avoid.left and avoid.right < ray_avoid):
 		t += "in the left, "
 		steer_to = -max_steer
+	printed += "%s\n" % avoid
 	# // End AI inputs
 	printed_distance = "NPC to Player: " + t.trim_suffix(", ")
 	get_physics(speed_to, steer_to)
@@ -141,7 +157,7 @@ func get_input():
 
 func get_drift():
 	speed = lerpf(speed, 0, speed_change * 4)
-	steer = steer * steer_change * 16
+	#steer = steer * steer_change * 16
 
 
 func get_physics(speed_to, steer_to):
