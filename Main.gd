@@ -3,7 +3,7 @@ extends Node
 # @TODO preload settings
 @export var cam_sensitivity = 0.05
 @export var cam_distance = 1
-@export var cam_x_speed = 1.4
+@export var cam_x_speed = 1.2
 var cam = Vector2()
 
 

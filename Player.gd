@@ -74,17 +74,17 @@ func get_physics(speed_to, steer_to):
 		steer_to = -steer_to
 
 	# Physics with LERP
-	steer = lerpf(steer, steer_to, 0.1)
 	speed = lerpf(speed, speed_to, 0.01)
+	steer = lerpf(steer, steer_to, 0.1)
 
+	print_debug(max_steer)
 	# Speed ​​steering
 	if speed > 0:
+		speed = speed - 0.001 * abs(steer) * speed
 		if abs(speed) < opt_speed:
-			steer = steer * ((abs(speed) + opt_speed) / (2 * opt_speed))
+			steer = steer * ((abs(speed) + opt_speed / 2) / opt_speed)
 		if abs(speed) > opt_speed:
 			steer = steer * (max_speed - sqrt(abs(speed))) / max_speed
-			speed = speed - 0.001 * abs(steer) * speed
-
 	# Speed limits
 	steer = clamp(steer, -max_steer, max_steer)
 	speed = clamp(speed, -max_speed/2.0, max_speed)

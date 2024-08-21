@@ -96,8 +96,9 @@ func get_physics(speed_to, steer_to):
 
 	# Speed ​​steering
 	if speed > 0:
+		speed = speed - 0.001 * abs(steer) * speed
 		if abs(speed) < opt_speed:
-			steer = steer * ((abs(speed) + opt_speed) / (2 * opt_speed))
+			steer = steer * ((abs(speed) + opt_speed / 2) / opt_speed)
 		if abs(speed) > opt_speed:
 			steer = steer * (max_speed - sqrt(abs(speed))) / max_speed
 
