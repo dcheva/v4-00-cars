@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://proc_gen_world.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://dfpghkyb58hew" path="res://noise_height.tres" id="2_3vmfj"]
 [ext_resource type="PackedScene" uid="uid://bw3pu5nictu11" path="res://tile_map_layer.tscn" id="3_flt1i"]
-[ext_resource type="PackedScene" uid="uid://b3ovwvmuotx6e" path="res://loader.tscn" id="3_qker1"]
+[ext_resource type="PackedScene" uid="uid://b3ovwvmuotx6e" path="res://g.tscn" id="3_qker1"]
 [ext_resource type="Texture2D" uid="uid://f83wkyvfxfie" path="res://art/statics/piles.png" id="4_uv42d"]
 [ext_resource type="Texture2D" uid="uid://lj4r86u80pko" path="res://art/statics/wall-0.png" id="5_eosro"]
 

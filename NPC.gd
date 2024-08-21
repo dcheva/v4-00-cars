@@ -13,7 +13,7 @@ extends CharacterBody2D
 @export var collision_k = 4
 @export var track_k_speed = 3
 @export var track_k_time = 0.2
-@export var ray_length = 500
+@export var ray_length = 1000
 var steer = 0
 var speed = 0
 
@@ -26,17 +26,26 @@ signal set_draw_timer
 @export var Track_S = preload("res://Track_S1.tscn")
 @export var Track_L = preload("res://Track_L1.tscn")
 
+var text = ""
 var printed = ""
 var printed_ = ""
-var target_vector_length = 0
+var printed_distance = ""
+var target_vector_length
+var player_last_seen
+var player_last_dir
+var player_invisible
+var player
+var mark
+
 
 func _ready():
-	pass
+	player = get_tree().get_root().get_node("Main/Player")
+	mark = get_tree().get_root().get_node("Main/Mark")
 
 
 func _physics_process(delta):
-	get_rays(delta)
-	get_input(delta)
+	get_rays()
+	get_input()
 	rotation += steer * rot_speed * delta
 	velocity = Vector2(0, -speed).rotated(rotation)
 	set_velocity(velocity)
@@ -44,42 +53,79 @@ func _physics_process(delta):
 	set_hud.emit()
 
 
-func get_rays(delta):
-# https://docs.godotengine.org/en/stable/tutorials/physics/ray-casting.html#raycast-query
+func get_rays():
+	# tutorials/physics/ray-casting.html#raycast-query
 	var space_state = get_world_2d().direct_space_state
 	# use global coordinates, not local to node
 	var ray_from = global_transform.origin
-	var trace_to = ray_from + velocity.normalized() * ray_length
-	var query = PhysicsRayQueryParameters2D.create(ray_from, trace_to)
-	var result = space_state.intersect_ray(query)
-	if result:
-		printed = "Hit at point: %s" % result.get("position")
+	var trace_to: Vector2
+	var query: PhysicsRayQueryParameters2D
+	var result: Dictionary
+	var printed = ""
+	# trace rays
+	var rays_rotated = [-PI, 0, -PI/10, PI/10]
+	for i in rays_rotated:
+		if i == -PI:
+			trace_to = player.global_position
+		else: 
+			trace_to = ray_from + velocity.normalized() * ray_length
+			trace_to = trace_to.rotated(i)
+		query = PhysicsRayQueryParameters2D.create(ray_from, trace_to)
+		# tutorials/physics/ray-casting.html#collision-exceptions
+		query.exclude = [self]
+		result = space_state.intersect_ray(query)
+		if result:
+			var pos2i = Vector2i(result.get("position"))
+			var col_obj = result.get("collider")
+			if i == -PI: text = "PLAYER"
+			if i == 0: text = "forwd"
+			if i == -PI/10: text = "left"
+			if i == PI/10: text = "right"
+			printed += "Ray hits %s: %s\n->%s\n" % [text,pos2i,col_obj]
+			# Remember player las seen
+			if i == -PI:
+				player_invisible = false
+				if col_obj == player:
+					player_last_seen = player.global_position
+					mark.global_position = player_last_seen
+					player_last_dir = to_local(player.global_transform.origin).normalized()
+				else:
+					player_invisible = true
 
-
-func get_input(delta):
+func get_input():
 	var speed_to = 0
 	var steer_to = steer
+	var target_vector
+	var target_direction
+	var _player_global_position
+	var _player_target_dir
+	var t = ""
 
-	var player = get_tree().get_root().get_node("Main/Player")
-	var target_vector = Vector2(position - player.position)
-	target_vector_length = int(target_vector.length()/10)
-	var target_direction = to_local(player.global_transform.origin).normalized() #direction to player
-
+	if player_invisible:
+		_player_global_position = player_last_seen
+		_player_target_dir = player_last_dir
+	else: 
+		_player_global_position = player.global_position
+		_player_target_dir = to_local(player.global_transform.origin).normalized()
+		
+	target_vector = Vector2(global_position - _player_global_position)
+	target_direction = _player_target_dir #direction to player
+	target_vector_length = int(target_vector.length())
+	
 	# \\ Start AI inputs
-	var t = "%s m. " % target_vector_length
 	if target_direction.y < 0:
 		t += "ahead, "
-		if target_vector.length() > 200:
+		if target_vector.length() > 200 or player_invisible:
 			speed_to = max_speed * acceleration
-		elif target_vector.length() < 100:
+		elif target_vector.length() < 100 and not player_invisible:
 			get_drift()
 	elif target_direction.y > 0:
 		t += "behind, "
-		if target_vector.length() > 400:
+		if target_vector.length() > 400 and not player_invisible:
 			speed_to = max_speed * acceleration
-		elif target_vector.length() > 200:
+		elif target_vector.length() > 200 or player_invisible:
 			speed_to = max_speed * breaking
-		elif target_vector.length() < 100:
+		elif target_vector.length() < 100 and not player_invisible:
 			get_drift()
 	if target_direction.x > 0.1:
 		t += "in the right, " 
@@ -91,7 +137,7 @@ func get_input(delta):
 	t = t.trim_suffix(", ")
 	if printed_ != t:
 		printed_ = t
-		# printed = "NPC to Player: " + t
+		printed_distance = "NPC to Player: " + t
 	get_physics(speed_to, steer_to)
 
 
