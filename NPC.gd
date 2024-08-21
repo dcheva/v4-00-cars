@@ -28,7 +28,6 @@ signal set_draw_timer
 
 var text = ""
 var printed = ""
-var printed_ = ""
 var printed_distance = ""
 var target_vector_length
 var player_last_seen
@@ -61,9 +60,9 @@ func get_rays():
 	var trace_to: Vector2
 	var query: PhysicsRayQueryParameters2D
 	var result: Dictionary
-	var printed = ""
 	# trace rays
 	var rays_rotated = [-PI, 0, -PI/10, PI/10]
+	printed = ""
 	for i in rays_rotated:
 		if i == -PI:
 			trace_to = player.global_position
@@ -86,9 +85,9 @@ func get_rays():
 			if i == -PI:
 				player_invisible = false
 				if col_obj == player:
-					player_last_seen = player.global_position
+					player_last_seen = Vector2(player.global_position)
 					mark.global_position = player_last_seen
-					player_last_dir = to_local(player.global_transform.origin).normalized()
+					player_last_dir = Vector2(to_local(player.global_transform.origin).normalized())
 				else:
 					player_invisible = true
 
@@ -115,17 +114,17 @@ func get_input():
 	# \\ Start AI inputs
 	if target_direction.y < 0:
 		t += "ahead, "
-		if target_vector.length() > 200 or player_invisible:
+		if target_vector.length() > 200:
 			speed_to = max_speed * acceleration
-		elif target_vector.length() < 100 and not player_invisible:
+		elif target_vector.length() < 100:
 			get_drift()
 	elif target_direction.y > 0:
 		t += "behind, "
-		if target_vector.length() > 400 and not player_invisible:
+		if target_vector.length() > 400:
 			speed_to = max_speed * acceleration
-		elif target_vector.length() > 200 or player_invisible:
+		elif target_vector.length() > 200:
 			speed_to = max_speed * breaking
-		elif target_vector.length() < 100 and not player_invisible:
+		elif target_vector.length() < 100:
 			get_drift()
 	if target_direction.x > 0.1:
 		t += "in the right, " 
@@ -134,10 +133,7 @@ func get_input():
 		t += "in the left, "
 		steer_to = -max_steer
 	# // End AI inputs
-	t = t.trim_suffix(", ")
-	if printed_ != t:
-		printed_ = t
-		printed_distance = "NPC to Player: " + t
+	printed_distance = "NPC to Player: " + t.trim_suffix(", ")
 	get_physics(speed_to, steer_to)
 
 
