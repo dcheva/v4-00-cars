@@ -38,7 +38,6 @@ func _physics_process(delta):
 	velocity = Vector2(0, -speed).rotated(rotation)
 	set_velocity(velocity)
 	move_and_slide()
-	velocity = velocity
 	set_hud.emit()
 
 

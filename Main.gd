@@ -1,4 +1,4 @@
-extends Node
+extends Node2D
 
 # @TODO preload settings
 @export var cam_sensitivity = 0.05
@@ -43,8 +43,8 @@ func set_label(args):
 	l.text += "Velocity : %s, %s\n" % [int(args[2][0]), int(args[2][1])]
 	l.text += "Camera   : %s, %s\n" % [int(args[5][0]), int(args[5][1])]
 	l.text += "Tracks   : %s\n" % args[6]
-	#l.text += "NPC dist : %s\n" % args[7]
-	l.text += "Player   : %s\n" % args[8]
+	l.text += "NPC dist : %s\n" % args[7]
+	l.text += "%s\n" % args[8]
 
 		
 func _set_draw_timer(author: CharacterBody2D):

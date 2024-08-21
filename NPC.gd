@@ -13,6 +13,7 @@ extends CharacterBody2D
 @export var collision_k = 4
 @export var track_k_speed = 3
 @export var track_k_time = 0.2
+@export var ray_length = 500
 var steer = 0
 var speed = 0
 
@@ -26,6 +27,7 @@ signal set_draw_timer
 @export var Track_L = preload("res://Track_L1.tscn")
 
 var printed = ""
+var printed_ = ""
 var target_vector_length = 0
 
 func _ready():
@@ -33,16 +35,28 @@ func _ready():
 
 
 func _physics_process(delta):
-	get_input()
+	get_rays(delta)
+	get_input(delta)
 	rotation += steer * rot_speed * delta
 	velocity = Vector2(0, -speed).rotated(rotation)
 	set_velocity(velocity)
 	move_and_slide()
-	velocity = velocity
 	set_hud.emit()
 
 
-func get_input():
+func get_rays(delta):
+# https://docs.godotengine.org/en/stable/tutorials/physics/ray-casting.html#raycast-query
+	var space_state = get_world_2d().direct_space_state
+	# use global coordinates, not local to node
+	var ray_from = global_transform.origin
+	var trace_to = ray_from + velocity.normalized() * ray_length
+	var query = PhysicsRayQueryParameters2D.create(ray_from, trace_to)
+	var result = space_state.intersect_ray(query)
+	if result:
+		printed = "Hit at point: %s" % result.get("position")
+
+
+func get_input(delta):
 	var speed_to = 0
 	var steer_to = steer
 
@@ -75,9 +89,9 @@ func get_input():
 		steer_to = -max_steer
 	# // End AI inputs
 	t = t.trim_suffix(", ")
-	if printed != t:
-		printed = t
-		
+	if printed_ != t:
+		printed_ = t
+		# printed = "NPC to Player: " + t
 	get_physics(speed_to, steer_to)
 
 
