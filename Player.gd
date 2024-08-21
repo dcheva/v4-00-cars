@@ -12,7 +12,6 @@ extends CharacterBody2D
 @export var breaking = -0.5
 @export var acceleration = 1.2
 @export var collision_k = 4
-@export var track_l_speed = 145
 @export var track_k_speed = 3
 @export var track_k_time = 0.2
 var max_speed = 0
@@ -67,7 +66,7 @@ func get_input():
 
 func get_drift():
 	speed = lerpf(speed, 0, speed_change * 4)
-	steer = steer * steer_change * 8
+	steer = steer * steer_change * 16
 
 
 func get_physics(speed_to, steer_to):
