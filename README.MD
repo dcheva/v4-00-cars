@@ -36,3 +36,5 @@
 - AI tested
 - Simple Collisions physics tested
 - Begin Statics and Avoidance logic
+- Implement draw_wall in one direction with check
+- Shift Driving and some physsics and camera fixes
