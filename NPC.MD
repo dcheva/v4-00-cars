@@ -7,4 +7,7 @@
 - Start ¶Ray-casting
 - Something wrong with NPC to Player direction if player_invisible
 - Fixed if player_invisible via player.global_transform
+- Continue Avoidence in NPC branch
+- Start implement ray-casting navigation
 - Modified RayTrace needs FSM in NPC get_input
+### STACKED NPC with raytrace needs FSM 

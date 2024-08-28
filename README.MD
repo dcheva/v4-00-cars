@@ -31,5 +31,5 @@
 - It works! Signals with ExtraCallArgument arg:string Main/NodeName->get_tree().get_root().get_node(arg)
 - Implement NPC car with tracks. Now it needts to be refactored!
 ## Separate MD's for Branches: "statics", "physics" and "npc"
-- Continue Avoidence in NPC branch
-- Start implement ray-casting navigation
+## Start refactor
+- Implement preload functions via g = $loader
