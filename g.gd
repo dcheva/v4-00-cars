@@ -15,5 +15,20 @@ func sum(arr:Array):
 	return result
 	
 	
-func med(arr:Array):
+func med(arr:Array) -> float:
 	return sum(arr)/arr.size()
+
+
+func div(a, b) -> float:
+	a = float(a)
+	b = float(b)
+	if b!=0: return a/b
+	else: return 0
+	
+	
+func half_chunk(chunk_size: int) -> int:
+	return int(float(chunk_size)/2)
+	
+	
+func quarter_chunk(chunk_size: int) -> int:
+	return int(float(chunk_size)/4)

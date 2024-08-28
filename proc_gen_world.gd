@@ -1,12 +1,13 @@
 extends Node2D
 
-# @TODO preload settings
+var g
+
 @export var chunk_size: int = 512
-var half_chunk: int = 256 # chunk_size / 2
+var half_chunk: int
+var quarter_chunk: int
 
 @export var noise_height_texture: NoiseTexture2D
 var noise: Noise
-
 
 var gravel: int
 var ground: int
@@ -23,6 +24,10 @@ var grassd_atlas = Vector2i(atlas_size * 2, 0)
 var grassg_atlas = Vector2i(atlas_size * 3, 0)
 
 func _ready() -> void:
+	g = $loader
+	half_chunk = g.half_chunk(chunk_size)
+	quarter_chunk = g.quarter_chunk(chunk_size)
+	
 	noise = noise_height_texture.noise
 	generate_world()
 	
@@ -66,8 +71,8 @@ func generate_world() -> void:
 			
 	# Pass 2 Add piles 
 	margin = 1
-	for x in range(-half_chunk/2 + margin, half_chunk/2 - margin):
-		for y in range(-half_chunk/2 + margin, half_chunk/2 - margin):
+	for x in range(-quarter_chunk + margin, quarter_chunk - margin):
+		for y in range(-quarter_chunk + margin, quarter_chunk - margin):
 			noise_val = noise.get_noise_2d(x, y)
 			kk = noise_val * 999999
 			if posmod(kk,  103) > 101: # 1%
@@ -76,14 +81,14 @@ func generate_world() -> void:
 	
 	# Pass 3 Add walls 
 	margin = 6
-	for x in range(-half_chunk/2 + margin, half_chunk/2 - margin):
-		for y in range(-half_chunk/2 + margin, half_chunk/2 - margin):
+	for x in range(-quarter_chunk + margin, quarter_chunk - margin):
+		for y in range(-quarter_chunk + margin, quarter_chunk - margin):
 			noise_val = noise.get_noise_2d(x, y)
 			kk = noise_val * 999999
 			if posmod(kk, 102) > 100: # 1%
 				# Draw lines in 4 directions (SW to N), length from 2 to 7
-				var wall_length = posmod($loader.get_byte(kk, 3), 5) + 2
-				var wall_direction = posmod($loader.get_byte(kk, 4), 4)
+				var wall_length = posmod(g.get_byte(kk, 3), 5) + 2
+				var wall_direction = posmod(g.get_byte(kk, 4), 4)
 				walls += 1
 				drawn += draw_wall(Vector2i(x, y), wall_direction, wall_length)
 
