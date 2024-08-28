@@ -11,3 +11,4 @@
 - Start implement ray-casting navigation
 - Modified RayTrace needs FSM in NPC get_input
 ### STACKED NPC with raytrace needs FSM 
+- Okama barber removed all raycast and avoidance due to sophisticated
