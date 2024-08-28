@@ -33,3 +33,4 @@
 ## Separate MD's for Branches: "statics", "physics" and "npc"
 ## Start refactor
 - Implement preload functions via g = $loader
+- Merge refactored Okama barber into initial
