@@ -7,11 +7,9 @@ extends Node2D
 var cam = Vector2()
 
 
-
 func _ready():
 	$Player/DrawTrack.start()
 	$NPC/DrawTrack.start()
-	$Mark.hide()
 
 
 func _process(_delta):
@@ -47,7 +45,7 @@ func set_label(args):
 	l.text += "NPC dist : %s\n" % args[7]
 	l.text += "%s\n" % args[8]
 
-		
+
 func _set_draw_timer(author: CharacterBody2D):
 	var DrawTime = author.draw_track_timer_formula()
 	var DrawTrack = author.find_child("DrawTrack")

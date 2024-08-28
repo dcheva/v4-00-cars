@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://3ujj6oc0alnj"]
+[gd_scene load_steps=7 format=3 uid="uid://3ujj6oc0alnj"]
 
 [ext_resource type="PackedScene" uid="uid://dq83bbgjp2u0q" path="res://Player.tscn" id="1"]
 [ext_resource type="Script" path="res://Main.gd" id="2"]
@@ -6,7 +6,6 @@
 [ext_resource type="AudioStream" uid="uid://bq0dt2arhuv7v" path="res://loops/intro.wav" id="6"]
 [ext_resource type="PackedScene" uid="uid://c43engym5lupy" path="res://proc_gen_world.tscn" id="6_t37np"]
 [ext_resource type="PackedScene" uid="uid://dclwvh1bc0tvq" path="res://NPC.tscn" id="7_3qrdf"]
-[ext_resource type="PackedScene" uid="uid://bjflkrd554110" path="res://mark.tscn" id="7_hq63i"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("2")
@@ -51,8 +50,6 @@ process_thread_messages = 0
 editor_description = "
 Process Priority 2 (less)
 Thread Group Order 2 (less)"
-
-[node name="Mark" parent="." instance=ExtResource("7_hq63i")]
 
 [connection signal="set_draw_timer" from="Player" to="." method="_on_Player_set_draw_timer"]
 [connection signal="set_hud" from="Player" to="." method="_on_Player_set_hud"]

@@ -28,7 +28,12 @@ func div(a, b) -> float:
 	
 func half_chunk(chunk_size: int) -> int:
 	return int(float(chunk_size)/2)
-	
-	
+
+
 func quarter_chunk(chunk_size: int) -> int:
 	return int(float(chunk_size)/4)
+	
+
+func positive(i) -> int:
+	if i < 0: return -1
+	else: return 1

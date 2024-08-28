@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://dclwvh1bc0tvq"]
+[gd_scene load_steps=5 format=3 uid="uid://dclwvh1bc0tvq"]
 
 [ext_resource type="Script" path="res://NPC.gd" id="1_1ensh"]
 [ext_resource type="Texture2D" uid="uid://ri1bg7v55yno" path="res://art/car-01.png" id="2_geuje"]
+[ext_resource type="PackedScene" uid="uid://b3ovwvmuotx6e" path="res://g.tscn" id="3_o38id"]
 
 [sub_resource type="RectangleShape2D" id="1"]
 size = Vector2(28, 61)
@@ -20,5 +21,7 @@ shape = SubResource("1")
 [node name="DrawTrack" type="Timer" parent="."]
 wait_time = 10.0
 one_shot = true
+
+[node name="loader" parent="." instance=ExtResource("3_o38id")]
 
 [connection signal="timeout" from="DrawTrack" to="." method="_on_draw_track_timeout"]

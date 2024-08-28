@@ -33,19 +33,15 @@ var printed_distance = ""
 var target_vector_length
 var player_last_seen
 var player_global_transform
-var player_invisible
 var player
-var mark
-var avoid = {fwd = 999, left = 999, right = 999}
 
 
 func _ready():
+	# AAA!!! @TODO loose coupling!!!
 	player = get_tree().get_root().get_node("Main/Player")
-	mark = get_tree().get_root().get_node("Main/Mark")
 
 
 func _physics_process(delta):
-	get_rays()
 	get_input()
 	rotation += steer * rot_speed * delta
 	velocity = Vector2(0, -speed).rotated(rotation)
@@ -53,58 +49,6 @@ func _physics_process(delta):
 	move_and_slide()
 	set_hud.emit()
 
-
-func get_rays():
-	# tutorials/physics/ray-casting.html#raycast-query
-	var space_state = get_world_2d().direct_space_state
-	# use global coordinates, not local to node
-	var ray_from = global_transform.origin
-	var trace_to: Vector2
-	var query: PhysicsRayQueryParameters2D
-	var result: Dictionary
-	# trace rays
-	var rays_rotated = [-PI, 0, -PI/9, -PI/7, -PI/5, PI/9, PI/7, PI/5]
-	avoid = {fwd = 999, left = 999, right = 999}
-	printed = ""
-	for i in rays_rotated:
-		if i == -PI:
-			trace_to = player.global_position
-		else: 
-			trace_to = ray_from + velocity.normalized() * ray_length
-			trace_to = trace_to.rotated(i)
-		query = PhysicsRayQueryParameters2D.create(ray_from, trace_to)
-		# tutorials/physics/ray-casting.html#collision-exceptions
-		query.exclude = [self]
-		result = space_state.intersect_ray(query)
-		if result:
-			var pos2i = result.get("position")
-			var pos2v = global_position - pos2i
-			var pos2l = int(pos2v.length())
-			var col_obj = result.get("collider")
-			if i <= -PI/9:
-				text = "<<-"
-				if col_obj != player:
-					avoid.left = min(avoid.left, pos2l)
-			if i >= PI/9:
-				text = "->>"
-				if col_obj != player:
-					avoid.right = min(avoid.right, pos2l)
-			if i == 0    : 
-				text = "^|^"
-				if col_obj != player:
-					avoid.fwd = pos2l
-			#printed += "Ray hits %s: %s\n->%s\n[!]: %s\n" % [text,Vector2i(pos2i),col_obj,avoid]
-			# Remember player las seen
-			if i == -PI:
-				if col_obj == player:
-					player_invisible = false
-					mark.hide()
-					player_last_seen = player.global_position
-					mark.global_position = player_last_seen
-					player_global_transform = player.global_transform
-				else:
-					player_invisible = true
-					mark.show()
 
 func get_input():
 	var speed_to = 0
@@ -115,25 +59,21 @@ func get_input():
 	var _player_target_dir
 	var t = ""
 
-	if player_invisible:
-		_player_global_position = player_last_seen
-		_player_target_dir = to_local(player_global_transform.origin).normalized()
-	else: 
-		_player_global_position = player.global_position
-		_player_target_dir = to_local(player.global_transform.origin).normalized()
+	_player_global_position = player.global_position
+	_player_target_dir = to_local(player.global_transform.origin).normalized()
 		
 	target_vector = Vector2(global_position - _player_global_position)
 	target_direction = _player_target_dir #direction to player
 	target_vector_length = int(target_vector.length())
 	
 	# \\ Start AI inputs
-	if target_direction.y < 0 and (avoid.fwd > ray_avoid):
+	if target_direction.y < 0:
 		t += "ahead, "
 		if target_vector.length() > 200:
 			speed_to = max_speed * acceleration
 		elif target_vector.length() < 100:
 			get_drift()
-	elif target_direction.y < 0 and (avoid.fwd < ray_avoid):
+	elif target_direction.y < 0:
 			speed_to = max_speed * breaking
 	elif target_direction.y > 0:
 		t += "behind, "
@@ -143,13 +83,12 @@ func get_input():
 			speed_to = max_speed * breaking
 		elif target_vector.length() < 100:
 			get_drift()
-	if target_direction.x > 0.1 or (avoid.left < avoid.right and avoid.left < ray_avoid):
+	if target_direction.x > 0.1:
 		t += "in the right, " 
 		steer_to = max_steer
-	elif target_direction.x < -0.1 or (avoid.right < avoid.left and avoid.right < ray_avoid):
+	elif target_direction.x < -0.1:
 		t += "in the left, "
 		steer_to = -max_steer
-	printed += "%s\n" % avoid
 	# // End AI inputs
 	printed_distance = "NPC to Player: " + t.trim_suffix(", ")
 	get_physics(speed_to, steer_to)
@@ -157,7 +96,7 @@ func get_input():
 
 func get_drift():
 	speed = lerpf(speed, 0, speed_change * 4)
-	#steer = steer * steer_change * 16
+	steer = steer * steer_change * 4
 
 
 func get_physics(speed_to, steer_to):
