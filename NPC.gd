@@ -59,15 +59,17 @@ func get_input():
 	var steer_to = steer
 	var target_vector
 	var target_direction
-	var _player_global_position
-	var _player_target_dir
 	var t = ""
 
+	var target_global_position = player.global_position
 	# Set target to Astar point
-	_player_global_position = player.global_position
-	_player_target_dir = to_local(player.global_transform.origin).normalized()
-	target_vector = Vector2(global_position - _player_global_position)
-	target_direction = _player_target_dir #direction to player
+	for next_position in tilemap_path:
+		# raycast to position and find farest
+		pass
+		
+	target_direction = to_local(player.global_transform.origin).normalized()
+	target_vector = Vector2(global_position - target_global_position)
+	target_direction = target_direction #direction to player
 	target_vector_length = int(target_vector.length())
 	
 	# \\ Start AI inputs

@@ -4,6 +4,7 @@ extends Node2D
 @onready var npc_driver := $NPC
 @onready var player_driver_timer := $Player/DrawTrack
 @onready var npc_driver_timer := $NPC/DrawTrack
+@onready var proc_gen_world = $proc_gen_world
 
 # @TODO preload settings
 @export var cam_sensitivity = 0.05
@@ -14,6 +15,7 @@ var cam := Vector2()
 
 func _ready():
 	npc_driver.player = player_driver
+	npc_driver.tilemap_path = proc_gen_world.tilemap_path
 	start_drivers()
 	
 
