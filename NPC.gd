@@ -1,5 +1,10 @@
 extends CharacterBody2D
 
+# Astar
+var tilemap_path := []
+
+@onready var g = $loader
+
 # @TODO preload settings
 @export var rot_speed = 0.15
 @export var max_steer = 15
@@ -34,6 +39,7 @@ var target_vector_length
 var player_last_seen
 var player_global_transform
 var player
+
 
 
 func _ready():

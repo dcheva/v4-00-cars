@@ -1,31 +1,40 @@
 extends Node2D
 
+@onready var player_driver := $Player
+@onready var npc_driver := $NPC
+@onready var player_driver_timer := $Player/DrawTrack
+@onready var npc_driver_timer := $NPC/DrawTrack
+
 # @TODO preload settings
 @export var cam_sensitivity = 0.05
 @export var cam_distance = 1
 @export var cam_x_speed = 1.4
-var cam = Vector2()
+var cam := Vector2()
 
 
 func _ready():
-	$Player/DrawTrack.start()
-	$NPC/DrawTrack.start()
-
+	start_drivers()
+	
 
 func _process(_delta):
 	if Input.is_action_just_pressed("alt_enter"):
 		get_window().mode = Window.MODE_EXCLUSIVE_FULLSCREEN if (!((get_window().mode == Window.MODE_EXCLUSIVE_FULLSCREEN) or (get_window().mode == Window.MODE_FULLSCREEN))  ) else Window.MODE_WINDOWED
 
 
+func start_drivers() -> void:
+	player_driver_timer.start()
+	npc_driver_timer.start()
+
+
 func _on_Player_set_hud():
-	var pos = $Player.position
-	var rot = $Player.rotation_degrees
-	var vel = $Player.velocity
-	var speed = $Player.speed
-	var steer = $Player.steer
+	var pos = player_driver.position
+	var rot = player_driver.rotation_degrees
+	var vel = player_driver.velocity
+	var speed = player_driver.speed
+	var steer = player_driver.steer
 	var trk = get_tree().get_nodes_in_group("track").size()
-	var npc = $NPC.target_vector_length
-	var plr = $NPC.printed_distance + "\n" + $NPC.printed + "\n"
+	var npc = npc_driver.target_vector_length
+	var plr = npc_driver.printed_distance + "\n" + npc_driver.printed + "\n"
 	# Set camera position @TODO move this code
 	var cam_to = pos + Vector2(int(vel.x * cam_x_speed * cam_distance),int(vel.y * cam_distance))
 	cam = lerp(cam, cam_to, cam_sensitivity)
@@ -71,8 +80,8 @@ func _on_draw_track_timeout(arg: String) -> void:
 
 
 func _on_npc_set_draw_timer() -> void:
-	_set_draw_timer($NPC)
+	_set_draw_timer(npc_driver)
 
 
 func _on_Player_set_draw_timer() -> void:
-	_set_draw_timer($Player)
+	_set_draw_timer(player_driver)

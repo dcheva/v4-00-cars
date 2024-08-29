@@ -1,6 +1,13 @@
 extends Node2D
 
-var g
+@onready var g = $loader
+
+# Astar grid
+@onready var astar_grid = AStarGrid2D.new()
+@onready var tilemap_layer: TileMapLayer = $StaticTileMapLayer
+@onready var tilemap_debug_path: Line2D = $DebugLine2D
+var static_tile_size := 64
+var tilemap_path := []
 
 @export var chunk_size: int = 512
 var half_chunk: int
@@ -8,10 +15,6 @@ var quarter_chunk: int
 
 @export var noise_height_texture: NoiseTexture2D
 var noise: Noise
-
-# Astar grid
-var astar_grid = AStarGrid2D.new()
-var path = []
 
 var gravel: int
 var ground: int
@@ -28,10 +31,8 @@ var grassd_atlas = Vector2i(atlas_size * 2, 0)
 var grassg_atlas = Vector2i(atlas_size * 3, 0)
 
 func _ready() -> void:
-	g = $loader
 	half_chunk = g.half_chunk(chunk_size)
 	quarter_chunk = g.quarter_chunk(chunk_size)
-	
 	noise = noise_height_texture.noise
 	generate_world()
 	
@@ -101,8 +102,6 @@ func generate_world() -> void:
 	
 	# Pass 4 Add Astar
 	# Set up parameters, then update the grid.
-	var tilemap_layer: TileMapLayer = $StaticTileMapLayer
-	var static_tile_size = 64
 	astar_grid.region = tilemap_layer.get_used_rect()
 	astar_grid.cell_size = Vector2(static_tile_size, static_tile_size)
 	astar_grid.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_ONLY_IF_NO_OBSTACLES
@@ -112,8 +111,8 @@ func generate_world() -> void:
 	for tile in tilemap_layer.get_used_cells():
 		astar_grid.set_point_solid(tile, true)
 	# Test Astar
-	path = astar_grid.get_point_path(Vector2i(0,0), Vector2i(-120, -60))
-	$DebugLine2D.points = path
+	tilemap_path = astar_grid.get_point_path(Vector2i(0,0), Vector2i(-120, -60))
+	tilemap_debug_path.points = tilemap_path
 
 	# Print stats to console
 	var s = "gravel : %s\nground : %s\ngrassd : %s\ngrassg : %s" % [gravel, ground, grassg, grassd]

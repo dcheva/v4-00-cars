@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://b3ovwvmuotx6e" path="res://g.tscn" id="3_qker1"]
 [ext_resource type="Texture2D" uid="uid://f83wkyvfxfie" path="res://art/statics/piles.png" id="4_uv42d"]
 [ext_resource type="Texture2D" uid="uid://lj4r86u80pko" path="res://art/statics/wall-0.png" id="5_eosro"]
-[ext_resource type="PackedScene" path="res://debug_line_2d.tscn" id="7_y1yl6"]
+[ext_resource type="PackedScene" uid="uid://c5gg7e5lvep3s" path="res://debug_line_2d.tscn" id="7_y1yl6"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mcw6t"]
 texture = ExtResource("4_uv42d")
