@@ -1,27 +1,28 @@
 extends CharacterBody2D
 
+@onready var g = $loader
+
 # Astar
 var tilemap_path := []
 
-@onready var g = $loader
+var player : CharacterBody2D
 
-# @TODO preload settings
-@export var rot_speed = 0.15
-@export var max_steer = 15
-@export var max_speed = 400
-@export var speed_change = 0.01
-@export var steer_change = 0.1
-@export var opt_speed = 140
-@export var min_speed = 20
-@export var breaking = -0.5
-@export var acceleration = 1.2
-@export var collision_k = 4
-@export var track_k_speed = 3
-@export var track_k_time = 0.2
-@export var ray_length = 1000
-@export var ray_avoid = 250
-var steer = 0
-var speed = 0
+var rot_speed := 0.15
+var max_steer := 15
+var max_speed := 400
+var speed_change := 0.01
+var steer_change := 0.1
+var opt_speed := 140
+var min_speed := 20
+var breaking := -0.5
+var acceleration := 1.2
+var track_k_speed := 3.0
+var track_k_time := 0.2
+var ray_length := 1000
+var ray_avoid := 250
+var steer := 0.0
+var speed := 0.0
+var collision_k := 4.0
 
 signal set_hud
 signal set_draw_timer
@@ -29,22 +30,19 @@ signal set_draw_timer
 @export var Track_S1_scene: PackedScene
 @export var Track_L1_scene: PackedScene
 
-@export var Track_S = preload("res://Track_S1.tscn")
-@export var Track_L = preload("res://Track_L1.tscn")
+@export var Track_S := preload("res://Track_S1.tscn")
+@export var Track_L := preload("res://Track_L1.tscn")
 
-var text = ""
-var printed = ""
-var printed_distance = ""
+var text := ""
+var printed := ""
+var printed_distance := ""
 var target_vector_length
 var player_last_seen
 var player_global_transform
-var player
-
 
 
 func _ready():
-	# AAA!!! @TODO loose coupling!!!
-	player = get_tree().get_root().get_node("Main/Player")
+	pass
 
 
 func _physics_process(delta):
@@ -101,8 +99,8 @@ func get_input():
 
 
 func get_drift():
-	speed = lerpf(speed, 0, speed_change * 4)
-	steer = steer * steer_change * 4
+	speed = lerpf(speed, 0.0, speed_change * 4.0)
+	steer = steer * steer_change * 4.0
 
 
 func get_physics(speed_to, steer_to):
@@ -112,7 +110,9 @@ func get_physics(speed_to, steer_to):
 		steer_to = -steer_to
 
 	# Physics with LERP
-	speed = lerpf(speed, speed_to, speed_change)
+	speed = lerpf(speed, 
+	speed_to, 
+	speed_change)
 	steer = lerpf(steer, steer_to, steer_change)
 
 	# Speed ​​steering

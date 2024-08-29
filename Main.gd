@@ -13,6 +13,7 @@ var cam := Vector2()
 
 
 func _ready():
+	npc_driver.player = player_driver
 	start_drivers()
 	
 
