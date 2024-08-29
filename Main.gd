@@ -4,7 +4,7 @@ extends Node2D
 @onready var npc_driver := $NPC
 @onready var player_driver_timer := $Player/DrawTrack
 @onready var npc_driver_timer := $NPC/DrawTrack
-@onready var proc_gen_world = $proc_gen_world
+@onready var generator = $proc_gen_world
 
 # @TODO preload settings
 @export var cam_sensitivity = 0.05
@@ -15,7 +15,8 @@ var cam := Vector2()
 
 func _ready():
 	npc_driver.player = player_driver
-	npc_driver.tilemap_path = proc_gen_world.tilemap_path
+	npc_driver.tilemap_path = generator.tilemap_path
+	npc_driver.generator = generator
 	start_drivers()
 	
 
@@ -36,7 +37,7 @@ func _on_Player_set_hud():
 	var speed = player_driver.speed
 	var steer = player_driver.steer
 	var trk = get_tree().get_nodes_in_group("track").size()
-	var npc = npc_driver.target_vector_length
+	var npc = npc_driver.pos2l
 	var plr = npc_driver.printed_distance + "\n" + npc_driver.printed + "\n"
 	# Set camera position @TODO move this code
 	var cam_to = pos + Vector2(int(vel.x * cam_x_speed * cam_distance),int(vel.y * cam_distance))
@@ -47,14 +48,14 @@ func _on_Player_set_hud():
 
 func set_label(args):
 	var l = $Canvas/Control/Label
-	l.text =  "X, Y     : %s, %s\n" % [int(args[0][0]), int(args[0][1])]
-	l.text += "Speed    : %s\n" % int(args[3])
-	l.text += "Steering : %s\n" % int(args[4])
-	l.text += "Rotation : %s\n" % int(args[1])
-	l.text += "Velocity : %s, %s\n" % [int(args[2][0]), int(args[2][1])]
-	l.text += "Camera   : %s, %s\n" % [int(args[5][0]), int(args[5][1])]
-	l.text += "Tracks   : %s\n" % args[6]
-	l.text += "NPC dist : %s\n" % args[7]
+	l.text =  "X,.Y.....: %s, %s\n" % [int(args[0][0]), int(args[0][1])]
+	l.text += "Speed....: %s\n" % int(args[3])
+	l.text += "Steering.: %s\n" % int(args[4])
+	l.text += "Rotation.: %s\n" % int(args[1])
+	l.text += "Velocity.: %s, %s\n" % [int(args[2][0]), int(args[2][1])]
+	l.text += "Camera...: %s, %s\n" % [int(args[5][0]), int(args[5][1])]
+	l.text += "Tracks...: %s\n" % args[6]
+	l.text += "Target,m.: %s\n" % int(args[7]/10)
 	l.text += "%s\n" % args[8]
 
 

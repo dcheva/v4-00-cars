@@ -17,7 +17,7 @@ z_index = 500
 
 [node name="NPC" parent="." instance=ExtResource("7_3qrdf")]
 z_index = 500
-position = Vector2(1, 112)
+position = Vector2(0, 308)
 
 [node name="Canvas" type="CanvasLayer" parent="."]
 

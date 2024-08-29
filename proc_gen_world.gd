@@ -111,7 +111,7 @@ func generate_world() -> void:
 	for tile in tilemap_layer.get_used_cells():
 		astar_grid.set_point_solid(tile, true)
 	# Test Astar
-	tilemap_path = astar_grid.get_point_path(Vector2i(0,0), Vector2i(-120, -60))
+	tilemap_path = astar_grid.get_point_path(Vector2i(0,0), Vector2i(-50, -50))
 	tilemap_debug_path.points = tilemap_path
 
 	# Print stats to console
@@ -123,6 +123,13 @@ func generate_world() -> void:
 	print("+piles : %s" % piles)
 	print("+walls : %s" % walls)
 	print("+drawn : %s" % drawn)
+	
+	
+func get_pixel_path(from_position, to_position) -> PackedVector2Array:
+	var from = $StaticTileMapLayer.local_to_map(from_position)
+	var to = $StaticTileMapLayer.local_to_map(to_position)
+	var path := astar_grid.get_point_path(from, to)
+	return path
 
 
 func draw_wall(coords: Vector2i, wall_direction, wall_length) -> int: 
