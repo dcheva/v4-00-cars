@@ -9,6 +9,10 @@ var quarter_chunk: int
 @export var noise_height_texture: NoiseTexture2D
 var noise: Noise
 
+# Astar grid
+var astar_grid = AStarGrid2D.new()
+var path = []
+
 var gravel: int
 var ground: int
 var grassg: int
@@ -68,7 +72,6 @@ func generate_world() -> void:
 					# grassd
 					$TileMapLayer.set_cell(Vector2i(x, y), source_id, grassd_atlas + vpos)
 			
-			
 	# Pass 2 Add piles 
 	margin = 1
 	for x in range(-quarter_chunk + margin, quarter_chunk - margin):
@@ -91,8 +94,16 @@ func generate_world() -> void:
 				var wall_direction = posmod(g.get_byte(kk, 4), 4)
 				walls += 1
 				drawn += draw_wall(Vector2i(x, y), wall_direction, wall_length)
+				
+	# Pass 4 Add Astar
+	# Set up parameters, then update the grid.
+	var tilemap_layer = $StaticTileMapLayer
+	astar_grid.region = tilemap_layer.get_used_rect()
+	astar_grid.cell_size = Vector2(TILE_SIZE, TILE_SIZE)
+	astar_grid.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_NEVER
+	astar_grid.update()
 
-
+	# Print stats to console
 	var s = "gravel : %s\nground : %s\ngrassd : %s\ngrassg : %s" % [gravel, ground, grassg, grassd]
 	print("Min : %s" % noise_array.min())
 	print("Max : %s" % noise_array.max())
@@ -103,7 +114,7 @@ func generate_world() -> void:
 	print("+drawn : %s" % drawn)
 
 
-func draw_wall(coords: Vector2i, wall_direction, wall_length): 
+func draw_wall(coords: Vector2i, wall_direction, wall_length) -> int: 
 	wall_direction = 0
 	var _id = wall_direction + 1
 	var shift: Vector2i
