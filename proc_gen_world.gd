@@ -74,8 +74,10 @@ func generate_world() -> void:
 			
 	# Pass 2 Add piles 
 	margin = 1
-	for x in range(-quarter_chunk + margin, quarter_chunk - margin):
-		for y in range(-quarter_chunk + margin, quarter_chunk - margin):
+	var range_from = -quarter_chunk + margin
+	var range_to   =  quarter_chunk - margin
+	for x in range(range_from, range_to):
+		for y in range(range_from, range_to):
 			noise_val = noise.get_noise_2d(x, y)
 			kk = noise_val * 999999
 			if posmod(kk,  103) > 101: # 1%
@@ -84,8 +86,10 @@ func generate_world() -> void:
 	
 	# Pass 3 Add walls 
 	margin = 6
-	for x in range(-quarter_chunk + margin, quarter_chunk - margin):
-		for y in range(-quarter_chunk + margin, quarter_chunk - margin):
+	range_from = -quarter_chunk + margin
+	range_to   =  quarter_chunk - margin
+	for x in range(range_from, range_to):
+		for y in range(range_from, range_to):
 			noise_val = noise.get_noise_2d(x, y)
 			kk = noise_val * 999999
 			if posmod(kk, 102) > 100: # 1%
@@ -94,14 +98,22 @@ func generate_world() -> void:
 				var wall_direction = posmod(g.get_byte(kk, 4), 4)
 				walls += 1
 				drawn += draw_wall(Vector2i(x, y), wall_direction, wall_length)
-				
+	
 	# Pass 4 Add Astar
 	# Set up parameters, then update the grid.
-	var tilemap_layer = $StaticTileMapLayer
+	var tilemap_layer: TileMapLayer = $StaticTileMapLayer
+	var static_tile_size = 64
 	astar_grid.region = tilemap_layer.get_used_rect()
-	astar_grid.cell_size = Vector2(TILE_SIZE, TILE_SIZE)
-	astar_grid.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_NEVER
+	astar_grid.cell_size = Vector2(static_tile_size, static_tile_size)
+	astar_grid.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_ONLY_IF_NO_OBSTACLES
 	astar_grid.update()
+	# All used cells are obstacles
+	# Maybe use get_cell_tile_data(coords: Vector2i) -> get_collision_polygons_count(layer_id: int)
+	for tile in tilemap_layer.get_used_cells():
+		astar_grid.set_point_solid(tile, true)
+	# Test Astar
+	path = astar_grid.get_point_path(Vector2i(0,0), Vector2i(-120, -60))
+	$DebugLine2D.points = path
 
 	# Print stats to console
 	var s = "gravel : %s\nground : %s\ngrassd : %s\ngrassg : %s" % [gravel, ground, grassg, grassd]

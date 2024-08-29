@@ -50,7 +50,6 @@ process_thread_messages = 0
 editor_description = "
 Process Priority 2 (less)
 Thread Group Order 2 (less)"
-chunk_size = null
 
 [connection signal="set_draw_timer" from="Player" to="." method="_on_Player_set_draw_timer"]
 [connection signal="set_hud" from="Player" to="." method="_on_Player_set_hud"]

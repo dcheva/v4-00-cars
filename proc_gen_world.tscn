@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=4 uid="uid://c43engym5lupy"]
+[gd_scene load_steps=11 format=4 uid="uid://c43engym5lupy"]
 
 [ext_resource type="Script" path="res://proc_gen_world.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://dfpghkyb58hew" path="res://noise_height.tres" id="2_3vmfj"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://b3ovwvmuotx6e" path="res://g.tscn" id="3_qker1"]
 [ext_resource type="Texture2D" uid="uid://f83wkyvfxfie" path="res://art/statics/piles.png" id="4_uv42d"]
 [ext_resource type="Texture2D" uid="uid://lj4r86u80pko" path="res://art/statics/wall-0.png" id="5_eosro"]
+[ext_resource type="PackedScene" path="res://debug_line_2d.tscn" id="7_y1yl6"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mcw6t"]
 texture = ExtResource("4_uv42d")
@@ -76,7 +77,6 @@ sources/1 = SubResource("TileSetAtlasSource_tr81d")
 
 [node name="proc_gen_world" type="Node2D"]
 script = ExtResource("1")
-chunk_size = null
 noise_height_texture = ExtResource("2_3vmfj")
 
 [node name="loader" parent="." instance=ExtResource("3_qker1")]
@@ -87,3 +87,5 @@ tile_map_data = PackedByteArray("AAD+//7/AAAGAAYAAAD+////AAAGAAcAAAD+/wAAAAAWAAA
 [node name="StaticTileMapLayer" type="TileMapLayer" parent="."]
 tile_map_data = PackedByteArray("AAAEAAYAAQAAAAIAAAAEAAcAAQAAAAMAAAAFAAUAAQABAAEAAAAFAAYAAQABAAIAAAAFAAcAAQABAAMAAAAGAAQAAQACAAAAAAAGAAUAAQACAAEAAAAGAAYAAQACAAIAAAAHAAQAAQADAAAAAAAHAAUAAQADAAEAAAD7/wYAAQACAAAAAFD7/wcAAQADAAAAAFD6/wUAAQABAAEAAFD6/wYAAQACAAEAAFD6/wcAAQADAAEAAFD5/wQAAQAAAAIAAFD5/wUAAQABAAIAAFD5/wYAAQACAAIAAFD4/wQAAQAAAAMAAFD4/wUAAQABAAMAAFD7//j/AQAAAAMAADD7//n/AQAAAAIAADD6//j/AQABAAMAADD6//n/AQABAAIAADD6//r/AQABAAEAADD5//n/AQACAAIAADD5//r/AQACAAEAADD5//v/AQACAAAAADD4//r/AQADAAEAADD4//v/AQADAAAAADAHAPr/AQABAAMAAGAHAPv/AQAAAAMAAGAGAPn/AQACAAIAAGAGAPr/AQABAAIAAGAGAPv/AQAAAAIAAGAFAPj/AQADAAEAAGAFAPn/AQACAAEAAGAFAPr/AQABAAEAAGAEAPj/AQADAAAAAGAEAPn/AQACAAAAAGA=")
 tile_set = SubResource("TileSet_muts0")
+
+[node name="DebugLine2D" parent="." instance=ExtResource("7_y1yl6")]
