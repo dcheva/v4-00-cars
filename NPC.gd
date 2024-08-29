@@ -155,3 +155,60 @@ func draw_track_timer_formula():
 
 func _on_draw_track_timeout() -> void:
 	get_tree().get_root().get_node("Main")._on_draw_track_timeout("Main/NPC")
+	
+
+## @DEPRECATED 
+## old stuff from raycast branch
+func get_rays():
+	## old globals
+	var avoid := {fwd = 999, left = 999, right = 999}
+	var player_invisible := false
+	# tutorials/physics/ray-casting.html#raycast-query
+	var space_state = get_world_2d().direct_space_state
+	# use global coordinates, not local to node
+	var ray_from = global_transform.origin
+	var trace_to: Vector2
+	var query: PhysicsRayQueryParameters2D
+	var result: Dictionary
+	# trace rays
+	var rays_rotated = [-PI, 0, -PI/9, -PI/7, -PI/5, PI/9, PI/7, PI/5] 
+	printed = ""
+	for i in rays_rotated:
+		if i == -PI:
+			trace_to = player.global_position
+		else: 
+			trace_to = ray_from + velocity.normalized() * ray_length
+			trace_to = trace_to.rotated(i)
+		query = PhysicsRayQueryParameters2D.create(ray_from, trace_to)
+		# tutorials/physics/ray-casting.html#collision-exceptions
+		query.exclude = [self]
+		result = space_state.intersect_ray(query)
+		if result:
+			var pos2i = result.get("position")
+			var pos2v = global_position - pos2i
+			var pos2l = int(pos2v.length())
+			var col_obj = result.get("collider")
+			if i <= -PI/9:
+				text = "<<-"
+				if col_obj != player:
+					avoid.left = min(avoid.left, pos2l)
+			if i >= PI/9:
+				text = "->>"
+				if col_obj != player:
+					avoid.right = min(avoid.right, pos2l)
+			if i == 0    : 
+				text = "^|^"
+				if col_obj != player:
+					avoid.fwd = pos2l
+			#printed += "Ray hits %s: %s\n->%s\n[!]: %s\n" % [text,Vector2i(pos2i),col_obj,avoid]
+			# Remember player las seen
+			if i == -PI:
+				if col_obj == player:
+					player_invisible = false
+					$Mark.hide()
+					player_last_seen = player.global_position
+					$Mark.global_position = player_last_seen
+					player_global_transform = player.global_transform
+				else:
+					player_invisible = true
+					$Mark.show()
