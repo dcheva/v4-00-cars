@@ -63,9 +63,9 @@ func get_input():
 	var _player_target_dir
 	var t = ""
 
+	# Set target to Astar point
 	_player_global_position = player.global_position
 	_player_target_dir = to_local(player.global_transform.origin).normalized()
-		
 	target_vector = Vector2(global_position - _player_global_position)
 	target_direction = _player_target_dir #direction to player
 	target_vector_length = int(target_vector.length())
@@ -94,6 +94,7 @@ func get_input():
 		t += "in the left, "
 		steer_to = -max_steer
 	# // End AI inputs
+	
 	printed_distance = "NPC to Player: " + t.trim_suffix(", ")
 	get_physics(speed_to, steer_to)
 
