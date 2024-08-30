@@ -1,4 +1,8 @@
 # Godot 3 Cars 2d with Physics prototype
+#### Create pull requests via:
+* https://bitbucket.org/dcheva/v4-00-cars/pull-requests/new?source=_BRANCH_&t=1
+* https://github.com/dcheva/v4-00-cars/pull/new/_BRANCH_
+---
 - Draw the car
 - Implement simple arcade car physics 
 - Add fonts
@@ -34,3 +38,5 @@
 ## Start refactor
 - Implement preload functions via g = $loader
 - Merge refactored Okama barber into initial
+- Remove redundant raycast and other logic
+- Add Timers and Triggers for generator.find_path

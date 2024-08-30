@@ -1,6 +1,13 @@
 extends Node2D
 
-var g
+@onready var g = $loader
+
+# Astar grid
+@onready var astar_grid = AStarGrid2D.new()
+@onready var tilemap_layer: TileMapLayer = $StaticTileMapLayer
+@onready var tilemap_debug_path: Line2D = $DebugLine2D
+var static_tile_size := 64
+var tilemap_path := []
 
 @export var chunk_size: int = 512
 var half_chunk: int
@@ -24,10 +31,8 @@ var grassd_atlas = Vector2i(atlas_size * 2, 0)
 var grassg_atlas = Vector2i(atlas_size * 3, 0)
 
 func _ready() -> void:
-	g = $loader
 	half_chunk = g.half_chunk(chunk_size)
 	quarter_chunk = g.quarter_chunk(chunk_size)
-	
 	noise = noise_height_texture.noise
 	generate_world()
 	
@@ -68,11 +73,12 @@ func generate_world() -> void:
 					# grassd
 					$TileMapLayer.set_cell(Vector2i(x, y), source_id, grassd_atlas + vpos)
 			
-			
 	# Pass 2 Add piles 
 	margin = 1
-	for x in range(-quarter_chunk + margin, quarter_chunk - margin):
-		for y in range(-quarter_chunk + margin, quarter_chunk - margin):
+	var range_from = -quarter_chunk + margin
+	var range_to   =  quarter_chunk - margin
+	for x in range(range_from, range_to):
+		for y in range(range_from, range_to):
 			noise_val = noise.get_noise_2d(x, y)
 			kk = noise_val * 999999
 			if posmod(kk,  103) > 101: # 1%
@@ -81,8 +87,10 @@ func generate_world() -> void:
 	
 	# Pass 3 Add walls 
 	margin = 6
-	for x in range(-quarter_chunk + margin, quarter_chunk - margin):
-		for y in range(-quarter_chunk + margin, quarter_chunk - margin):
+	range_from = -quarter_chunk + margin
+	range_to   =  quarter_chunk - margin
+	for x in range(range_from, range_to):
+		for y in range(range_from, range_to):
 			noise_val = noise.get_noise_2d(x, y)
 			kk = noise_val * 999999
 			if posmod(kk, 102) > 100: # 1%
@@ -91,8 +99,22 @@ func generate_world() -> void:
 				var wall_direction = posmod(g.get_byte(kk, 4), 4)
 				walls += 1
 				drawn += draw_wall(Vector2i(x, y), wall_direction, wall_length)
+	
+	# Pass 4 Add Astar
+	# Set up parameters, then update the grid.
+	astar_grid.region = tilemap_layer.get_used_rect()
+	astar_grid.cell_size = Vector2(static_tile_size, static_tile_size)
+	astar_grid.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_ONLY_IF_NO_OBSTACLES
+	astar_grid.update()
+	# All used cells are obstacles
+	# Maybe use get_cell_tile_data(coords: Vector2i) -> get_collision_polygons_count(layer_id: int)
+	for tile in tilemap_layer.get_used_cells():
+		astar_grid.set_point_solid(tile, true)
+	# Test Astar
+	tilemap_path = astar_grid.get_point_path(Vector2i(0,0), Vector2i(-50, -50))
+	tilemap_debug_path.points = tilemap_path
 
-
+	# Print stats to console
 	var s = "gravel : %s\nground : %s\ngrassd : %s\ngrassg : %s" % [gravel, ground, grassg, grassd]
 	print("Min : %s" % noise_array.min())
 	print("Max : %s" % noise_array.max())
@@ -101,9 +123,16 @@ func generate_world() -> void:
 	print("+piles : %s" % piles)
 	print("+walls : %s" % walls)
 	print("+drawn : %s" % drawn)
+	
+	
+func get_pixel_path(from_position, to_position) -> PackedVector2Array:
+	var from = $StaticTileMapLayer.local_to_map(from_position)
+	var to = $StaticTileMapLayer.local_to_map(to_position)
+	var path := astar_grid.get_point_path(from, to)
+	return path
 
 
-func draw_wall(coords: Vector2i, wall_direction, wall_length): 
+func draw_wall(coords: Vector2i, wall_direction, wall_length) -> int: 
 	wall_direction = 0
 	var _id = wall_direction + 1
 	var shift: Vector2i
@@ -157,3 +186,7 @@ func draw_wall(coords: Vector2i, wall_direction, wall_length):
 	return 1
 	
 	
+func find_path(global_position_fron: Vector2, global_position_to:Vector2) -> Array:
+		tilemap_path = get_pixel_path(global_position_fron, global_position_to)
+		tilemap_debug_path.points = tilemap_path
+		return tilemap_path
