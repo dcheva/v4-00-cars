@@ -89,3 +89,4 @@ tile_map_data = PackedByteArray("AAAEAAYAAQAAAAIAAAAEAAcAAQAAAAMAAAAFAAUAAQABAAE
 tile_set = SubResource("TileSet_muts0")
 
 [node name="DebugLine2D" parent="." instance=ExtResource("7_y1yl6")]
+visible = false

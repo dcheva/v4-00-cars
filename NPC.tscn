@@ -26,5 +26,6 @@ one_shot = true
 [node name="loader" parent="." instance=ExtResource("3_o38id")]
 
 [node name="Mark" parent="." instance=ExtResource("4_cnlls")]
+visible = false
 
 [connection signal="timeout" from="DrawTrack" to="." method="_on_draw_track_timeout"]

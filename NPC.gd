@@ -105,7 +105,7 @@ func get_input(delta):
 		timer += delta
 	
 	# 2. Range trigger for target mark distance
-	if tilemap_path.size() > 0 and pos2l < (point_range/2 +  point_range * speed / max_speed):
+	if tilemap_path.size() > 0 and pos2l < (point_range / 2 +  point_range * speed / max_speed):
 		tilemap_path.remove_at(0)
 	
 		
