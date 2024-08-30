@@ -186,3 +186,7 @@ func draw_wall(coords: Vector2i, wall_direction, wall_length) -> int:
 	return 1
 	
 	
+func find_path(global_position_fron: Vector2, global_position_to:Vector2) -> Array:
+		tilemap_path = get_pixel_path(global_position_fron, global_position_to)
+		tilemap_debug_path.points = tilemap_path
+		return tilemap_path

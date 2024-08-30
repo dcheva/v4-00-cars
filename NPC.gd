@@ -21,7 +21,7 @@ var acceleration := 1.2
 var track_k_speed := 3.0
 var track_k_time := 0.2
 var ray_length := 1000
-var ray_avoid := 500
+var ray_avoid := 100
 var steer := 0.0
 var speed := 0.0
 var collision_k := 4.0
@@ -43,13 +43,17 @@ var pos2:  Vector2
 var pos2v: Vector2
 var pos2l: float
 
+var timer := 0.0
+var wait  := 0.5 # second generator's timeout
+var point_range := 200 # pixels to target point
+
 
 func _ready():
 	pass
 
 
 func _physics_process(delta):
-	get_input()
+	get_input(delta)
 	rotation += steer * rot_speed * delta
 	velocity = Vector2(0, -speed).rotated(rotation)
 	set_velocity(velocity)
@@ -57,7 +61,7 @@ func _physics_process(delta):
 	set_hud.emit()
 
 
-func get_input():
+func get_input(delta):
 	var speed_to = 0
 	var steer_to = steer
 	var target_vector
@@ -65,32 +69,46 @@ func get_input():
 	var t = ""
 	
 	# Raycast begin
-	var ray_from = global_transform.origin
-	var query: PhysicsRayQueryParameters2D
-	var result: Dictionary
+	#var ray_from = global_transform.origin
+	#var query: PhysicsRayQueryParameters2D
+	#var result: Dictionary
 	
 
 	# Set target to Astar point
 	if tilemap_path.size() > 0:
-			# Rebuild navigation
-			# Process position
-			var next_position = tilemap_path.front()
-			if next_position != null:
-				# test ray on collision in range ray_avoid
-				query = PhysicsRayQueryParameters2D.create(ray_from, next_position)
-				query.exclude = [self]
-				result = space_state.intersect_ray(query)
-				if !result or result.get("collider").name != "StaticTileMapLayer":
-					$Mark.global_position = next_position
-					pos2  = next_position
-					pos2v = global_position - pos2
-					pos2l = pos2v.length()
-					if tilemap_path.size() > 0:
-						tilemap_path.remove_at(0)
-						
-	if (global_position - player.global_position).length() > 400:
-		tilemap_path = generator.get_pixel_path(global_position, player.global_position)
-		generator.tilemap_debug_path.points = tilemap_path
+		# Rebuild navigation
+		# Process position
+		var next_position = tilemap_path.front()
+		if next_position != null:
+			## test ray on collision in range ray_avoid
+			#query = PhysicsRayQueryParameters2D.create(ray_from, next_position)
+			#query.exclude = [self]
+			#result = space_state.intersect_ray(query)
+			#if !result or result.get("collider").name != "StaticTileMapLayer":
+				#$Mark.global_position = next_position
+				#pos2  = next_position
+				#pos2v = global_position - pos2
+				#pos2l = pos2v.length()
+			$Mark.global_position = next_position
+			pos2  = next_position
+			pos2v = global_position - pos2
+			pos2l = pos2v.length()
+			var p : int = tilemap_path.size()
+			var d : int = p * generator.static_tile_size
+			t += "distance:%s points:%s " % [d, p]
+	
+	# 1. Timer trigger for generator.find_path 
+	if timer > wait:
+		tilemap_path = generator.find_path(global_position, player.global_position)
+		timer = 0.0
+	else: 
+		timer += delta
+	
+	# 2. Range trigger for target mark distance
+	if tilemap_path.size() > 0 and pos2l < (point_range/2 +  point_range * speed / max_speed):
+		tilemap_path.remove_at(0)
+	
+		
 
 	## TEST AGAIN
 	target_direction = to_local(pos2).normalized()
@@ -100,29 +118,23 @@ func get_input():
 	# \\ Start AI inputs
 	if target_direction.y < 0:
 		t += "ahead, "
-		if target_vector.length() > 200:
+		if target_vector.length() > 100:
 			speed_to = max_speed * acceleration
-		elif target_vector.length() < 100:
-			get_drift()
 	elif target_direction.y < 0:
 			speed_to = max_speed * breaking
 	elif target_direction.y > 0:
 		t += "behind, "
-		if target_vector.length() > 400:
+		if target_vector.length() > 100:
 			speed_to = max_speed * acceleration
-		elif target_vector.length() > 200:
-			speed_to = max_speed * breaking
-		elif target_vector.length() < 100:
-			get_drift()
-	if target_direction.x > 0.1:
+	if target_direction.x > 0.2:
 		t += "in the right, " 
 		steer_to = max_steer
-	elif target_direction.x < -0.1:
+	elif target_direction.x < -0.2:
 		t += "in the left, "
 		steer_to = -max_steer
 	# // End AI inputs
 	
-	printed_distance = "NPC to target: " + t.trim_suffix(", ")
+	printed_distance = "Target: " + t.trim_suffix(", ")
 	get_physics(speed_to, steer_to)
 
 
@@ -189,6 +201,10 @@ func get_rays():
 	var avoid := {fwd = 999, left = 999, right = 999}
 	var player_last_seen
 	var player_global_transform
+	var pos2i
+	#var pos2v
+	#var pos2l
+	var col_obj
 	# tutorials/physics/ray-casting.html#raycast-query
 	# use global coordinates, not local to node
 	var ray_from = global_transform.origin
@@ -204,16 +220,15 @@ func get_rays():
 		else: 
 			trace_to = ray_from + velocity.normalized() * ray_length
 			trace_to = trace_to.rotated(i)
-		query = PhysicsRayQueryParameters2D.create(ray_from, trace_to)
 		# tutorials/physics/ray-casting.html#collision-exceptions
 		query = PhysicsRayQueryParameters2D.create(ray_from, trace_to)
 		query.exclude = [self]
 		result = space_state.intersect_ray(query)
 		if result:
-			var pos2i = result.get("position")
-			var pos2v = global_position - pos2i
-			var pos2l = int(pos2v.length())
-			var col_obj = result.get("collider")
+			pos2i = result.get("position")
+			pos2v = global_position - pos2i
+			pos2l = int(pos2v.length())
+			col_obj = result.get("collider")
 			if i <= -PI/9:
 				text = "<<-"
 				if col_obj != player:

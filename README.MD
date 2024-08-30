@@ -38,3 +38,5 @@
 ## Start refactor
 - Implement preload functions via g = $loader
 - Merge refactored Okama barber into initial
+- Remove redundant raycast and other logic
+- Add Timers and Triggers for generator.find_path
