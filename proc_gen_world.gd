@@ -82,8 +82,11 @@ func generate_world() -> void:
 			noise_val = noise.get_noise_2d(x, y)
 			kk = noise_val * 999999
 			if posmod(kk,  103) > 101: # 1%
-				piles += 1
-				$StaticTileMapLayer.set_cell(Vector2i(x, y), source_id, Vector2i(0, posmod(kk,  16)))
+				# check first
+				if !$StaticTileMapLayer.get_cell_tile_data(Vector2i(x, y)):
+					piles += 1
+					$StaticTileMapLayer.set_cell(Vector2i(x, y), 
+						source_id, Vector2i(0, posmod(kk,  16)))
 	
 	# Pass 3 Add walls 
 	margin = 6
@@ -123,13 +126,6 @@ func generate_world() -> void:
 	print("+piles : %s" % piles)
 	print("+walls : %s" % walls)
 	print("+drawn : %s" % drawn)
-	
-	
-func get_pixel_path(from_position, to_position) -> PackedVector2Array:
-	var from = $StaticTileMapLayer.local_to_map(from_position)
-	var to = $StaticTileMapLayer.local_to_map(to_position)
-	var path := astar_grid.get_point_path(from, to)
-	return path
 
 
 func draw_wall(coords: Vector2i, wall_direction, wall_length) -> int: 
@@ -187,6 +183,13 @@ func draw_wall(coords: Vector2i, wall_direction, wall_length) -> int:
 	
 	
 func find_path(global_position_fron: Vector2, global_position_to:Vector2) -> Array:
-		tilemap_path = get_pixel_path(global_position_fron, global_position_to)
-		tilemap_debug_path.points = tilemap_path
-		return tilemap_path
+	tilemap_path = get_pixel_path(global_position_fron, global_position_to)
+	tilemap_debug_path.points = tilemap_path
+	return tilemap_path
+
+
+func get_pixel_path(from_position, to_position) -> PackedVector2Array:
+	var from = $StaticTileMapLayer.local_to_map(from_position)
+	var to = $StaticTileMapLayer.local_to_map(to_position)
+	var path := astar_grid.get_point_path(from, to)
+	return path

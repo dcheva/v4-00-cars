@@ -10,18 +10,16 @@ var tilemap_path := []
 var player : CharacterBody2D
 
 var rot_speed := 0.15
-var max_steer := 15
-var max_speed := 400
+var max_steer := 15.0
+var max_speed := 400.0
 var speed_change := 0.01
 var steer_change := 0.1
-var opt_speed := 140
-var min_speed := 20
+var opt_speed := 140.0
+var min_speed := 20.0
 var breaking := -0.5
 var acceleration := 1.2
 var track_k_speed := 3.0
 var track_k_time := 0.2
-var ray_length := 1000
-var ray_avoid := 100
 var steer := 0.0
 var speed := 0.0
 var collision_k := 4.0
@@ -45,7 +43,7 @@ var pos2l: float
 
 var timer := 0.0
 var wait  := 0.5 # second generator's timeout
-var point_range := 200 # pixels to target point
+var point_range := 200.0 # pixels to target point
 
 
 func _ready():
@@ -202,6 +200,7 @@ func get_rays():
 	var player_last_seen
 	var player_global_transform
 	var pos2i
+	var ray_length = 1000
 	#var pos2v
 	#var pos2l
 	var col_obj
