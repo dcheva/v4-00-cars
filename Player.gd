@@ -29,7 +29,8 @@ signal set_draw_timer
 
 
 func _ready():
-	pass
+	$AnimationPlayer.play("Start")
+	
 
 
 func _physics_process(delta):
@@ -46,18 +47,26 @@ func get_input():
 	var steer_to = steer
 	
 	if Input.is_action_pressed("shift"):
+		$AnimationPlayer.play("Load")
 		max_speed = lerpf(max_speed, max_speed_shift, speed_change * 4)
 	else: 
 		max_speed = lerpf(max_speed, max_speed_drive, speed_change * 4)
+		$AnimationPlayer.play("idle")
 	if Input.is_action_pressed("up_arrow"):
 		speed_to = max_speed * acceleration
+		if $AnimationPlayer.current_animation != "Load":
+			$AnimationPlayer.play("Power")
 	if Input.is_action_pressed("down_arrow"):
 		speed_to = max_speed * breaking
+		if $AnimationPlayer.current_animation != "Load":
+			$AnimationPlayer.play("idle")
 	if Input.is_action_pressed("right_arrow"):
 		steer_to = max_steer
 	if Input.is_action_pressed("left_arrow"):
 		steer_to = -max_steer
 	if Input.is_action_pressed("space"):
+		if $AnimationPlayer.current_animation != "Load":
+			$AnimationPlayer.play("Stop")
 		get_drift()
 		
 	get_physics(speed_to, steer_to)
@@ -115,3 +124,7 @@ func draw_track_timer_formula():
 
 func _on_draw_track_timeout() -> void:
 	get_tree().get_root().get_node("Main")._on_draw_track_timeout("Main/Player")
+
+
+func _on_idle_timer_timeout() -> void:
+	$AnimationPlayer.play("idle")
