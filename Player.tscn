@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://dq83bbgjp2u0q"]
+[gd_scene load_steps=26 format=3 uid="uid://dq83bbgjp2u0q"]
 
 [ext_resource type="Texture2D" uid="uid://dir7cluak2a2a" path="res://art/car-00.png" id="1"]
 [ext_resource type="Script" path="res://Player.gd" id="2"]
@@ -9,7 +9,11 @@
 [ext_resource type="AudioStream" uid="uid://crk0beghyiyc8" path="res://loops/engine_off.wav" id="6_inyy0"]
 [ext_resource type="AudioStream" uid="uid://bq1al3jdlq8jh" path="res://loops/exhaust_idle.wav" id="7_2kicv"]
 [ext_resource type="AudioStream" uid="uid://d3vhb88sf1sc" path="res://loops/gear_air_1.wav" id="8_1o5vi"]
-[ext_resource type="Script" path="res://addons/behaviour_toolkit/finite_state_machine/fsm.gd" id="10_2x0rv"]
+[ext_resource type="Script" path="res://FSM/finite_state_machine.gd" id="10_id2dq"]
+[ext_resource type="Script" path="res://addons/behaviour_toolkit/blackboard.gd" id="11_5likt"]
+[ext_resource type="Script" path="res://FSM/off.gd" id="11_f53fg"]
+[ext_resource type="Script" path="res://FSM/Start.gd" id="12_x7piy"]
+[ext_resource type="Script" path="res://FSM/idle.gd" id="14_xc6i6"]
 
 [sub_resource type="RectangleShape2D" id="1"]
 size = Vector2(42, 58)
@@ -1009,6 +1013,10 @@ _data = {
 "idle": SubResource("Animation_7f60f")
 }
 
+[sub_resource type="Resource" id="Resource_ov6wc"]
+script = ExtResource("11_5likt")
+content = {}
+
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("2")
 
@@ -1075,8 +1083,21 @@ scale_amount_max = 4.0
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Animations"]
 
-[node name="FiniteStateMachine" type="Node" parent="."]
-script = ExtResource("10_2x0rv")
+[node name="FiniteStateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state", "actor")]
+script = ExtResource("10_id2dq")
+initial_state = NodePath("Off")
+actor = NodePath("..")
+blackboard = SubResource("Resource_ov6wc")
+
+[node name="Off" type="Node" parent="FiniteStateMachine"]
+script = ExtResource("11_f53fg")
+
+[node name="Start" type="Node" parent="FiniteStateMachine/Off" node_paths=PackedStringArray("next_state")]
+script = ExtResource("12_x7piy")
+next_state = NodePath("../../Idle")
+
+[node name="Idle" type="Node" parent="FiniteStateMachine"]
+script = ExtResource("14_xc6i6")
 
 [connection signal="timeout" from="DrawTrack" to="." method="_on_draw_track_timeout"]
 [connection signal="timeout" from="idleTimer" to="." method="_on_idle_timer_timeout"]
