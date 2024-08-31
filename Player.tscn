@@ -13,7 +13,7 @@ size = Vector2(42, 58)
 
 [sub_resource type="Animation" id="Animation_h04s4"]
 resource_name = "Power"
-length = 2.4
+length = 2.0
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -120,35 +120,12 @@ tracks/8/loop_wrap = true
 tracks/8/keys = {
 "clips": [{
 "end_offset": 0.0,
-"start_offset": 0.0,
+"start_offset": 0.3998,
 "stream": ExtResource("6_dcnpj")
 }],
 "times": PackedFloat32Array(0)
 }
 tracks/8/use_blend = true
-tracks/9/type = "audio"
-tracks/9/imported = false
-tracks/9/enabled = true
-tracks/9/path = NodePath("Animations/AudioStreamPlayer2D")
-tracks/9/interp = 1
-tracks/9/loop_wrap = true
-tracks/9/keys = {
-"clips": [{
-"end_offset": 0.0,
-"start_offset": 0.0,
-"stream": ExtResource("7_84by6")
-}, {
-"end_offset": 0.0,
-"start_offset": 0.0,
-"stream": ExtResource("7_84by6")
-}, {
-"end_offset": 0.0,
-"start_offset": 0.0,
-"stream": ExtResource("7_84by6")
-}],
-"times": PackedFloat32Array(0, 0.0001, 1.16667)
-}
-tracks/9/use_blend = true
 
 [sub_resource type="Animation" id="Animation_hxywy"]
 length = 0.001
