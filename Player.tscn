@@ -956,8 +956,9 @@ scale_amount_max = 4.0
 [node name="FiniteStateMachine" type="Node" parent="."]
 script = SubResource("GDScript_bxi4d")
 
-[node name="Start" type="Node" parent="FiniteStateMachine"]
+[node name="Start" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("player")]
 script = ExtResource("8_f3qwu")
+player = NodePath("../..")
 
 [node name="Idle" type="Node" parent="FiniteStateMachine"]
 script = ExtResource("9_tovbn")

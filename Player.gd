@@ -42,6 +42,14 @@ func _physics_process(delta):
 	set_hud.emit()
 
 
+func set_animation(string_name: StringName) -> CharacterBody2D:
+	$AnimationPlayer.current_animation(string_name)
+	return self
+
+func play_animation() -> void:
+	$AnimationPlayer.call_deferred("play")
+
+
 func get_input():
 	var speed_to = 0
 	var steer_to = steer
