@@ -56,22 +56,13 @@ func get_input():
 			$AnimationPlayer.current_animation = "idle"
 	if Input.is_action_pressed("up_arrow"):
 		speed_to = max_speed * acceleration
-		if $AnimationPlayer.current_animation != "Load":
-			$AnimationPlayer.current_animation = "Load"
 	if Input.is_action_pressed("down_arrow"):
 		speed_to = max_speed * breaking
-		if $AnimationPlayer.current_animation != "Load":
-			if $AnimationPlayer.current_animation != "idle":
-				$AnimationPlayer.current_animation = "idle"
 	if Input.is_action_pressed("right_arrow"):
 		steer_to = max_steer
 	if Input.is_action_pressed("left_arrow"):
 		steer_to = -max_steer
 	if Input.is_action_pressed("space"):
-		if $AnimationPlayer.current_animation != "Load":
-			if $AnimationPlayer.current_animation != "Stop":
-				$AnimationPlayer.current_animation = "Stop"
-				$idleTimer.start(2)
 		get_drift()
 	print($AnimationPlayer.current_animation)
 	get_physics(speed_to, steer_to)
