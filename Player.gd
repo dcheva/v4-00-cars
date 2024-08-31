@@ -43,7 +43,7 @@ func _physics_process(delta):
 
 
 func set_animation(string_name: StringName) -> CharacterBody2D:
-	$AnimationPlayer.current_animation(string_name)
+	$AnimationPlayer.current_animation = string_name
 	return self
 
 func play_animation() -> void:
@@ -55,13 +55,9 @@ func get_input():
 	var steer_to = steer
 	
 	if Input.is_action_pressed("shift"):
-		if $AnimationPlayer.current_animation != "Load":
-			$AnimationPlayer.current_animation = "Load"
 		max_speed = lerpf(max_speed, max_speed_shift, speed_change * 4)
 	else: 
 		max_speed = lerpf(max_speed, max_speed_drive, speed_change * 4)
-		if $AnimationPlayer.current_animation != "idle":
-			$AnimationPlayer.current_animation = "idle"
 	if Input.is_action_pressed("up_arrow"):
 		speed_to = max_speed * acceleration
 	if Input.is_action_pressed("down_arrow"):
@@ -72,7 +68,6 @@ func get_input():
 		steer_to = -max_steer
 	if Input.is_action_pressed("space"):
 		get_drift()
-	print($AnimationPlayer.current_animation)
 	get_physics(speed_to, steer_to)
 
 

@@ -7,17 +7,17 @@ func on_enter() -> void:
 
 
 # Called every frame when this state is active.
-func on_process(delta: float) -> void:
+func on_process(_delta: float) -> void:
 	pass
 
 
 # Called every physics frame when this state is active.
-func on_physics_process(delta: float) -> void:
+func on_physics_process(_delta: float) -> void:
 	pass
 
 
-# Called when there is an input event while this state is active.
-func on_input(event: InputEvent) -> void:
+# Called when there is an input _event while this state is active.
+func on_input(_event: InputEvent) -> void:
 	pass
 
 
