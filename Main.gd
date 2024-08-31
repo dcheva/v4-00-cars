@@ -5,6 +5,7 @@ extends Node2D
 @onready var player_driver_timer := $Player/DrawTrack
 @onready var npc_driver_timer := $NPC/DrawTrack
 @onready var generator = $proc_gen_world
+@onready var label = $Canvas/Control/Label
 
 # @TODO preload settings
 @export var cam_sensitivity = 0.05
@@ -47,7 +48,7 @@ func _on_Player_set_hud():
 
 
 func set_label(args):
-	var l = $Canvas/Control/Label
+	var l = label
 	l.text =  "X,.Y.....: %s, %s\n" % [int(args[0][0]), int(args[0][1])]
 	l.text += "Speed....: %s\n" % int(args[3])
 	l.text += "Steering.: %s\n" % int(args[4])
