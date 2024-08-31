@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://dq83bbgjp2u0q"]
+[gd_scene load_steps=16 format=3 uid="uid://dq83bbgjp2u0q"]
 
 [ext_resource type="Texture2D" uid="uid://dir7cluak2a2a" path="res://art/car-00.png" id="1"]
 [ext_resource type="Script" path="res://Player.gd" id="2"]
@@ -7,12 +7,6 @@
 [ext_resource type="AudioStream" uid="uid://bslaucjxv7000" path="res://loops/load_end.wav" id="5_becrd"]
 [ext_resource type="AudioStream" uid="uid://dmrxemwyrottv" path="res://loops/motor.wav" id="6_dcnpj"]
 [ext_resource type="AudioStream" uid="uid://bbnu7liew433t" path="res://loops/power.wav" id="7_84by6"]
-[ext_resource type="Script" path="res://addons/finite_state_machine/scripts/finite_state_machine.gd" id="8_6kwm3"]
-[ext_resource type="Script" path="res://FSM/start.gd" id="8_f3qwu"]
-[ext_resource type="Script" path="res://FSM/idle.gd" id="9_tovbn"]
-[ext_resource type="Script" path="res://FSM/power.gd" id="10_jo22m"]
-[ext_resource type="Script" path="res://FSM/load.gd" id="11_ypnxo"]
-[ext_resource type="Script" path="res://FSM/stop.gd" id="12_v6ghu"]
 
 [sub_resource type="RectangleShape2D" id="1"]
 size = Vector2(42, 58)
@@ -780,27 +774,6 @@ scale_amount_min = 2.0
 scale_amount_max = 4.0
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Animations"]
-
-[node name="FiniteStateMachine2" type="Node" parent="." node_paths=PackedStringArray("current_state", "animation_player")]
-script = ExtResource("8_6kwm3")
-current_state = NodePath("Start")
-animation_player = NodePath("../AnimationPlayer")
-
-[node name="Start" type="Node" parent="FiniteStateMachine2" node_paths=PackedStringArray("player")]
-script = ExtResource("8_f3qwu")
-player = NodePath("../..")
-
-[node name="Idle" type="Node" parent="FiniteStateMachine2"]
-script = ExtResource("9_tovbn")
-
-[node name="Power" type="Node" parent="FiniteStateMachine2"]
-script = ExtResource("10_jo22m")
-
-[node name="Load" type="Node" parent="FiniteStateMachine2"]
-script = ExtResource("11_ypnxo")
-
-[node name="Stop" type="Node" parent="FiniteStateMachine2"]
-script = ExtResource("12_v6ghu")
 
 [connection signal="timeout" from="DrawTrack" to="." method="_on_draw_track_timeout"]
 [connection signal="timeout" from="idleTimer" to="." method="_on_idle_timer_timeout"]
