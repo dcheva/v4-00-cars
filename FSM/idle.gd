@@ -1,11 +1,20 @@
 extends FSMState
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
+# Executes after the state is entered.
+func _on_enter(actor, _blackboard: Blackboard):
+	# Cast actor
+	actor = actor as CharacterBody2D
+	print_debug()
+	
+	actor.animation_player.play("idle")
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+# Executes every _process call, if the state is active.
+func _on_update(_delta, _actor, _blackboard: Blackboard):
+	pass
+
+
+# Executes before the state is exited.
+func _on_exit(_actor, _blackboard: Blackboard):
 	pass
