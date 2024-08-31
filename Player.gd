@@ -27,10 +27,12 @@ signal set_draw_timer
 @export var Track_S = preload("res://Track_S.tscn")
 @export var Track_L = preload("res://Track_L.tscn")
 
+@onready var animation_player = $AnimationPlayer
+@onready var state_machine := $FiniteStateMachine
+
 
 func _ready():
-	$AnimationPlayer.play("Start")
-	
+	state_machine.start()
 
 
 func _physics_process(delta):
@@ -42,12 +44,12 @@ func _physics_process(delta):
 	set_hud.emit()
 
 
-func set_animation(string_name: StringName) -> CharacterBody2D:
-	$AnimationPlayer.current_animation = string_name
-	return self
-
-func play_animation() -> void:
-	$AnimationPlayer.call_deferred("play")
+#func set_animation(string_name: StringName) -> CharacterBody2D:
+	#animation_player.current_animation = string_name
+	#return self
+#
+#func play_animation() -> void:
+	#animation_player.call_deferred("play")
 
 
 func get_input():
@@ -123,7 +125,3 @@ func draw_track_timer_formula():
 
 func _on_draw_track_timeout() -> void:
 	get_tree().get_root().get_node("Main")._on_draw_track_timeout("Main/Player")
-
-
-func _on_idle_timer_timeout() -> void:
-	$AnimationPlayer.play("idle")
