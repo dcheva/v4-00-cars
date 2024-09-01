@@ -128,31 +128,34 @@ func generate_world() -> void:
 	print("+drawn : %s" % drawn)
 
 
-func draw_wall(coords: Vector2i, wall_direction, wall_length) -> int: 
+func draw_wall(global_coords: Vector2i, wall_direction, wall_length) -> int: 
 
 	wall_direction = 1
 	var _id = wall_direction + 1
 	
-	var shift: Vector2i
-	var _coords: Vector2i
-	var tiles = []
-	var tiles_end = []
+	#!!! Starting point in the tilemap
+	var tilemap_start: Vector2i
+	var tilemap_shift: Vector2i
+	var tilemap_tiles = []
+	var tilemap_tiles_end = []
 
 	# Frow NE to SW
 	if wall_direction == 0:
-		shift = Vector2i(-1,1)
+		tilemap_start = Vector2i(3,0)
+		tilemap_shift = Vector2i(-1,1)
 		# start tiles (3,0) (3,1) (2,0)
-		tiles = [Vector2i(0,0), Vector2i(0,1), Vector2i(-1,0)]
+		tilemap_tiles = [Vector2i(0,0), Vector2i(0,1), Vector2i(-1,0)]
 		# end tiles (0,2) (0,3) (1,3) (1,2)  
-		tiles_end = [Vector2i(0,-1), Vector2i(0,0), Vector2i(1,0), Vector2i(1,-1)]
+		tilemap_tiles_end = [Vector2i(0,-1), Vector2i(0,0), Vector2i(1,0), Vector2i(1,-1)]
 		
 	# Frow NW to SE
 	if wall_direction == 1:
-		shift = Vector2i(1,1)
+		tilemap_start = Vector2i(0,0)
+		tilemap_shift = Vector2i(1,1)
 		# start tiles (0,0) (0,1) (1,0)
-		tiles = [Vector2i(0,0), Vector2i(0,1), Vector2i(1,0)]
+		tilemap_tiles = [Vector2i(0,0), Vector2i(0,1), Vector2i(1,0)]
 		# end tiles (2,2) (2,3) (3,2) (3,3)  
-		tiles_end = [Vector2i(0,0), Vector2i(0,1), Vector2i(1,0), Vector2i(1,1)]
+		tilemap_tiles_end = [Vector2i(0,0), Vector2i(0,1), Vector2i(1,0), Vector2i(1,1)]
 		
 	# deploy next
 	#if wall_direction == 2:
@@ -160,19 +163,20 @@ func draw_wall(coords: Vector2i, wall_direction, wall_length) -> int:
 	#if wall_direction == 3:
 		#shift = Vector2i(0,-1)
 		
+	# Start check/set cells
 	# check first
 	for checked in [false, true]:
-		# start tiles
-		_coords = Vector2i(3,0)
-		for n in tiles.size():
+		## starting tiles
+		for n in tilemap_tiles.size():
 			if not checked:
-				if $StaticTileMapLayer.get_cell_tile_data(coords + tiles[n]):
+				if $StaticTileMapLayer.get_cell_tile_data(global_coords + tilemap_tiles[n]):
 					return 0
 			else:
-				print("%s %s %s %s" % [coords, tiles[n], _id, _coords])
-				$StaticTileMapLayer.set_cell(coords + tiles[n], _id, _coords + tiles[n])
+				print("%s %s %s %s" % [global_coords, tilemap_tiles[n], _id, tilemap_start])
+				$StaticTileMapLayer.set_cell(
+					global_coords + tilemap_tiles[n], _id, tilemap_start + tilemap_tiles[n])
 				
-		## repeat in length
+		## repeating in length
 		#_coords = Vector2i(2,1)
 		#for i in range(1, wall_length - 1):
 			#for n in tiles.size():
@@ -182,7 +186,7 @@ func draw_wall(coords: Vector2i, wall_direction, wall_length) -> int:
 				#else:
 					#$StaticTileMapLayer.set_cell(coords + tiles[n] + shift * i, _id, _coords + tiles[n] + shift)
 		#
-		## end tiles
+		## ending tiles
 		#_coords = Vector2i(0,3)
 		#for n in tiles_end.size():
 				#if not checked:
