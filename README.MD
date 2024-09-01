@@ -43,5 +43,3 @@
 - ~~Start adding statics~~
 - Deploy FSM from BehaviourToolkit
 - Implement basic states and transitions
-* /fsm-bt/ Start implement BT
-* /sounds/ Realize fully-functional code-controlled AnimationPlayer with various engine sounds dependent on engine RPM

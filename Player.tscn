@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://dq83bbgjp2u0q"]
+[gd_scene load_steps=21 format=3 uid="uid://dq83bbgjp2u0q"]
 
 [ext_resource type="Texture2D" uid="uid://dir7cluak2a2a" path="res://art/car-00.png" id="1"]
 [ext_resource type="Script" path="res://Player.gd" id="2"]
@@ -9,22 +9,7 @@
 [ext_resource type="AudioStream" uid="uid://crk0beghyiyc8" path="res://loops/engine_off.wav" id="6_inyy0"]
 [ext_resource type="AudioStream" uid="uid://bq1al3jdlq8jh" path="res://loops/exhaust_idle.wav" id="7_2kicv"]
 [ext_resource type="AudioStream" uid="uid://d3vhb88sf1sc" path="res://loops/gear_air_1.wav" id="8_1o5vi"]
-[ext_resource type="Script" path="res://FSM/finite_state_machine.gd" id="10_id2dq"]
-[ext_resource type="Script" path="res://addons/behaviour_toolkit/blackboard.gd" id="11_5likt"]
-[ext_resource type="Script" path="res://FSM/Start.gd" id="11_f53fg"]
-[ext_resource type="Script" path="res://FSM/Started.gd" id="12_x7piy"]
-[ext_resource type="Script" path="res://FSM/idle.gd" id="14_xc6i6"]
-[ext_resource type="Script" path="res://FSM/on_load.gd" id="15_q6gc4"]
-[ext_resource type="Script" path="res://FSM/on_power.gd" id="16_6e7y2"]
-[ext_resource type="Script" path="res://FSM/Load.gd" id="16_bc2uk"]
-[ext_resource type="Script" path="res://FSM/on_run.gd" id="17_jhg1u"]
-[ext_resource type="Script" path="res://FSM/Power.gd" id="19_fbrq2"]
-[ext_resource type="Script" path="res://FSM/load_on_idle.gd" id="19_mfnqc"]
-[ext_resource type="Script" path="res://FSM/Run.gd" id="20_unmej"]
-[ext_resource type="Script" path="res://FSM/power_on_idle.gd" id="21_a7ar8"]
-[ext_resource type="Script" path="res://FSM/power_on_load.gd" id="21_nngyl"]
-[ext_resource type="Script" path="res://FSM/run_on_idle.gd" id="23_3iw23"]
-[ext_resource type="Script" path="res://FSM/run_on_load.gd" id="24_ewkil"]
+[ext_resource type="PackedScene" uid="uid://dk21lve4cidf2" path="res://finite_state_machine.tscn" id="10_pi5mk"]
 
 [sub_resource type="RectangleShape2D" id="1"]
 size = Vector2(42, 58)
@@ -215,10 +200,10 @@ tracks/5/path = NodePath("Animations/CPUParticles2D1:modulate")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.0333333),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 0.0333333, 8.43333),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Color(1, 0, 0, 0), Color(1, 0, 0, 0.6)]
+"values": [Color(1, 0, 0, 0), Color(1, 0, 1, 0.6), Color(1, 0, 1, 0.6)]
 }
 tracks/6/type = "value"
 tracks/6/imported = false
@@ -239,10 +224,10 @@ tracks/7/path = NodePath("Animations/CPUParticles2D2:modulate")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
-"times": PackedFloat32Array(0, 0.0333333),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 0.0333333, 8.43333),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Color(1, 0, 0, 0), Color(1, 0, 0, 0.6)]
+"values": [Color(1, 0, 0, 0), Color(1, 0, 1, 0.6), Color(1, 0, 1, 0.6)]
 }
 tracks/8/type = "audio"
 tracks/8/imported = false
@@ -343,10 +328,10 @@ tracks/5/path = NodePath("Animations/CPUParticles2D1:modulate")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.0333333),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 0.0333333, 7.73333),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 0, 0, 0.6)]
+"values": [Color(1, 1, 1, 0), Color(1, 0, 0, 0.6), Color(1, 0, 0, 0.6)]
 }
 tracks/6/type = "value"
 tracks/6/imported = false
@@ -367,10 +352,10 @@ tracks/7/path = NodePath("Animations/CPUParticles2D2:modulate")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
-"times": PackedFloat32Array(0, 0.0333333),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 0.0333333, 7.73333),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 0, 0, 0.6)]
+"values": [Color(1, 1, 1, 0), Color(1, 0, 0, 0.6), Color(1, 0, 0, 0.6)]
 }
 tracks/8/type = "audio"
 tracks/8/imported = false
@@ -597,10 +582,10 @@ tracks/5/path = NodePath("Animations/CPUParticles2D1:modulate")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.0333333),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 0.0333333, 11.3333),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 0.517647, 0, 0.6)]
+"values": [Color(1, 1, 1, 0), Color(1, 0.517647, 0, 0.6), Color(1, 0.517647, 0, 0.6)]
 }
 tracks/6/type = "value"
 tracks/6/imported = false
@@ -621,10 +606,10 @@ tracks/7/path = NodePath("Animations/CPUParticles2D2:modulate")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
-"times": PackedFloat32Array(0, 0.0333333),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 0.0333333, 11.3333),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 0.517647, 0, 0.6)]
+"values": [Color(1, 1, 1, 0), Color(1, 0.517647, 0, 0.6), Color(1, 0.517647, 0, 0.6)]
 }
 tracks/8/type = "audio"
 tracks/8/imported = false
@@ -955,10 +940,10 @@ tracks/5/path = NodePath("Animations/CPUParticles2D1:modulate")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 5.36667),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 0.2)]
+"values": [Color(1, 1, 1, 0.2), Color(1, 1, 1, 0.2)]
 }
 tracks/6/type = "value"
 tracks/6/imported = false
@@ -979,10 +964,10 @@ tracks/7/path = NodePath("Animations/CPUParticles2D2:modulate")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 5.4),
+"transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 0.2)]
+"values": [Color(1, 1, 1, 0.2), Color(1, 1, 1, 0.2)]
 }
 tracks/8/type = "audio"
 tracks/8/imported = false
@@ -1023,10 +1008,6 @@ _data = {
 "Stop": SubResource("Animation_4puvq"),
 "idle": SubResource("Animation_7f60f")
 }
-
-[sub_resource type="Resource" id="Resource_ov6wc"]
-script = ExtResource("11_5likt")
-content = {}
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("2")
@@ -1094,62 +1075,8 @@ scale_amount_max = 4.0
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Animations"]
 
-[node name="FiniteStateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state", "actor")]
-script = ExtResource("10_id2dq")
-initial_state = NodePath("Start")
+[node name="FiniteStateMachine" parent="." node_paths=PackedStringArray("actor") instance=ExtResource("10_pi5mk")]
 actor = NodePath("..")
-blackboard = SubResource("Resource_ov6wc")
-
-[node name="Start" type="Node" parent="FiniteStateMachine"]
-script = ExtResource("11_f53fg")
-
-[node name="Started" type="Node" parent="FiniteStateMachine/Start" node_paths=PackedStringArray("next_state")]
-script = ExtResource("12_x7piy")
-next_state = NodePath("../../Idle")
-
-[node name="Idle" type="Node" parent="FiniteStateMachine"]
-script = ExtResource("14_xc6i6")
-
-[node name="onLoad" type="Node" parent="FiniteStateMachine/Idle" node_paths=PackedStringArray("next_state")]
-script = ExtResource("15_q6gc4")
-next_state = NodePath("../../Load")
-
-[node name="onPower" type="Node" parent="FiniteStateMachine/Idle" node_paths=PackedStringArray("next_state")]
-script = ExtResource("16_6e7y2")
-next_state = NodePath("../../Power")
-
-[node name="onRun" type="Node" parent="FiniteStateMachine/Idle" node_paths=PackedStringArray("next_state")]
-script = ExtResource("17_jhg1u")
-next_state = NodePath("../../Run")
-
-[node name="Load" type="Node" parent="FiniteStateMachine"]
-script = ExtResource("16_bc2uk")
-
-[node name="LoadOnIdle" type="Node" parent="FiniteStateMachine/Load" node_paths=PackedStringArray("next_state")]
-script = ExtResource("19_mfnqc")
-next_state = NodePath("../../Idle")
-
-[node name="Power" type="Node" parent="FiniteStateMachine"]
-script = ExtResource("19_fbrq2")
-
-[node name="PowerOnLoad" type="Node" parent="FiniteStateMachine/Power" node_paths=PackedStringArray("next_state")]
-script = ExtResource("21_nngyl")
-next_state = NodePath("../../Load")
-
-[node name="PowerOnIdle" type="Node" parent="FiniteStateMachine/Power" node_paths=PackedStringArray("next_state")]
-script = ExtResource("21_a7ar8")
-next_state = NodePath("../../Idle")
-
-[node name="Run" type="Node" parent="FiniteStateMachine"]
-script = ExtResource("20_unmej")
-
-[node name="RunOnLoad" type="Node" parent="FiniteStateMachine/Run" node_paths=PackedStringArray("next_state")]
-script = ExtResource("24_ewkil")
-next_state = NodePath("../../Load")
-
-[node name="RunOnIdle" type="Node" parent="FiniteStateMachine/Run" node_paths=PackedStringArray("next_state")]
-script = ExtResource("23_3iw23")
-next_state = NodePath("../../Idle")
 
 [connection signal="timeout" from="DrawTrack" to="." method="_on_draw_track_timeout"]
 [connection signal="timeout" from="idleTimer" to="." method="_on_idle_timer_timeout"]
