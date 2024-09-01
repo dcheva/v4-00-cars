@@ -40,7 +40,7 @@
 - Merge refactored Okama barber into initial
 - Remove redundant raycast and other logic
 - Add Timers and Triggers for generator.find_path
-- ~~Start adding statics~~
 - Deploy FSM from BehaviourToolkit
 - Implement basic states and transitions
 - Try to commit as cheva@github
+- Change Physics FPS to 30
