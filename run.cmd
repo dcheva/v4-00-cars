@@ -1,1 +1,1 @@
-godot4 -d Main.tscn
+godot4 Main.tscn
