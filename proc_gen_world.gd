@@ -169,7 +169,7 @@ func draw_wall(global_coords: Vector2i, wall_direction, wall_length) -> int:
 		# start tiles (0,0) (0,1) (1,0)
 		tilemap_tiles = [Vector2i(0,-1), Vector2i(0,0), Vector2i(-1,0)]
 		# end tiles (2,2) (2,3) (3,2) (3,3)  
-		tilemap_tiles_end = [Vector2i(1,1), Vector2i(1,2), Vector2i(2,1), Vector2i(2,2)]
+		tilemap_tiles_end = [Vector2i(0,0), Vector2i(0,1), Vector2i(1,0), Vector2i(1,1)]
 		
 	# deploy next
 	#if wall_direction == 2:
@@ -210,20 +210,20 @@ func draw_wall(global_coords: Vector2i, wall_direction, wall_length) -> int:
 						#wall_source_id, 
 						#shifted_start + tilemap_tiles[n] + tilemap_shift)
 
-		### ending tiles
-		#shifted_start = tilemap_start + tilemap_shift * (tilemap_width)
-		#for n in tilemap_tiles_end.size():
-			#var static_tilemap_coords = Vector2i(
-					#global_coords + tilemap_tiles_end[n] + tilemap_shift * wall_length)
-			## check first
-			#if not checked:
-				#if static_tilemap_layer.get_used_cells().has(static_tilemap_coords):
-					#return 0
-			#else:
-				#static_tilemap_layer.set_cell(
-					#static_tilemap_coords, 
-					#wall_source_id, 
-					#shifted_start + tilemap_tiles_end[n])
+		## ending tiles
+		shifted_start = tilemap_start + tilemap_shift * (tilemap_width)
+		for n in tilemap_tiles_end.size():
+			var static_tilemap_coords = Vector2i(
+					global_coords + tilemap_tiles_end[n] + tilemap_shift * wall_length)
+			# check first
+			if not checked:
+				if static_tilemap_layer.get_used_cells().has(static_tilemap_coords):
+					return 0
+			else:
+				static_tilemap_layer.set_cell(
+					static_tilemap_coords, 
+					wall_source_id, 
+					shifted_start + tilemap_tiles_end[n])
 	# Finished: +1
 	return 1
 	
