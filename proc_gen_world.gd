@@ -23,12 +23,6 @@ var grassd: int
 var cente: float = 0.25
 var noise_array: Array
 
-var source_id = 0
-var atlas_size = 8
-var gravel_atlas = Vector2i(atlas_size * 0, 0)
-var ground_atlas = Vector2i(atlas_size * 1, 0)
-var grassd_atlas = Vector2i(atlas_size * 2, 0)
-var grassg_atlas = Vector2i(atlas_size * 3, 0)
 
 func _ready() -> void:
 	half_chunk = g.half_chunk(chunk_size)
@@ -46,35 +40,44 @@ func generate_world() -> void:
 	var margin
 	
 	# Pass 1 - Draw ground tiles
+	margin = 0
+	var ground_source_id = 0
+	var ground_atlas_size = 8
+	var gravel_atlas = Vector2i(ground_atlas_size * 0, 0)
+	var ground_atlas = Vector2i(ground_atlas_size * 1, 0)
+	var grassd_atlas = Vector2i(ground_atlas_size * 2, 0)
+	var grassg_atlas = Vector2i(ground_atlas_size * 3, 0)
+	
 	for x in range(-half_chunk, half_chunk):
 		for y in range(-half_chunk, half_chunk):
 			
 			noise_val = noise.get_noise_2d(x, y)
 			kk = noise_val * 999999
 			noise_array.append(noise_val)
-			vpos = Vector2i(posmod(x, atlas_size),posmod(y, atlas_size))
+			vpos = Vector2i(posmod(x, ground_atlas_size),posmod(y, ground_atlas_size))
 			
 			if noise_val < 0:
 				if noise_val < -cente:
 					gravel += 1
 					# gravel
-					$TileMapLayer.set_cell(Vector2i(x, y), source_id, gravel_atlas + vpos)
+					$TileMapLayer.set_cell(Vector2i(x, y), ground_source_id, gravel_atlas + vpos)
 				else:
 					ground += 1
 					# ground
-					$TileMapLayer.set_cell(Vector2i(x, y), source_id, ground_atlas + vpos)
+					$TileMapLayer.set_cell(Vector2i(x, y), ground_source_id, ground_atlas + vpos)
 			else:
 				if noise_val > cente:
 					grassg += 1
 					# grassg
-					$TileMapLayer.set_cell(Vector2i(x, y), source_id, grassg_atlas + vpos)
+					$TileMapLayer.set_cell(Vector2i(x, y), ground_source_id, grassg_atlas + vpos)
 				else:
 					grassd += 1
 					# grassd
-					$TileMapLayer.set_cell(Vector2i(x, y), source_id, grassd_atlas + vpos)
+					$TileMapLayer.set_cell(Vector2i(x, y), ground_source_id, grassd_atlas + vpos)
 			
 	# Pass 2 Add piles 
 	margin = 1
+	var piles_source_id = 1
 	var range_from = -quarter_chunk + margin
 	var range_to   =  quarter_chunk - margin
 	for x in range(range_from, range_to):
@@ -86,7 +89,7 @@ func generate_world() -> void:
 				if !$StaticTileMapLayer.get_cell_tile_data(Vector2i(x, y)):
 					piles += 1
 					$StaticTileMapLayer.set_cell(Vector2i(x, y), 
-						source_id, Vector2i(0, posmod(kk,  16)))
+						piles_source_id, Vector2i(0, posmod(kk,  16)))
 	
 	# Pass 3 Add walls 
 	margin = 6
@@ -132,7 +135,7 @@ func draw_wall(global_coords: Vector2i, wall_direction, wall_length) -> int:
 	
 	wall_direction = wall_direction % 2 
 	# Tileset Source ID
-	var source_id = wall_direction + 1
+	var wall_source_id = wall_direction + 1
 	
 	#!!! Starting point in the tilemap
 	var tilemap_width: int
@@ -180,7 +183,7 @@ func draw_wall(global_coords: Vector2i, wall_direction, wall_length) -> int:
 					return 0
 			else:
 				$StaticTileMapLayer.set_cell(
-					global_coords + tilemap_tiles[n], source_id, 
+					global_coords + tilemap_tiles[n], wall_source_id, 
 					tilemap_start + tilemap_tiles[n])
 
 		## repeating in length
@@ -193,8 +196,9 @@ func draw_wall(global_coords: Vector2i, wall_direction, wall_length) -> int:
 						return 0
 				else:
 					$StaticTileMapLayer.set_cell(
-						global_coords + tilemap_tiles[n] + tilemap_shift * i, source_id, 
+						global_coords + tilemap_tiles[n] + tilemap_shift * i, wall_source_id, 
 						shifted_start + tilemap_tiles[n] + tilemap_shift)
+				pass
 
 		## ending tiles
 		shifted_start = tilemap_start + tilemap_shift * (tilemap_width - 1) # 0..2
@@ -205,7 +209,7 @@ func draw_wall(global_coords: Vector2i, wall_direction, wall_length) -> int:
 						return 0
 				else:
 					$StaticTileMapLayer.set_cell(
-						global_coords + tilemap_tiles_end[n] + tilemap_shift * wall_length, source_id, 
+						global_coords + tilemap_tiles_end[n] + tilemap_shift * wall_length, wall_source_id, 
 						shifted_start + tilemap_tiles_end[n])
 	
 	return 1
