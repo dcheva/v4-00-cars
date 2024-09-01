@@ -1,0 +1,79 @@
+[gd_scene load_steps=18 format=3 uid="uid://dk21lve4cidf2"]
+
+[ext_resource type="Script" path="res://FSM/finite_state_machine.gd" id="1_fqqn5"]
+[ext_resource type="Script" path="res://addons/behaviour_toolkit/blackboard.gd" id="2_uaops"]
+[ext_resource type="Script" path="res://FSM/Start.gd" id="3_nmde2"]
+[ext_resource type="Script" path="res://FSM/Started.gd" id="4_y2lv2"]
+[ext_resource type="Script" path="res://FSM/idle.gd" id="5_bt0ft"]
+[ext_resource type="Script" path="res://FSM/on_load.gd" id="6_nagpr"]
+[ext_resource type="Script" path="res://FSM/on_power.gd" id="7_wag6b"]
+[ext_resource type="Script" path="res://FSM/on_run.gd" id="8_3i0sv"]
+[ext_resource type="Script" path="res://FSM/Load.gd" id="9_1g5jy"]
+[ext_resource type="Script" path="res://FSM/load_on_idle.gd" id="10_8xkcf"]
+[ext_resource type="Script" path="res://FSM/Power.gd" id="11_1hgj4"]
+[ext_resource type="Script" path="res://FSM/power_on_load.gd" id="12_ocaeg"]
+[ext_resource type="Script" path="res://FSM/power_on_idle.gd" id="13_h6ly2"]
+[ext_resource type="Script" path="res://FSM/Run.gd" id="14_rd3xr"]
+[ext_resource type="Script" path="res://FSM/run_on_load.gd" id="15_c2l3q"]
+[ext_resource type="Script" path="res://FSM/run_on_idle.gd" id="16_8idrs"]
+
+[sub_resource type="Resource" id="Resource_ov6wc"]
+script = ExtResource("2_uaops")
+content = {}
+
+[node name="FiniteStateMachine" type="Node" node_paths=PackedStringArray("initial_state", "actor")]
+script = ExtResource("1_fqqn5")
+initial_state = NodePath("Start")
+actor = NodePath("")
+blackboard = SubResource("Resource_ov6wc")
+
+[node name="Start" type="Node" parent="."]
+script = ExtResource("3_nmde2")
+
+[node name="Started" type="Node" parent="Start" node_paths=PackedStringArray("next_state")]
+script = ExtResource("4_y2lv2")
+next_state = NodePath("../../Idle")
+
+[node name="Idle" type="Node" parent="."]
+script = ExtResource("5_bt0ft")
+
+[node name="onLoad" type="Node" parent="Idle" node_paths=PackedStringArray("next_state")]
+script = ExtResource("6_nagpr")
+next_state = NodePath("../../Load")
+
+[node name="onPower" type="Node" parent="Idle" node_paths=PackedStringArray("next_state")]
+script = ExtResource("7_wag6b")
+next_state = NodePath("../../Power")
+
+[node name="onRun" type="Node" parent="Idle" node_paths=PackedStringArray("next_state")]
+script = ExtResource("8_3i0sv")
+next_state = NodePath("../../Run")
+
+[node name="Load" type="Node" parent="."]
+script = ExtResource("9_1g5jy")
+
+[node name="LoadOnIdle" type="Node" parent="Load" node_paths=PackedStringArray("next_state")]
+script = ExtResource("10_8xkcf")
+next_state = NodePath("../../Idle")
+
+[node name="Power" type="Node" parent="."]
+script = ExtResource("11_1hgj4")
+
+[node name="PowerOnLoad" type="Node" parent="Power" node_paths=PackedStringArray("next_state")]
+script = ExtResource("12_ocaeg")
+next_state = NodePath("../../Load")
+
+[node name="PowerOnIdle" type="Node" parent="Power" node_paths=PackedStringArray("next_state")]
+script = ExtResource("13_h6ly2")
+next_state = NodePath("../../Idle")
+
+[node name="Run" type="Node" parent="."]
+script = ExtResource("14_rd3xr")
+
+[node name="RunOnLoad" type="Node" parent="Run" node_paths=PackedStringArray("next_state")]
+script = ExtResource("15_c2l3q")
+next_state = NodePath("../../Load")
+
+[node name="RunOnIdle" type="Node" parent="Run" node_paths=PackedStringArray("next_state")]
+script = ExtResource("16_8idrs")
+next_state = NodePath("../../Idle")
