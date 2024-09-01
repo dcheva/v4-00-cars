@@ -8,7 +8,7 @@
 ### STATICS
 * Add 3 more walls
 * Redraw walls tileset
-* Add City spawner
+* Add City and its spawner
 ### NPC
 * Potato targets to hunt (groups, FSM and BT)
 * Hunting design - NPC helper roles, logic and gameplay, goals
