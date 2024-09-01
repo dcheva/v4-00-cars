@@ -5,7 +5,7 @@ extends FSMState
 func _on_enter(actor, _blackboard: Blackboard):
 	# Cast actor
 	actor = actor as CharacterBody2D
-	print_debug()
+	#print_debug()
 	
 	actor.animation_player.play("idle")
 

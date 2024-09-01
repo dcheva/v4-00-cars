@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://dq83bbgjp2u0q"]
+[gd_scene load_steps=37 format=3 uid="uid://dq83bbgjp2u0q"]
 
 [ext_resource type="Texture2D" uid="uid://dir7cluak2a2a" path="res://art/car-00.png" id="1"]
 [ext_resource type="Script" path="res://Player.gd" id="2"]
@@ -14,9 +14,17 @@
 [ext_resource type="Script" path="res://FSM/Start.gd" id="11_f53fg"]
 [ext_resource type="Script" path="res://FSM/Started.gd" id="12_x7piy"]
 [ext_resource type="Script" path="res://FSM/idle.gd" id="14_xc6i6"]
-[ext_resource type="Script" path="res://FSM/on_run.gd" id="15_q6gc4"]
-[ext_resource type="Script" path="res://FSM/Run.gd" id="16_bc2uk"]
-[ext_resource type="Script" path="res://FSM/on_idle.gd" id="17_ae2y5"]
+[ext_resource type="Script" path="res://FSM/on_load.gd" id="15_q6gc4"]
+[ext_resource type="Script" path="res://FSM/on_power.gd" id="16_6e7y2"]
+[ext_resource type="Script" path="res://FSM/Load.gd" id="16_bc2uk"]
+[ext_resource type="Script" path="res://FSM/on_run.gd" id="17_jhg1u"]
+[ext_resource type="Script" path="res://FSM/Power.gd" id="19_fbrq2"]
+[ext_resource type="Script" path="res://FSM/load_on_idle.gd" id="19_mfnqc"]
+[ext_resource type="Script" path="res://FSM/Run.gd" id="20_unmej"]
+[ext_resource type="Script" path="res://FSM/power_on_idle.gd" id="21_a7ar8"]
+[ext_resource type="Script" path="res://FSM/power_on_load.gd" id="21_nngyl"]
+[ext_resource type="Script" path="res://FSM/run_on_idle.gd" id="23_3iw23"]
+[ext_resource type="Script" path="res://FSM/run_on_load.gd" id="24_ewkil"]
 
 [sub_resource type="RectangleShape2D" id="1"]
 size = Vector2(42, 58)
@@ -138,7 +146,7 @@ tracks/8/use_blend = true
 
 [sub_resource type="Animation" id="Animation_tr81x"]
 resource_name = "Load"
-length = 11.0
+length = 8.45
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -245,7 +253,7 @@ tracks/8/loop_wrap = true
 tracks/8/keys = {
 "clips": [{
 "end_offset": 0.0,
-"start_offset": 0.36,
+"start_offset": 0.0,
 "stream": ExtResource("4_456wl")
 }],
 "times": PackedFloat32Array(0)
@@ -1102,15 +1110,45 @@ next_state = NodePath("../../Idle")
 [node name="Idle" type="Node" parent="FiniteStateMachine"]
 script = ExtResource("14_xc6i6")
 
-[node name="onRun" type="Node" parent="FiniteStateMachine/Idle" node_paths=PackedStringArray("next_state")]
+[node name="onLoad" type="Node" parent="FiniteStateMachine/Idle" node_paths=PackedStringArray("next_state")]
 script = ExtResource("15_q6gc4")
+next_state = NodePath("../../Load")
+
+[node name="onPower" type="Node" parent="FiniteStateMachine/Idle" node_paths=PackedStringArray("next_state")]
+script = ExtResource("16_6e7y2")
+next_state = NodePath("../../Power")
+
+[node name="onRun" type="Node" parent="FiniteStateMachine/Idle" node_paths=PackedStringArray("next_state")]
+script = ExtResource("17_jhg1u")
 next_state = NodePath("../../Run")
 
-[node name="Run" type="Node" parent="FiniteStateMachine"]
+[node name="Load" type="Node" parent="FiniteStateMachine"]
 script = ExtResource("16_bc2uk")
 
-[node name="onIdle" type="Node" parent="FiniteStateMachine/Run" node_paths=PackedStringArray("next_state")]
-script = ExtResource("17_ae2y5")
+[node name="LoadOnIdle" type="Node" parent="FiniteStateMachine/Load" node_paths=PackedStringArray("next_state")]
+script = ExtResource("19_mfnqc")
+next_state = NodePath("../../Idle")
+
+[node name="Power" type="Node" parent="FiniteStateMachine"]
+script = ExtResource("19_fbrq2")
+
+[node name="PowerOnLoad" type="Node" parent="FiniteStateMachine/Power" node_paths=PackedStringArray("next_state")]
+script = ExtResource("21_nngyl")
+next_state = NodePath("../../Load")
+
+[node name="PowerOnIdle" type="Node" parent="FiniteStateMachine/Power" node_paths=PackedStringArray("next_state")]
+script = ExtResource("21_a7ar8")
+next_state = NodePath("../../Idle")
+
+[node name="Run" type="Node" parent="FiniteStateMachine"]
+script = ExtResource("20_unmej")
+
+[node name="RunOnLoad" type="Node" parent="FiniteStateMachine/Run" node_paths=PackedStringArray("next_state")]
+script = ExtResource("24_ewkil")
+next_state = NodePath("../../Load")
+
+[node name="RunOnIdle" type="Node" parent="FiniteStateMachine/Run" node_paths=PackedStringArray("next_state")]
+script = ExtResource("23_3iw23")
 next_state = NodePath("../../Idle")
 
 [connection signal="timeout" from="DrawTrack" to="." method="_on_draw_track_timeout"]

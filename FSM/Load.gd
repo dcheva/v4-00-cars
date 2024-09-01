@@ -7,10 +7,7 @@ func _on_enter(actor, _blackboard: Blackboard):
 	actor = actor as CharacterBody2D
 	#print_debug()
 
-	actor.animation_player.play("RESET")
-	actor.animation_player.play("Start")
-	var await_time: float = actor.animation_player.current_animation_length
-	await get_tree().create_timer(await_time).timeout
+	actor.animation_player.play("Load")
 
 
 # Executes every _process call, if the state is active.

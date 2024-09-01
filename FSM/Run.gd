@@ -5,9 +5,9 @@ extends FSMState
 func _on_enter(actor, _blackboard: Blackboard):
 	# Cast actor
 	actor = actor as CharacterBody2D
-	print_debug()
+	#print_debug()
 
-	actor.animation_player.play("Power")
+	actor.animation_player.play("Run")
 
 
 # Executes every _process call, if the state is active.
