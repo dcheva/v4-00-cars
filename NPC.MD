@@ -17,4 +17,4 @@
 - Tested Working Astar in proc_gen_world now Deploy it to NPC
 - Implement !!!NPC!!! not world logic: Find the player and draw the route A*
 - Added 1. Timer trigger for generator.find_path 2. Range trigger for target mark distance
-* Implement FSM for triggers and states such as Stuck or Target Lost
+* ... Implement FSM-BT for states such as Stuck or Target Lost

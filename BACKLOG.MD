@@ -5,12 +5,5 @@
 4. Preload settings
 ---
 ### TODO NOW
-* ...A* NPC navigation 
+- A* NPC navigation 
 * Potato targets to hunt (groups, FSM and BT)
-#### Realisation:
-1. Implement !!!NPC!!! not world logic:
-  * Find the player on the minimap and draw the route A*
-  * When the player becomes visible - run one of the FollowMe algorithms:
-    * Interception
-    * Approach
-    * Pursuit

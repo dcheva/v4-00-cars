@@ -40,4 +40,8 @@
 - Merge refactored Okama barber into initial
 - Remove redundant raycast and other logic
 - Add Timers and Triggers for generator.find_path
-- Start adding statics
+- ~~Start adding statics~~
+- Deploy FSM from BehaviourToolkit
+- Implement basic states and transitions
+* /fsm-bt/ Start implement BT
+* /sounds/ Realize fully-functional code-controlled AnimationPlayer with various engine sounds dependent on engine RPM
