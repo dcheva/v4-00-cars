@@ -23,7 +23,6 @@ var gravel: int
 var ground: int
 var grassg: int
 var grassd: int
-var noise_array: Array
 var noise_val
 
 func _ready() -> void:
@@ -45,10 +44,7 @@ func generate_world() -> void:
 
 	# Print stats to console
 	var arr := [gravel, ground, grassg, grassd] 
-	var s = "gravel : %s\nground : %s\ngrassd : %s\ngrassg : %s" % arr
-	print("Min : %s" % noise_array.min())
-	print("Max : %s" % noise_array.max())
-	print("Med : %s" % g.med(noise_array))
+	print("gravel : %s\nground : %s\ngrassd : %s\ngrassg : %s" % arr)
 	print("+piles : %s" % piles)
 	print("+walls : %s" % walls)
 
@@ -64,8 +60,6 @@ func draw_ground_tiles() -> void:
 		for y in range(-half_chunk, half_chunk):
 			
 			noise_val = noise.get_noise_2d(x, y)
-			var kk = noise_val * 999999
-			noise_array.append(noise_val)
 			var vpos = Vector2i(posmod(x, ground_atlas_size),posmod(y, ground_atlas_size))
 			
 			if noise_val < 0:
