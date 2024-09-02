@@ -138,7 +138,7 @@ func generate_world() -> void:
 
 func draw_wall(global_coords: Vector2i, wall_direction, wall_length) -> int: 
 	
-	wall_direction = wall_direction % 2
+	wall_direction = wall_direction
 	# Tileset Source ID (index 0 are piles)
 	var wall_source_id = wall_direction + 1
 	
@@ -168,10 +168,17 @@ func draw_wall(global_coords: Vector2i, wall_direction, wall_length) -> int:
 		# end tiles (2,2) (2,3) (3,2) (3,3)  
 		tilemap_tiles_end = [Vector2i(1,1), Vector2i(1,2), Vector2i(2,1), Vector2i(2,2)]
 		
-	# deploy next
-	#if wall_direction == 2:
-		#shift = Vector2i(-1,-1)
-	#if wall_direction == 3:
+	# Horizontal
+	if wall_direction == 2:
+		tilemap_start = Vector2i(4,0)
+		# start tiles (4,0) (4,1) (3,0) (3,1)
+		tilemap_tiles = [Vector2i(0,0), Vector2i(0,1), Vector2i(-1,0), Vector2i(-1,1)]
+		# target tiles (2,0) (2,1) (1,0) (1,1)
+		tilemap_shift = Vector2i(-2,0)
+		# end tiles (2,2) (2,3) (3,2) (3,3)  
+		tilemap_tiles_end = [Vector2i(1,1), Vector2i(1,2), Vector2i(2,1), Vector2i(2,2)]
+	if wall_direction == 3:
+		return 0
 		#shift = Vector2i(0,-1)
 		
 	## Start check/set cells
