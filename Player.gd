@@ -108,7 +108,7 @@ func get_physics(speed_to, steer_to):
 		
 	# Play right sound
 	var sound_pitch: float = clamp(abs(speed) / opt_speed, 0.5, 2)
-	print (opt_speed, " ", sound_pitch)
+	#print (opt_speed, " ", sound_pitch)
 	$Animations/AudioStreamPlayer2D.pitch_scale = sound_pitch
 
 
