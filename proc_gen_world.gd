@@ -106,7 +106,7 @@ func generate_world() -> void:
 			kk = noise_val * 999999
 			if posmod(kk, 102) > 100: # 1%
 				# Draw lines in 4 directions (SW to N), length from 2 to 7
-				var wall_length = posmod(g.get_byte(kk, 3), 5) + 2
+				var wall_length = posmod(g.get_byte(kk, 3), 3) + 3
 				var wall_direction = posmod(g.get_byte(kk, 5), 5)
 				walls += 1
 				drawn += draw_wall(Vector2i(x, y), wall_direction, wall_length)
@@ -139,37 +139,34 @@ func generate_world() -> void:
 func draw_wall(global_coords: Vector2i, wall_direction, wall_length) -> int: 
 	
 	wall_direction = wall_direction % 2
-	wall_length = 3
 	# Tileset Source ID (index 0 are piles)
 	var wall_source_id = wall_direction + 1
 	
 	#!!! Starting point in the tilemap
-	var tilemap_width: int
 	var tilemap_start: Vector2i
 	var tilemap_shift: Vector2i
 	var tilemap_tiles = []
 	var tilemap_tiles_end = []
-	var shifted_start: Vector2i
 
 	# Frow NE to SW
 	if wall_direction == 0:
-		tilemap_width = 3
 		tilemap_start = Vector2i(3,0)
-		tilemap_shift = Vector2i(-1,1)
-		# start tiles (3,0) (3,1) (2,0)
+		# start tiles (2,0) (3,0) (3,1)
 		tilemap_tiles = [Vector2i(-1,0), Vector2i(0,0), Vector2i(0,1)]
-		# end tiles (0,2) (0,3) (1,3) (1,2)  
-		tilemap_tiles_end = [Vector2i(0,-1), Vector2i(0,0), Vector2i(1,0), Vector2i(1,-1)]
+		# target tiles (1,1) (2,1) (2,2)
+		tilemap_shift = Vector2i(-1,1)
+		# end tiles (0,2) (1,2) (1,3) (0,3)  
+		tilemap_tiles_end = [Vector2i(0,2), Vector2i(1,2), Vector2i(1,3), Vector2i(0,3)]
 		
 	# Frow NW to SE
 	if wall_direction == 1:
-		tilemap_width = 3
-		tilemap_start = Vector2i(3,3)
-		tilemap_shift = Vector2i(-1,-1)
-		# start tiles (0,0) (0,1) (1,0)
-		tilemap_tiles = [Vector2i(0,-1), Vector2i(0,0), Vector2i(-1,0)]
+		tilemap_start = Vector2i(0,0)
+		# start tiles (0,1) (0,0) (1,0)
+		tilemap_tiles = [Vector2i(0,1), Vector2i(0,0), Vector2i(1,0)]
+		# target tiles (1,2) (1,1) (2,1)
+		tilemap_shift = Vector2i(1,1)
 		# end tiles (2,2) (2,3) (3,2) (3,3)  
-		tilemap_tiles_end = [Vector2i(0,0), Vector2i(0,1), Vector2i(1,0), Vector2i(1,1)]
+		tilemap_tiles_end = [Vector2i(2,2), Vector2i(2,3), Vector2i(3,2), Vector2i(3,3)]
 		
 	# deploy next
 	#if wall_direction == 2:
@@ -194,27 +191,25 @@ func draw_wall(global_coords: Vector2i, wall_direction, wall_length) -> int:
 					tilemap_start + tilemap_tiles[n])
 				pass
 
-		### repeating in length
-		#shifted_start = tilemap_start + tilemap_shift
-		#for i in range(1, wall_length - 1):
-			#for n in tilemap_tiles.size():
-				#var static_tilemap_coords = Vector2i(
-						#global_coords + tilemap_tiles[n] + tilemap_shift * i)
-				## check first
-				#if not checked:
-					#if static_tilemap_layer.get_used_cells().has(static_tilemap_coords):
-							#return 0
-				#else:
-					#static_tilemap_layer.set_cell(
-						#static_tilemap_coords, 
-						#wall_source_id, 
-						#shifted_start + tilemap_tiles[n] + tilemap_shift)
+		## repeating in length
+		for i in range(1, wall_length - 1):
+			for n in tilemap_tiles.size():
+				var static_tilemap_coords = Vector2i(
+						global_coords + tilemap_tiles[n] + tilemap_shift * i)
+				# check first
+				if not checked:
+					if static_tilemap_layer.get_used_cells().has(static_tilemap_coords):
+							return 0
+				else:
+					static_tilemap_layer.set_cell(
+						static_tilemap_coords, 
+						wall_source_id, 
+						tilemap_start + tilemap_shift + tilemap_tiles[n])
 
 		## ending tiles
-		shifted_start = tilemap_start + tilemap_shift * (tilemap_width)
 		for n in tilemap_tiles_end.size():
 			var static_tilemap_coords = Vector2i(
-					global_coords + tilemap_tiles_end[n] + tilemap_shift * wall_length)
+					global_coords + tilemap_shift * (wall_length-2) + tilemap_tiles_end[n])
 			# check first
 			if not checked:
 				if static_tilemap_layer.get_used_cells().has(static_tilemap_coords):
@@ -223,7 +218,7 @@ func draw_wall(global_coords: Vector2i, wall_direction, wall_length) -> int:
 				static_tilemap_layer.set_cell(
 					static_tilemap_coords, 
 					wall_source_id, 
-					shifted_start + tilemap_tiles_end[n])
+					tilemap_tiles_end[n])
 	# Finished: +1
 	return 1
 	
