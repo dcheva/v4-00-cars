@@ -63,7 +63,6 @@ func get_input(delta):
 	var steer_to = steer
 	var target_vector
 	var target_direction
-	var t = ""
 	
 	# Set target to Astar point
 	if tilemap_path.size() > 0:
@@ -80,7 +79,7 @@ func get_input(delta):
 	
 	# 1. Timer trigger for generator.find_path 
 	if timer > wait:
-		tilemap_path = generator.get_pixel_path(global_position, player.global_position)
+		tilemap_path = generator.get_apath(global_position, player.global_position)
 		timer = 0.0
 	else: 
 		timer += delta
