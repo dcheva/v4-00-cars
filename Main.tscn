@@ -38,23 +38,6 @@ theme_override_font_sizes/font_size = 24
 text = "Text line 1
 Text line 2"
 
-[node name="Control2" type="Control" parent="Canvas"]
-layout_mode = 3
-anchors_preset = 0
-offset_left = 30.0
-offset_top = 20.0
-offset_right = 30.0
-offset_bottom = 20.0
-
-[node name="Label" type="Label" parent="Canvas/Control2"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 14.0
-theme_override_fonts/font = ExtResource("4_7wqwy")
-theme_override_font_sizes/font_size = 24
-text = "Text line 1
-Text line 2"
-
 [node name="intro" type="AudioStreamPlayer" parent="Canvas"]
 stream = ExtResource("5_gm17i")
 autoplay = true
