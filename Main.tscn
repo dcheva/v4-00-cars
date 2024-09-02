@@ -14,6 +14,7 @@ script = ExtResource("2")
 
 [node name="Player" parent="." instance=ExtResource("1")]
 z_index = 500
+position = Vector2(0, 176)
 
 [node name="NPC" parent="." instance=ExtResource("7_3qrdf")]
 z_index = 500
@@ -50,6 +51,7 @@ process_thread_messages = 0
 editor_description = "
 Process Priority 2 (less)
 Thread Group Order 2 (less)"
+position = Vector2(0, 8)
 
 [connection signal="set_draw_timer" from="Player" to="." method="_on_Player_set_draw_timer"]
 [connection signal="set_hud" from="Player" to="." method="_on_Player_set_hud"]

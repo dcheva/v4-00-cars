@@ -17,11 +17,12 @@ var quarter_chunk: int
 @export var noise_height_texture: NoiseTexture2D
 var noise: Noise
 
+var wall_max_length = 4
+var cente: float = 0.25
 var gravel: int
 var ground: int
 var grassg: int
 var grassd: int
-var cente: float = 0.25
 var noise_array: Array
 
 
@@ -106,7 +107,7 @@ func generate_world() -> void:
 			kk = noise_val * 999999
 			if posmod(kk, 102) > 100: # 1%
 				# Draw lines in 4 directions (SW to N), length from 2 to 7
-				var wall_length = posmod(g.get_byte(kk, 3), 3) + 3
+				var wall_length = posmod(g.get_byte(kk, 5), 5) + 1
 				var wall_direction = posmod(g.get_byte(kk, 5), 5)
 				walls += 1
 				drawn += draw_wall(Vector2i(x, y), wall_direction, wall_length)
@@ -137,8 +138,8 @@ func generate_world() -> void:
 
 
 func draw_wall(global_coords: Vector2i, wall_direction, wall_length) -> int: 
-	
-	wall_direction = wall_direction
+	print(wall_length)
+
 	# Tileset Source ID (index 0 are piles)
 	var wall_source_id = wall_direction + 1
 	
@@ -150,16 +151,18 @@ func draw_wall(global_coords: Vector2i, wall_direction, wall_length) -> int:
 
 	# Frow NE to SW
 	if wall_direction == 0:
-		tilemap_start = Vector2i(3,0)
+		wall_length = clamp(wall_length, 2, wall_max_length)
+		tilemap_start = Vector2i(0,3)
 		# start tiles (2,0) (3,0) (3,1)
-		tilemap_tiles = [Vector2i(-1,0), Vector2i(0,0), Vector2i(0,1)]
+		tilemap_tiles = [Vector2i(0,-1), Vector2i(0,0), Vector2i(1,0)]
 		# target tiles (1,1) (2,1) (2,2)
-		tilemap_shift = Vector2i(-1,1)
+		tilemap_shift = Vector2i(1,-1)
 		# end tiles (0,2) (1,2) (1,3) (0,3)  
-		tilemap_tiles_end = [Vector2i(1,1), Vector2i(2,1), Vector2i(2,2), Vector2i(1,2)]
+		tilemap_tiles_end = [Vector2i(1,1), Vector2i(1,2), Vector2i(2,2), Vector2i(2,1)]
 		
 	# Frow NW to SE
 	if wall_direction == 1:
+		wall_length = clamp(wall_length, 2, wall_max_length)
 		tilemap_start = Vector2i(0,0)
 		# start tiles (0,1) (0,0) (1,0)
 		tilemap_tiles = [Vector2i(0,0), Vector2i(0,1), Vector2i(1,0)]
@@ -170,21 +173,25 @@ func draw_wall(global_coords: Vector2i, wall_direction, wall_length) -> int:
 		
 	# Horizontal
 	if wall_direction == 2:
+		# Tiles are doublesized
+		wall_length = clamp(wall_length/2, 2, wall_max_length)
 		tilemap_start = Vector2i(5,0)
-		# start tiles (5,0) (5,1) (4,0) (4 ,1)
 		tilemap_tiles = [Vector2i(0,0), Vector2i(0,1), Vector2i(-1,0), Vector2i(-1,1)]
-		# target tiles (2,0) (2,1) (1,0) (1,1)
 		tilemap_shift = Vector2i(-2,0)
-		# end tiles (2,2) (2,3) (3,2) (3,3)  
-		tilemap_tiles_end = [Vector2i(1,0), Vector2i(1,1), Vector2i(2,0), Vector2i(2,1)]
+		tilemap_tiles_end = [Vector2i(2,0), Vector2i(2,1), Vector2i(3,0), Vector2i(3,1)]
 		
+	# Vertical
 	if wall_direction == 3:
-		return 0
-		#shift = Vector2i(0,-1)
+		# Tiles are doublesized
+		wall_length = clamp(wall_length/2 + 1, 2, wall_max_length)
+		tilemap_start = Vector2i(0,5)
+		tilemap_tiles = [Vector2i(0,0), Vector2i(1,0), Vector2i(0,-1), Vector2i(1,-1)]
+		tilemap_shift = Vector2i(0,-2)
+		tilemap_tiles_end = [Vector2i(0,2), Vector2i(1,2), Vector2i(0,3), Vector2i(1,3)]
 		
 	## Start check/set cells
 	for checked in [false, true]:
-		## starting tiles
+		### starting tiles
 		for n in tilemap_tiles.size():
 			var static_tilemap_coords = Vector2i(
 					global_coords + tilemap_tiles[n])
