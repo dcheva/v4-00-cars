@@ -102,8 +102,14 @@ func get_physics(speed_to, steer_to):
 		speed = - normal.length() * speed / collision_k
 		position = position + normal * collision_k
 
+	# Draw tracks
 	if abs(speed) > min_speed:
 		set_draw_timer.emit()
+		
+	# Play right sound
+	var sound_pitch: float = clamp(abs(speed) / opt_speed, 0.5, 2)
+	print (opt_speed, " ", sound_pitch)
+	$Animations/AudioStreamPlayer2D.pitch_scale = sound_pitch
 
 
 func draw_track_timer_formula():
