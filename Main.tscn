@@ -14,6 +14,7 @@ script = ExtResource("2")
 
 [node name="Player" parent="." instance=ExtResource("1")]
 z_index = 500
+position = Vector2(0, 176)
 
 [node name="NPC" parent="." instance=ExtResource("7_3qrdf")]
 z_index = 500
@@ -38,23 +39,6 @@ theme_override_font_sizes/font_size = 24
 text = "Text line 1
 Text line 2"
 
-[node name="Control2" type="Control" parent="Canvas"]
-layout_mode = 3
-anchors_preset = 0
-offset_left = 30.0
-offset_top = 20.0
-offset_right = 30.0
-offset_bottom = 20.0
-
-[node name="Label" type="Label" parent="Canvas/Control2"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 14.0
-theme_override_fonts/font = ExtResource("4_7wqwy")
-theme_override_font_sizes/font_size = 24
-text = "Text line 1
-Text line 2"
-
 [node name="intro" type="AudioStreamPlayer" parent="Canvas"]
 stream = ExtResource("5_gm17i")
 autoplay = true
@@ -67,6 +51,7 @@ process_thread_messages = 0
 editor_description = "
 Process Priority 2 (less)
 Thread Group Order 2 (less)"
+position = Vector2(0, 8)
 
 [connection signal="set_draw_timer" from="Player" to="." method="_on_Player_set_draw_timer"]
 [connection signal="set_hud" from="Player" to="." method="_on_Player_set_hud"]

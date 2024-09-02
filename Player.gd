@@ -44,17 +44,9 @@ func _physics_process(delta):
 	set_hud.emit()
 
 
-#func set_animation(string_name: StringName) -> CharacterBody2D:
-	#animation_player.current_animation = string_name
-	#return self
-#
-#func play_animation() -> void:
-	#animation_player.call_deferred("play")
-
-
 func get_input():
 	var speed_to = 0
-	var steer_to = steer
+	var steer_to = 0
 	
 	if Input.is_action_pressed("shift"):
 		max_speed = lerpf(max_speed, max_speed_shift, speed_change * 4)
@@ -83,20 +75,18 @@ func get_physics(speed_to, steer_to):
 	# Reverse steering
 	if speed < 0: 
 		steer_to = -steer_to
-
+		
 	# Physics with LERP
 	speed = lerpf(speed, speed_to, speed_change)
 	steer = lerpf(steer, steer_to, steer_change)
 
-	# Speed ​​steering
+	# Speed steering
 	if speed > 0:
 		speed = speed - 0.001 * abs(steer) * speed
-		if abs(speed) < opt_speed:
-			steer = steer * ((abs(speed) + opt_speed) / (2 * opt_speed))
 		if abs(speed) > opt_speed:
 			steer = steer * (max_speed - sqrt(abs(speed))) / max_speed
 			
-	# Speed limits
+	# limits
 	steer = clamp(steer, -max_steer, max_steer)
 	speed = clamp(speed, -max_speed/2.0, max_speed)
 

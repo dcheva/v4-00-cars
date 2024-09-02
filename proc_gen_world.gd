@@ -4,7 +4,8 @@ extends Node2D
 
 # Astar grid
 @onready var astar_grid = AStarGrid2D.new()
-@onready var tilemap_layer: TileMapLayer = $StaticTileMapLayer
+@onready var ground_tilemap_layer: TileMapLayer = $GroundTileMapLayer
+@onready var static_tilemap_layer: TileMapLayer = $StaticTileMapLayer
 @onready var tilemap_debug_path: Line2D = $DebugLine2D
 var static_tile_size := 64
 var tilemap_path := []
@@ -16,19 +17,14 @@ var quarter_chunk: int
 @export var noise_height_texture: NoiseTexture2D
 var noise: Noise
 
+var wall_max_length = 4
+var cente: float = 0.25
 var gravel: int
 var ground: int
 var grassg: int
 var grassd: int
-var cente: float = 0.25
 var noise_array: Array
 
-var source_id = 0
-var atlas_size = 8
-var gravel_atlas = Vector2i(atlas_size * 0, 0)
-var ground_atlas = Vector2i(atlas_size * 1, 0)
-var grassd_atlas = Vector2i(atlas_size * 2, 0)
-var grassg_atlas = Vector2i(atlas_size * 3, 0)
 
 func _ready() -> void:
 	half_chunk = g.half_chunk(chunk_size)
@@ -46,35 +42,48 @@ func generate_world() -> void:
 	var margin
 	
 	# Pass 1 - Draw ground tiles
+	margin = 0
+	var ground_source_id = 0
+	var ground_atlas_size = 8
+	var gravel_atlas = Vector2i(ground_atlas_size * 0, 0)
+	var ground_atlas = Vector2i(ground_atlas_size * 1, 0)
+	var grassd_atlas = Vector2i(ground_atlas_size * 2, 0)
+	var grassg_atlas = Vector2i(ground_atlas_size * 3, 0)
+	
 	for x in range(-half_chunk, half_chunk):
 		for y in range(-half_chunk, half_chunk):
 			
 			noise_val = noise.get_noise_2d(x, y)
 			kk = noise_val * 999999
 			noise_array.append(noise_val)
-			vpos = Vector2i(posmod(x, atlas_size),posmod(y, atlas_size))
+			vpos = Vector2i(posmod(x, ground_atlas_size),posmod(y, ground_atlas_size))
 			
 			if noise_val < 0:
 				if noise_val < -cente:
 					gravel += 1
 					# gravel
-					$TileMapLayer.set_cell(Vector2i(x, y), source_id, gravel_atlas + vpos)
+					ground_tilemap_layer.set_cell(Vector2i(x, y), 
+					ground_source_id, gravel_atlas + vpos)
 				else:
 					ground += 1
 					# ground
-					$TileMapLayer.set_cell(Vector2i(x, y), source_id, ground_atlas + vpos)
+					ground_tilemap_layer.set_cell(Vector2i(x, y), 
+					ground_source_id, ground_atlas + vpos)
 			else:
 				if noise_val > cente:
 					grassg += 1
 					# grassg
-					$TileMapLayer.set_cell(Vector2i(x, y), source_id, grassg_atlas + vpos)
+					ground_tilemap_layer.set_cell(Vector2i(x, y), 
+					ground_source_id, grassg_atlas + vpos)
 				else:
 					grassd += 1
 					# grassd
-					$TileMapLayer.set_cell(Vector2i(x, y), source_id, grassd_atlas + vpos)
+					ground_tilemap_layer.set_cell(Vector2i(x, y), 
+					ground_source_id, grassd_atlas + vpos)
 			
 	# Pass 2 Add piles 
 	margin = 1
+	var piles_source_id = 0
 	var range_from = -quarter_chunk + margin
 	var range_to   =  quarter_chunk - margin
 	for x in range(range_from, range_to):
@@ -83,10 +92,10 @@ func generate_world() -> void:
 			kk = noise_val * 999999
 			if posmod(kk,  103) > 101: # 1%
 				# check first
-				if !$StaticTileMapLayer.get_cell_tile_data(Vector2i(x, y)):
+				if !static_tilemap_layer.get_cell_tile_data(Vector2i(x, y)):
 					piles += 1
-					$StaticTileMapLayer.set_cell(Vector2i(x, y), 
-						source_id, Vector2i(0, posmod(kk,  16)))
+					static_tilemap_layer.set_cell(Vector2i(x, y), 
+						piles_source_id, Vector2i(0, posmod(kk,  16)))
 	
 	# Pass 3 Add walls 
 	margin = 6
@@ -98,20 +107,20 @@ func generate_world() -> void:
 			kk = noise_val * 999999
 			if posmod(kk, 102) > 100: # 1%
 				# Draw lines in 4 directions (SW to N), length from 2 to 7
-				var wall_length = posmod(g.get_byte(kk, 3), 5) + 2
-				var wall_direction = posmod(g.get_byte(kk, 4), 4)
+				var wall_length = posmod(g.get_byte(kk, 5), 5) + 1
+				var wall_direction = posmod(g.get_byte(kk, 5), 5)
 				walls += 1
 				drawn += draw_wall(Vector2i(x, y), wall_direction, wall_length)
 	
 	# Pass 4 Add Astar
 	# Set up parameters, then update the grid.
-	astar_grid.region = tilemap_layer.get_used_rect()
+	astar_grid.region = static_tilemap_layer.get_used_rect()
 	astar_grid.cell_size = Vector2(static_tile_size, static_tile_size)
 	astar_grid.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_ONLY_IF_NO_OBSTACLES
 	astar_grid.update()
 	# All used cells are obstacles
 	# Maybe use get_cell_tile_data(coords: Vector2i) -> get_collision_polygons_count(layer_id: int)
-	for tile in tilemap_layer.get_used_cells():
+	for tile in static_tilemap_layer.get_used_cells():
 		astar_grid.set_point_solid(tile, true)
 	# Test Astar
 	tilemap_path = astar_grid.get_point_path(Vector2i(0,0), Vector2i(-50, -50))
@@ -121,75 +130,123 @@ func generate_world() -> void:
 	var s = "gravel : %s\nground : %s\ngrassd : %s\ngrassg : %s" % [gravel, ground, grassg, grassd]
 	print("Min : %s" % noise_array.min())
 	print("Max : %s" % noise_array.max())
-	print("Med : %s" % $loader.med(noise_array))
+	print("Med : %s" % g.med(noise_array))
 	print(s)
 	print("+piles : %s" % piles)
 	print("+walls : %s" % walls)
 	print("+drawn : %s" % drawn)
 
 
-func draw_wall(coords: Vector2i, wall_direction, wall_length) -> int: 
-	wall_direction = 0
-	var _id = wall_direction + 1
-	var shift: Vector2i
-	var _coords: Vector2i
-	var tiles = []
-	var tiles_end = []
+func draw_wall(global_coords: Vector2i, wall_direction, wall_length) -> int: 
+	print(wall_length)
 
+	# Tileset Source ID (index 0 are piles)
+	var wall_source_id = wall_direction + 1
+	
+	#!!! Starting point in the tilemap
+	var tilemap_start: Vector2i
+	var tilemap_shift: Vector2i
+	var tilemap_tiles = []
+	var tilemap_tiles_end = []
+
+	# Frow NE to SW
 	if wall_direction == 0:
-		shift = Vector2i(-1,1)
-		# start tiles (3,0) (3,1) (2,0)
-		tiles = [Vector2i(0,0), Vector2i(0,1), Vector2i(-1,0)]
-		# end tiles (0,2) (0,3) (1,3) (1,2)  
-		tiles_end = [Vector2i(0,-1), Vector2i(0,0), Vector2i(1,0), Vector2i(1,-1)]
-	if wall_direction == 1:
-		shift = Vector2i(-1,0)
-	if wall_direction == 2:
-		shift = Vector2i(-1,-1)
-	if wall_direction == 3:
-		shift = Vector2i(0,-1)
+		wall_length = clamp(wall_length, 2, wall_max_length)
+		tilemap_start = Vector2i(0,3)
+		# start tiles (2,0) (3,0) (3,1)
+		tilemap_tiles = [Vector2i(0,-1), Vector2i(0,0), Vector2i(1,0)]
+		# target tiles (1,1) (2,1) (2,2)
+		tilemap_shift = Vector2i(1,-1)
+		# end tiles (0,2) (1,2) (1,3) (0,3)  
+		tilemap_tiles_end = [Vector2i(1,1), Vector2i(1,2), Vector2i(2,2), Vector2i(2,1)]
 		
-	# check first
+	# Frow NW to SE
+	if wall_direction == 1:
+		wall_length = clamp(wall_length, 2, wall_max_length)
+		tilemap_start = Vector2i(0,0)
+		# start tiles (0,1) (0,0) (1,0)
+		tilemap_tiles = [Vector2i(0,0), Vector2i(0,1), Vector2i(1,0)]
+		# target tiles (1,2) (1,1) (2,1)
+		tilemap_shift = Vector2i(1,1)
+		# end tiles (2,2) (2,3) (3,2) (3,3)  
+		tilemap_tiles_end = [Vector2i(1,1), Vector2i(1,2), Vector2i(2,1), Vector2i(2,2)]
+		
+	# Horizontal
+	if wall_direction == 2:
+		# Tiles are doublesized
+		wall_length = clamp(wall_length/2, 2, wall_max_length)
+		tilemap_start = Vector2i(5,0)
+		tilemap_tiles = [Vector2i(0,0), Vector2i(0,1), Vector2i(-1,0), Vector2i(-1,1)]
+		tilemap_shift = Vector2i(-2,0)
+		tilemap_tiles_end = [Vector2i(2,0), Vector2i(2,1), Vector2i(3,0), Vector2i(3,1)]
+		
+	# Vertical
+	if wall_direction == 3:
+		# Tiles are doublesized
+		wall_length = clamp(wall_length/2 + 1, 2, wall_max_length)
+		tilemap_start = Vector2i(0,5)
+		tilemap_tiles = [Vector2i(0,0), Vector2i(1,0), Vector2i(0,-1), Vector2i(1,-1)]
+		tilemap_shift = Vector2i(0,-2)
+		tilemap_tiles_end = [Vector2i(0,2), Vector2i(1,2), Vector2i(0,3), Vector2i(1,3)]
+		
+	## Start check/set cells
 	for checked in [false, true]:
-		# start tiles
-		_coords = Vector2i(3,0)
-		for n in tiles.size():
+		### starting tiles
+		for n in tilemap_tiles.size():
+			var static_tilemap_coords = Vector2i(
+					global_coords + tilemap_tiles[n])
+			# check first
 			if not checked:
-				if $StaticTileMapLayer.get_cell_tile_data(coords + tiles[n]):
+				if static_tilemap_layer.get_used_cells().has(static_tilemap_coords):
+						return 0
+			else:
+				static_tilemap_layer.set_cell(
+					static_tilemap_coords, 
+					wall_source_id, 
+					tilemap_start + tilemap_tiles[n])
+				pass
+
+		## repeating in length
+		for i in range(1, wall_length - 1):
+			for n in tilemap_tiles.size():
+				var static_tilemap_coords = Vector2i(
+						global_coords + tilemap_tiles[n] + tilemap_shift * i)
+				# check first
+				if not checked:
+					if static_tilemap_layer.get_used_cells().has(static_tilemap_coords):
+							return 0
+				else:
+					static_tilemap_layer.set_cell(
+						static_tilemap_coords, 
+						wall_source_id, 
+						tilemap_start + tilemap_shift + tilemap_tiles[n])
+
+		## ending tiles
+		for n in tilemap_tiles_end.size():
+			var static_tilemap_coords = Vector2i(
+					global_coords - tilemap_start 
+					+ tilemap_shift * (wall_length-2) + tilemap_tiles_end[n])
+			# check first
+			if not checked:
+				if static_tilemap_layer.get_used_cells().has(static_tilemap_coords):
 					return 0
 			else:
-				$StaticTileMapLayer.set_cell(coords + tiles[n], _id, _coords + tiles[n])
-		
-		# repeat in length
-		_coords = Vector2i(2,1)
-		for i in range(1, wall_length - 1):
-			for n in tiles.size():
-				if not checked:
-					if $StaticTileMapLayer.get_cell_tile_data(coords + tiles[n] + shift * i):
-						return 0
-				else:
-					$StaticTileMapLayer.set_cell(coords + tiles[n] + shift * i, _id, _coords + tiles[n] + shift)
-		
-		# end tiles
-		_coords = Vector2i(0,3)
-		for n in tiles_end.size():
-				if not checked:
-					if $StaticTileMapLayer.get_cell_tile_data(coords + tiles_end[n] + shift * wall_length):
-						return 0
-				else:
-					$StaticTileMapLayer.set_cell(coords + tiles_end[n] + shift * wall_length, _id, _coords + tiles_end[n])
-	
+				static_tilemap_layer.set_cell(
+					static_tilemap_coords, 
+					wall_source_id, 
+					tilemap_tiles_end[n] + tilemap_shift)
+	# Finished: +1
 	return 1
 	
-	
+	## @TODO REFACTOR!!! DRY!!!
 func find_path(global_position_fron: Vector2, global_position_to:Vector2) -> Array:
 	tilemap_path = get_pixel_path(global_position_fron, global_position_to)
 	tilemap_debug_path.points = tilemap_path
 	return tilemap_path
 
-
+	## @TODO REFACTOR!!! DRY!!!
 func get_pixel_path(from_position, to_position) -> PackedVector2Array:
-	var from = $StaticTileMapLayer.local_to_map(from_position)
-	var to = $StaticTileMapLayer.local_to_map(to_position)
-	var path := astar_grid.get_point_path(from, to)
-	return path
+	var from = static_tilemap_layer.local_to_map(from_position)
+	var to = static_tilemap_layer.local_to_map(to_position)
+	var pixel_path := astar_grid.get_point_path(from, to)
+	return pixel_path

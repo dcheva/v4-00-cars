@@ -5,7 +5,7 @@ extends ResourcePreloader
 func get_byte(num: int, pos: int):
 	for i in range (1, pos):
 		num = num % 10
-	return posmod(num, 10)	
+	return posmod(num, 10)
 
 
 func sum(arr:Array):
