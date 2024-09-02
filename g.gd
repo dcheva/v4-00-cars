@@ -2,7 +2,7 @@ extends ResourcePreloader
 
 
 # Math
-func get_byte(num: int, pos: int):
+func get_byte(num: int, pos: int) -> int:
 	for i in range (1, pos):
 		num = num % 10
 	return posmod(num, 10)
@@ -19,7 +19,7 @@ func med(arr:Array) -> float:
 	return sum(arr)/arr.size()
 
 
-func div(a, b) -> float:
+func fdiv(a, b) -> float:
 	a = float(a)
 	b = float(b)
 	if b!=0: return a/b
@@ -32,7 +32,7 @@ func half_chunk(chunk_size: int) -> int:
 
 func quarter_chunk(chunk_size: int) -> int:
 	return int(float(chunk_size)/4)
-	
+
 
 func positive(i) -> int:
 	if i < 0: return -1

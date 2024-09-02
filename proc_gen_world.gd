@@ -90,7 +90,7 @@ func generate_world() -> void:
 		for y in range(range_from, range_to):
 			noise_val = noise.get_noise_2d(x, y)
 			kk = noise_val * 999999
-			if posmod(kk,  103) > 101: # 1%
+			if posmod(kk,  103) > 101: # 2%
 				# check first
 				if !static_tilemap_layer.get_cell_tile_data(Vector2i(x, y)):
 					piles += 1
@@ -107,8 +107,9 @@ func generate_world() -> void:
 			kk = noise_val * 999999
 			if posmod(kk, 102) > 100: # 1%
 				# Draw lines in 4 directions (SW to N), length from 2 to 7
-				var wall_length = posmod(g.get_byte(kk, 5), 5) + 1
-				var wall_direction = posmod(g.get_byte(kk, 5), 5)
+				var five = g.get_byte(kk, 5)
+				var wall_length = posmod(five, 5) + 1
+				var wall_direction = posmod(g.get_byte(five, 5), 5)
 				walls += 1
 				drawn += draw_wall(Vector2i(x, y), wall_direction, wall_length)
 	
@@ -237,16 +238,10 @@ func draw_wall(global_coords: Vector2i, wall_direction, wall_length) -> int:
 					tilemap_tiles_end[n] + tilemap_shift)
 	# Finished: +1
 	return 1
-	
-	## @TODO REFACTOR!!! DRY!!!
-func find_path(global_position_fron: Vector2, global_position_to:Vector2) -> Array:
-	tilemap_path = get_pixel_path(global_position_fron, global_position_to)
-	tilemap_debug_path.points = tilemap_path
-	return tilemap_path
 
-	## @TODO REFACTOR!!! DRY!!!
+
 func get_pixel_path(from_position, to_position) -> PackedVector2Array:
 	var from = static_tilemap_layer.local_to_map(from_position)
 	var to = static_tilemap_layer.local_to_map(to_position)
-	var pixel_path := astar_grid.get_point_path(from, to)
-	return pixel_path
+	tilemap_path = astar_grid.get_point_path(from, to)
+	return tilemap_path

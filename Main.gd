@@ -39,7 +39,7 @@ func _on_Player_set_hud():
 	var steer = player_driver.steer
 	var trk = get_tree().get_nodes_in_group("track").size()
 	var npc = npc_driver.pos2l
-	var plr = npc_driver.printed_distance + "\n" + npc_driver.printed + "\n"
+	var plr = npc_driver.printed + "\n"
 	# Set camera position @TODO move this code
 	var cam_to = pos + Vector2(int(vel.x * cam_x_speed * cam_distance),int(vel.y * cam_distance))
 	cam = lerp(cam, cam_to, cam_sensitivity)
