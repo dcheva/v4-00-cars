@@ -106,12 +106,15 @@ func get_physics(speed_to, steer_to):
 	if abs(speed) > min_speed:
 		set_draw_timer.emit()
 		
+	pitch_player_engine_bus()
+
+
+func pitch_player_engine_bus() -> void:
 	# Play right sound !!!IMPORTANT!!!
-	var sound_pitch: float = clamp(abs(speed) / opt_speed, 0.5, 2)
+	var sound_pitch: float = clamp(abs(speed) / max_speed, 0.5, 2)
 	var as_id := AudioServer.get_bus_index("PlayerEngine")
 	var as_ef := AudioServer.get_bus_effect(as_id, 0)
 	as_ef.pitch_scale = sound_pitch
-	#print(as_ef.pitch_scale)
 
 
 func draw_track_timer_formula():
