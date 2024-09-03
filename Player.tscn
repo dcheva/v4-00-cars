@@ -1075,6 +1075,7 @@ scale_amount_min = 2.0
 scale_amount_max = 4.0
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Animations"]
+pitch_scale = 1.99206
 
 [node name="FiniteStateMachine" parent="." node_paths=PackedStringArray("actor") instance=ExtResource("10_pi5mk")]
 actor = NodePath("..")
