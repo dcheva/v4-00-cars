@@ -1024,17 +1024,12 @@ shape = SubResource("1")
 wait_time = 10.0
 one_shot = true
 
-[node name="idleTimer" type="Timer" parent="."]
-one_shot = true
-autostart = true
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_cisow")
 }
 
 [node name="Animations" type="Node2D" parent="."]
-visible = false
 
 [node name="CPUParticles2D1" type="CPUParticles2D" parent="Animations"]
 modulate = Color(1, 1, 1, 0.4)
@@ -1081,4 +1076,3 @@ bus = &"PlayerEngine"
 actor = NodePath("..")
 
 [connection signal="timeout" from="DrawTrack" to="." method="_on_draw_track_timeout"]
-[connection signal="timeout" from="idleTimer" to="." method="_on_idle_timer_timeout"]

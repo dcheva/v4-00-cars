@@ -111,7 +111,7 @@ func get_physics(speed_to, steer_to):
 	var as_id := AudioServer.get_bus_index("PlayerEngine")
 	var as_ef := AudioServer.get_bus_effect(as_id, 0)
 	as_ef.pitch_scale = sound_pitch
-	print(as_ef.pitch_scale)
+	#print(as_ef.pitch_scale)
 
 
 func draw_track_timer_formula():
