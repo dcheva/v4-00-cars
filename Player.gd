@@ -106,10 +106,12 @@ func get_physics(speed_to, steer_to):
 	if abs(speed) > min_speed:
 		set_draw_timer.emit()
 		
-	# Play right sound
+	# Play right sound !!!IMPORTANT!!!
 	var sound_pitch: float = clamp(abs(speed) / opt_speed, 0.5, 2)
-	#print (opt_speed, " ", sound_pitch)
-	$Animations/AudioStreamPlayer2D.pitch_scale = sound_pitch
+	var as_id := AudioServer.get_bus_index("PlayerEngine")
+	var as_ef := AudioServer.get_bus_effect(as_id, 0)
+	as_ef.pitch_scale = sound_pitch
+	print(as_ef.pitch_scale)
 
 
 func draw_track_timer_formula():
