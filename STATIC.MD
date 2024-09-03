@@ -1,5 +1,5 @@
-# Describe STATICS improvements and changes here
-## use statics branch
+# Describe STATICS improvements and changes
+## UseBranch statics
 - Begin Statics
 - Create the obstacles layer instead of piles
 - Implement the obstacles layer with lines (walls) and points (rocks, trees, ...)
