@@ -7,12 +7,12 @@ extends CharacterBody2D
 @export var max_steer = 15
 @export var max_speed_shift = 600
 @export var max_speed_drive = 300
-@export var opt_speed = 120
+@export var opt_speed = 100
 @export var min_speed = 20
 @export var breaking = -0.5
 @export var acceleration = 1.2
 @export var sound_pitch_min := 0.5
-@export var sound_pitch_max := 1
+@export var sound_pitch_max := 1.0
 @export var collision_k = 4
 @export var track_k_speed = 3
 @export var track_k_time = 0.2
