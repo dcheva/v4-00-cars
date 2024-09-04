@@ -88,7 +88,7 @@ func get_physics(speed_to, steer_to):
 		if abs(speed) > opt_speed:
 			steer = steer * (max_speed - sqrt(abs(speed))) / max_speed
 	if abs(speed) < opt_speed or speed < 0:
-		if !Input.is_action_pressed("shift"):
+		if !Input.is_action_pressed("space"):
 			steer = steer * (abs(speed) + min_speed) / opt_speed
 		
 	# limits

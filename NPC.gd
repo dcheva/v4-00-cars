@@ -127,7 +127,7 @@ func get_physics(speed_to, steer_to):
 		speed = speed - 0.001 * abs(steer) * speed
 		if abs(speed) > opt_speed:
 			steer = steer * (max_speed - sqrt(abs(speed))) / max_speed
-			
+		
 	# limits
 	steer = clamp(steer, -max_steer, max_steer)
 	speed = clamp(speed, -max_speed/2.0, max_speed)
@@ -144,6 +144,7 @@ func get_physics(speed_to, steer_to):
 		speed = - normal.length() * speed / collision_k
 		position = position + normal * collision_k
 
+	# Draw tracks
 	if abs(speed) > min_speed:
 		set_draw_timer.emit()
 

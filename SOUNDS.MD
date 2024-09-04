@@ -8,3 +8,5 @@
 	var as_ef := AudioServer.get_bus_effect(as_id, 0)
 	as_ef.pitch_scale = sound_pitch
 	print(as_ef.pitch_scale)
+
+- Finish Sounds and Physics bugs - Animations/AudioStreamPlayer with Engine and Gears sounds and particles

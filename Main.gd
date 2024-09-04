@@ -51,7 +51,7 @@ func _on_Player_set_hud():
 	var speed = player_driver.speed
 	var steer = player_driver.steer
 	var trk = get_tree().get_nodes_in_group("track").size()
-	var npc := ""
+	var npc := 0
 	var plr := ""
 	if not hide_npc:
 		npc = npc_driver.pos2l # npc current target
