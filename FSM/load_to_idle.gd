@@ -10,6 +10,8 @@ func is_valid(actor, _blackboard: Blackboard):
 	# Cast actor
 	actor = actor as CharacterBody2D
 	
-	if Input.is_action_just_released("shift"):
+	if (Input.is_action_just_released("shift") 
+		and not Input.is_action_pressed("up_arrow")
+		and not Input.is_action_pressed("down_arrow")):
 		return true
 	return false

@@ -1,10 +1,11 @@
-[gd_scene load_steps=21 format=3 uid="uid://dk21lve4cidf2"]
+[gd_scene load_steps=22 format=3 uid="uid://dk21lve4cidf2"]
 
-[ext_resource type="Script" path="res://FSM/finite_state_machine.gd" id="1_fqqn5"]
+[ext_resource type="Script" path="res://finite_state_machine.gd" id="1_fqqn5"]
 [ext_resource type="Script" path="res://addons/behaviour_toolkit/blackboard.gd" id="2_uaops"]
 [ext_resource type="Script" path="res://FSM/Start.gd" id="3_nmde2"]
 [ext_resource type="Script" path="res://FSM/Started.gd" id="4_y2lv2"]
 [ext_resource type="Script" path="res://FSM/idle.gd" id="5_bt0ft"]
+[ext_resource type="Script" path="res://FSM/to_load.gd" id="6_nagpr"]
 [ext_resource type="Script" path="res://FSM/to_power.gd" id="7_wag6b"]
 [ext_resource type="Script" path="res://FSM/to_run.gd" id="8_3i0sv"]
 [ext_resource type="Script" path="res://FSM/Load.gd" id="9_1g5jy"]
@@ -42,6 +43,10 @@ script = ExtResource("5_bt0ft")
 [node name="toRun" type="Node" parent="Idle" node_paths=PackedStringArray("next_state")]
 script = ExtResource("8_3i0sv")
 next_state = NodePath("../../Run")
+
+[node name="toLoad" type="Node" parent="Idle" node_paths=PackedStringArray("next_state")]
+script = ExtResource("6_nagpr")
+next_state = NodePath("../../Load")
 
 [node name="toPower" type="Node" parent="Idle" node_paths=PackedStringArray("next_state")]
 script = ExtResource("7_wag6b")
