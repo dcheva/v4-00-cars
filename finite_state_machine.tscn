@@ -21,10 +21,9 @@
 script = ExtResource("2_uaops")
 content = {}
 
-[node name="FiniteStateMachine" type="Node" node_paths=PackedStringArray("initial_state", "actor")]
+[node name="FiniteStateMachine" type="Node" node_paths=PackedStringArray("initial_state")]
 script = ExtResource("1_fqqn5")
 initial_state = NodePath("Start")
-actor = NodePath("")
 blackboard = SubResource("Resource_ov6wc")
 
 [node name="Start" type="Node" parent="."]

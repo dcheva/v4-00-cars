@@ -3,10 +3,10 @@ extends FSMState
 
 # Executes after the state is entered.
 func _on_enter(actor, _blackboard: Blackboard):
-	# Cast actor
 	actor = actor as CharacterBody2D
-	#print_debug()
-
+	actor.animation_player.play("ShiftDown")
+	var await_time: float = actor.animation_player.current_animation_length
+	await get_tree().create_timer(await_time).timeout
 	actor.animation_player.play("Power")
 
 

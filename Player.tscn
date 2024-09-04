@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://dq83bbgjp2u0q"]
+[gd_scene load_steps=25 format=3 uid="uid://dq83bbgjp2u0q"]
 
 [ext_resource type="Texture2D" uid="uid://dir7cluak2a2a" path="res://art/car-00.png" id="1"]
 [ext_resource type="Script" path="res://Player.gd" id="2"]
@@ -9,7 +9,9 @@
 [ext_resource type="AudioStream" uid="uid://crk0beghyiyc8" path="res://loops/engine_off.wav" id="6_inyy0"]
 [ext_resource type="AudioStream" uid="uid://bq1al3jdlq8jh" path="res://loops/exhaust_idle.wav" id="7_2kicv"]
 [ext_resource type="AudioStream" uid="uid://d3vhb88sf1sc" path="res://loops/gear_air_1.wav" id="8_1o5vi"]
+[ext_resource type="AudioStream" uid="uid://c6ymu421812c7" path="res://loops/gear_air_2.wav" id="10_g31ti"]
 [ext_resource type="PackedScene" uid="uid://dk21lve4cidf2" path="res://finite_state_machine.tscn" id="10_pi5mk"]
+[ext_resource type="AudioStream" uid="uid://cj1bx1xbrq1eu" path="res://loops/gear_air_3.wav" id="11_uu4lt"]
 
 [sub_resource type="RectangleShape2D" id="1"]
 size = Vector2(42, 58)
@@ -639,6 +641,121 @@ tracks/9/keys = {
 "values": [-6.0]
 }
 
+[sub_resource type="Animation" id="Animation_hea84"]
+resource_name = "ShiftUp"
+length = 0.54
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Animations/CPUParticles2D1:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Animations/CPUParticles2D2:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Animations/CPUParticles2D1:one_shot")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.0333333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Animations/CPUParticles2D2:one_shot")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.0333333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Animations/CPUParticles2D1:speed_scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [4.0]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Animations/CPUParticles2D1:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 1, 0, 0.4)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Animations/CPUParticles2D2:speed_scale")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [4.0]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Animations/CPUParticles2D2:modulate")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 1, 0, 0.4)]
+}
+tracks/8/type = "audio"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Animations/AudioStreamPlayer")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("10_g31ti")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/8/use_blend = true
+
 [sub_resource type="Animation" id="Animation_kvdap"]
 resource_name = "Start"
 length = 1.17
@@ -997,6 +1114,121 @@ tracks/9/keys = {
 "values": [-6.0]
 }
 
+[sub_resource type="Animation" id="Animation_nps3i"]
+resource_name = "ShiftDown"
+length = 0.83
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Animations/CPUParticles2D1:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.233333, 0.366667, 0.6, 0.733333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [false, true, false, true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Animations/CPUParticles2D2:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.233333, 0.366667, 0.6, 0.733333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [false, true, false, true, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Animations/CPUParticles2D1:one_shot")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.0333333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Animations/CPUParticles2D2:one_shot")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.0333333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Animations/CPUParticles2D1:speed_scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [4.0]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Animations/CPUParticles2D1:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 0, 0.4)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Animations/CPUParticles2D2:speed_scale")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [4.0]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Animations/CPUParticles2D2:modulate")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 0, 0.4)]
+}
+tracks/8/type = "audio"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Animations/AudioStreamPlayer")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("11_uu4lt")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/8/use_blend = true
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_cisow"]
 _data = {
 "Bang": SubResource("Animation_4jksr"),
@@ -1004,6 +1236,8 @@ _data = {
 "Power": SubResource("Animation_h04s4"),
 "RESET": SubResource("Animation_hxywy"),
 "Run": SubResource("Animation_v73eh"),
+"ShiftDown": SubResource("Animation_nps3i"),
+"ShiftUp": SubResource("Animation_hea84"),
 "Start": SubResource("Animation_kvdap"),
 "Stop": SubResource("Animation_4puvq"),
 "idle": SubResource("Animation_7f60f")
