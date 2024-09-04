@@ -2,11 +2,13 @@ extends Node2D
 
 @onready var player_driver := $Player
 @onready var player_driver_timer := $Player/DrawTrack
+@onready var player_driver_animations := $Player/Animations
 @onready var generator = $proc_gen_world
 @onready var label = $Canvas/Control/Label
 @onready var npc_driver := $NPC
 @onready var npc_driver_timer := $NPC/DrawTrack
 @export var hide_npc := true
+@export var hide_cpu := true
 
 # @TODO preload settings
 @export var cam_sensitivity = 0.05
@@ -22,6 +24,12 @@ func _ready():
 		npc_driver.player = player_driver
 		npc_driver.tilemap_path = generator.tilemap_path
 		npc_driver.generator = generator
+	if hide_cpu:
+		for cpu_child_id in player_driver_animations.get_child_count():
+			var cpu_child = player_driver_animations.get_child(cpu_child_id)
+			print(cpu_child_id,cpu_child)
+			if is_instance_of(cpu_child,CPUParticles2D):
+				cpu_child.queue_free()
 	start_drivers()
 	
 
