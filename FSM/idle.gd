@@ -8,7 +8,7 @@ func _on_enter(actor, _blackboard: Blackboard):
 	actor.animation_player.play("ShiftDown")
 	var await_time: float = actor.animation_player.current_animation_length
 	await get_tree().create_timer(await_time).timeout
-	actor.animation_player.play("idle")
+	actor.animation_player.play("Idle")
 
 
 # Executes every _process call, if the state is active.

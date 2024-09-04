@@ -11,6 +11,8 @@ extends CharacterBody2D
 @export var min_speed = 20
 @export var breaking = -0.5
 @export var acceleration = 1.2
+@export var sound_pitch_min := 0.5
+@export var sound_pitch_max := 1
 @export var collision_k = 4
 @export var track_k_speed = 3
 @export var track_k_time = 0.2
@@ -21,11 +23,11 @@ var speed = 0
 signal set_hud
 signal set_draw_timer
 
-@export var Track_S_scene: PackedScene
-@export var Track_L_scene: PackedScene
+var Track_S_scene: PackedScene
+var Track_L_scene: PackedScene
 
-@export var Track_S = preload("res://Track_S.tscn")
-@export var Track_L = preload("res://Track_L.tscn")
+var Track_S = preload("res://Track_S.tscn")
+var Track_L = preload("res://Track_L.tscn")
 
 @onready var animation_player = $AnimationPlayer
 @onready var state_machine := $FiniteStateMachine
@@ -85,7 +87,10 @@ func get_physics(speed_to, steer_to):
 		speed = speed - 0.001 * abs(steer) * speed
 		if abs(speed) > opt_speed:
 			steer = steer * (max_speed - sqrt(abs(speed))) / max_speed
-			
+	if abs(speed) < opt_speed or speed < 0:
+		if !Input.is_action_pressed("shift"):
+			steer = steer * (abs(speed) + min_speed) / opt_speed
+		
 	# limits
 	steer = clamp(steer, -max_steer, max_steer)
 	speed = clamp(speed, -max_speed/2.0, max_speed)
@@ -111,7 +116,7 @@ func get_physics(speed_to, steer_to):
 
 func pitch_player_engine_bus() -> void:
 	# Play right sound !!!IMPORTANT!!!
-	var sound_pitch: float = clamp(abs(speed) / max_speed, 0.25, 1.5)
+	var sound_pitch: float = clamp(abs(speed) / max_speed, sound_pitch_min, sound_pitch_max)
 	var as_id := AudioServer.get_bus_index("PlayerEngine")
 	var as_ef := AudioServer.get_bus_effect(as_id, 0)
 	as_ef.pitch_scale = sound_pitch
