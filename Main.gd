@@ -1,11 +1,12 @@
 extends Node2D
 
 @onready var player_driver := $Player
-@onready var npc_driver := $NPC
 @onready var player_driver_timer := $Player/DrawTrack
-@onready var npc_driver_timer := $NPC/DrawTrack
 @onready var generator = $proc_gen_world
 @onready var label = $Canvas/Control/Label
+@onready var npc_driver := $NPC
+@onready var npc_driver_timer := $NPC/DrawTrack
+@export var hide_npc := true
 
 # @TODO preload settings
 @export var cam_sensitivity = 0.05
@@ -15,9 +16,12 @@ var cam := Vector2()
 
 
 func _ready():
-	npc_driver.player = player_driver
-	npc_driver.tilemap_path = generator.tilemap_path
-	npc_driver.generator = generator
+	if hide_npc:
+		npc_driver.queue_free()
+	else:
+		npc_driver.player = player_driver
+		npc_driver.tilemap_path = generator.tilemap_path
+		npc_driver.generator = generator
 	start_drivers()
 	
 
@@ -28,7 +32,8 @@ func _process(_delta):
 
 func start_drivers() -> void:
 	player_driver_timer.start()
-	npc_driver_timer.start()
+	if not hide_npc:
+		npc_driver_timer.start()
 
 
 func _on_Player_set_hud():
@@ -38,8 +43,11 @@ func _on_Player_set_hud():
 	var speed = player_driver.speed
 	var steer = player_driver.steer
 	var trk = get_tree().get_nodes_in_group("track").size()
-	var npc = npc_driver.pos2l
-	var plr = npc_driver.printed + "\n"
+	var npc := ""
+	var plr := ""
+	if not hide_npc:
+		npc = npc_driver.pos2l # npc current target
+		plr = npc_driver.printed + "\n" # plr from npc astar position
 	# Set camera position @TODO move this code
 	var cam_to = pos + Vector2(int(vel.x * cam_x_speed * cam_distance),int(vel.y * cam_distance))
 	cam = lerp(cam, cam_to, cam_sensitivity)
@@ -56,8 +64,9 @@ func set_label(args):
 	l.text += "Velocity.: %s, %s\n" % [int(args[2][0]), int(args[2][1])]
 	l.text += "Camera...: %s, %s\n" % [int(args[5][0]), int(args[5][1])]
 	l.text += "Tracks...: %s\n" % args[6]
-	#l.text += "Target,m.: %s\n" % int(args[7]/10)
-	l.text += "%s\n" % args[8]
+	if not hide_npc:
+		#l.text += "Target,m.: %s\n" % int(args[7]/10) # npc current target
+		l.text += "%s\n" % args[8] # plr from npc astar position
 
 
 func _set_draw_timer(author: CharacterBody2D):
@@ -85,7 +94,8 @@ func _on_draw_track_timeout(arg: String) -> void:
 
 
 func _on_npc_set_draw_timer() -> void:
-	_set_draw_timer(npc_driver)
+	if not hide_npc:
+		_set_draw_timer(npc_driver)
 
 
 func _on_Player_set_draw_timer() -> void:
