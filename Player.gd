@@ -79,8 +79,8 @@ func get_physics(speed_to, steer_to):
 		steer_to = -steer_to
 		
 	# Physics with LERP
-	speed = lerpf(speed, speed_to, speed_change)
-	steer = lerpf(steer, steer_to, steer_change)
+	speed_to = lerpf(speed, speed_to, speed_change)
+	steer_to = lerpf(steer, steer_to, steer_change)
 
 	# Speed steering
 	if speed > 0:
