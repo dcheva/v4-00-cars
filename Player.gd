@@ -79,8 +79,8 @@ func get_physics(speed_to, steer_to):
 		steer_to = -steer_to
 		
 	# Physics with LERP
-	speed_to = lerpf(speed, speed_to, speed_change)
-	steer_to = lerpf(steer, steer_to, steer_change)
+	speed = lerpf(speed, speed_to, speed_change)
+	steer = lerpf(steer, steer_to, steer_change)
 
 	# Speed steering
 	if speed > 0:
@@ -116,7 +116,11 @@ func get_physics(speed_to, steer_to):
 
 func pitch_player_engine_bus() -> void:
 	# Play right sound !!!IMPORTANT!!!
-	var sound_pitch: float = clamp(abs(speed) / max_speed, sound_pitch_min, sound_pitch_max)
+	var sound_pitch: float = clamp(
+		abs(speed) / max_speed, 
+		sound_pitch_min, 
+		sound_pitch_max
+		)
 	var as_id := AudioServer.get_bus_index("PlayerEngine")
 	var as_ef := AudioServer.get_bus_effect(as_id, 0)
 	as_ef.pitch_scale = sound_pitch
