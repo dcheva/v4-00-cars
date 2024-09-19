@@ -8,16 +8,20 @@
 
 config_version=5
 
+[animation]
+
+warnings/check_invalid_track_paths=false
+
 [application]
 
 config/name="V4-00-cars"
 config/description="2d Cars Proto"
+config/tags=PackedStringArray("v4.00")
 run/main_scene="res://Main.tscn"
 config/features=PackedStringArray("4.3")
 boot_splash/image="res://backs/ground.png"
 boot_splash/fullsize=false
 config/icon="res://icon.png"
-config/tags=PackedStringArray("v4.00")
 
 [display]
 

@@ -1,20 +1,23 @@
 extends Node2D
 
+var hide_npc := true
+var hide_cpu := true
+var hide_snd := true
+
+var cam_sensitivity = 0.05
+var cam_distance = 1
+var cam_x_speed = 1.4
+var cam := Vector2()
+
+
 @onready var player_driver := $Player
 @onready var player_driver_timer := $Player/DrawTrack
 @onready var player_driver_animations := $Player/Animations
 @onready var generator = $proc_gen_world
 @onready var label = $Canvas/Control/Label
+@onready var audioplayer = $Canvas/AudioPlayer
 @onready var npc_driver := $NPC
 @onready var npc_driver_timer := $NPC/DrawTrack
-@export var hide_npc := true
-@export var hide_cpu := true
-
-# @TODO preload settings
-@export var cam_sensitivity = 0.05
-@export var cam_distance = 1
-@export var cam_x_speed = 1.4
-var cam := Vector2()
 
 
 func _ready():
@@ -24,12 +27,16 @@ func _ready():
 		npc_driver.player = player_driver
 		npc_driver.tilemap_path = generator.tilemap_path
 		npc_driver.generator = generator
-	if hide_cpu:
-		for cpu_child_id in player_driver_animations.get_child_count():
-			var cpu_child = player_driver_animations.get_child(cpu_child_id)
-			print(cpu_child_id,cpu_child)
-			if is_instance_of(cpu_child,CPUParticles2D):
-				cpu_child.queue_free()
+	for _child_id in player_driver_animations.get_child_count():
+		var _child = player_driver_animations.get_child(_child_id)
+		if hide_cpu:
+			if is_instance_of(_child, CPUParticles2D):
+				_child.queue_free()
+		if hide_snd:
+			if is_instance_of(_child, AudioStreamPlayer):
+				_child.queue_free()
+			audioplayer.queue_free()
+			
 	start_drivers()
 	
 

@@ -26,8 +26,8 @@ signal set_draw_timer
 var Track_S_scene: PackedScene
 var Track_L_scene: PackedScene
 
-var Track_S = preload("res://Track_S.tscn")
-var Track_L = preload("res://Track_L.tscn")
+var Track_S = preload("res://Addings/Cars/Parts/Track_S.tscn")
+var Track_L = preload("res://Addings/Cars/Parts/Track_L.tscn")
 
 @onready var animation_player = $AnimationPlayer
 @onready var state_machine := $FiniteStateMachine
@@ -35,7 +35,8 @@ var Track_L = preload("res://Track_L.tscn")
 
 func _ready():
 	state_machine.start()
-
+	pass
+	
 
 func _physics_process(delta):
 	get_input()

@@ -31,8 +31,8 @@ signal set_draw_timer
 @export var Track_S1_scene: PackedScene
 @export var Track_L1_scene: PackedScene
 
-@export var Track_S := preload("res://Track_S1.tscn")
-@export var Track_L := preload("res://Track_L1.tscn")
+@export var Track_S := preload("res://Addings/Cars/Parts/Track_S1.tscn")
+@export var Track_L := preload("res://Addings/Cars/Parts/Track_L1.tscn")
 
 var printed := ""
 

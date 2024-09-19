@@ -10,7 +10,7 @@ extends Node2D
 var static_tile_size := 64
 var tilemap_path := []
 
-@export var chunk_size: int = 512
+@export var chunk_size: int = 256
 var half_chunk: int
 var quarter_chunk: int
 
@@ -113,10 +113,10 @@ func draw_walls() -> int:
 		for y in range(range_from, range_to):
 			noise_val = noise.get_noise_2d(x, y)
 			var kk = noise_val * 999999
-			if posmod(kk, 102) > 100: # 1%
+			if posmod(kk, 202) > 200: # x%
 				# Draw lines in 4 directions (SW to N), length from 2 to 7
 				var five = g.get_byte(kk, 5)
-				var wall_length = posmod(five, 5) + 1
+				var wall_length = posmod(five, 3) + 2
 				var wall_direction = posmod(g.get_byte(five, 5), 5)
 				walls += draw_wall(Vector2i(x, y), wall_direction, wall_length)
 	return walls
