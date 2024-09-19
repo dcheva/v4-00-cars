@@ -1,0 +1,31 @@
+[gd_resource type="AudioStreamPlaylist" load_steps=13 format=3 uid="uid://co2jyc1h31bby"]
+
+[ext_resource type="AudioStream" uid="uid://426dr8jvv6ej" path="res://Addings/Farts/art/audio/Fart's 0.wav" id="1_1dffy"]
+[ext_resource type="AudioStream" uid="uid://bw4e1mpfpng68" path="res://Addings/Farts/art/audio/Fart's 1.wav" id="2_1rpcb"]
+[ext_resource type="AudioStream" uid="uid://bs8lxudnhwry2" path="res://Addings/Farts/art/audio/Fart's a.wav" id="3_ejkjc"]
+[ext_resource type="AudioStream" uid="uid://cugu72uu2wsmx" path="res://Addings/Farts/art/audio/Fart's b.wav" id="4_jwhbe"]
+[ext_resource type="AudioStream" uid="uid://sw5yayiaei0d" path="res://Addings/Farts/art/audio/Fart's 2.wav" id="5_c48v8"]
+[ext_resource type="AudioStream" uid="uid://bmwbt2of3loqw" path="res://Addings/Farts/art/audio/Fart's 3.wav" id="6_e2dkr"]
+[ext_resource type="AudioStream" uid="uid://bl5w8e78nfjbq" path="res://Addings/Farts/art/audio/Fart's 4.wav" id="7_queb8"]
+[ext_resource type="AudioStream" uid="uid://b0p5lkvd5sig6" path="res://Addings/Farts/art/audio/Fart's 5.wav" id="8_icc4q"]
+[ext_resource type="AudioStream" uid="uid://mjooxywmff65" path="res://Addings/Farts/art/audio/Fart's 6.wav" id="9_ievup"]
+[ext_resource type="AudioStream" uid="uid://dabtpkrdqqh8g" path="res://Addings/Farts/art/audio/Fart's 7.wav" id="10_lyi6x"]
+[ext_resource type="AudioStream" uid="uid://cbb6517nsq4nj" path="res://Addings/Farts/art/audio/Fart's 8.wav" id="11_kivt3"]
+[ext_resource type="AudioStream" uid="uid://bq0fw1lq73n23" path="res://Addings/Farts/art/audio/Fart's 9.wav" id="12_6f4cn"]
+
+[resource]
+shuffle = true
+fade_time = 0.0
+stream_count = 12
+stream_0 = ExtResource("1_1dffy")
+stream_1 = ExtResource("2_1rpcb")
+stream_2 = ExtResource("5_c48v8")
+stream_3 = ExtResource("6_e2dkr")
+stream_4 = ExtResource("7_queb8")
+stream_5 = ExtResource("8_icc4q")
+stream_6 = ExtResource("9_ievup")
+stream_7 = ExtResource("10_lyi6x")
+stream_8 = ExtResource("11_kivt3")
+stream_9 = ExtResource("12_6f4cn")
+stream_10 = ExtResource("3_ejkjc")
+stream_11 = ExtResource("4_jwhbe")

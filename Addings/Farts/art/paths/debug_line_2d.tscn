@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://c5gg7e5lvep3s"]
+
+[sub_resource type="Curve" id="Curve_4bbs5"]
+_data = [Vector2(1e-05, 1), 0.0, 0.0, 0, 0, Vector2(0.498845, 0.362271), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_aqpsl"]
+colors = PackedColorArray(0.415686, 0.635294, 0.772549, 1, 0.631373, 0.282353, 0.282353, 1)
+
+[node name="DebugLine2D" type="Line2D"]
+points = PackedVector2Array(20, -79)
+width_curve = SubResource("Curve_4bbs5")
+gradient = SubResource("Gradient_aqpsl")
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2

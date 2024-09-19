@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://ru0mxq44tbh5"]
+
+[ext_resource type="AudioStream" uid="uid://b8ujoseaght3u" path="res://Addings/Farts/art/audio/Eepy Boy Elastique.wav" id="1_norma"]
+[ext_resource type="Script" path="res://Addings/Farts/art/audio/player.gd" id="2_oy1ep"]
+
+[node name="Player" type="AudioStreamPlayer2D"]
+stream = ExtResource("1_norma")
+volume_db = -6.0
+autoplay = true
+max_polyphony = 4
+script = ExtResource("2_oy1ep")

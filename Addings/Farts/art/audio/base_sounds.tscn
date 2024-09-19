@@ -1,0 +1,41 @@
+[gd_scene load_steps=15 format=3 uid="uid://c4tpc7flvp8pe"]
+
+[ext_resource type="AudioStream" uid="uid://bxfuueuatgnrc" path="res://Addings/Farts/art/audio/Fart's 0.wav" id="1_lm686"]
+[ext_resource type="AudioStream" uid="uid://c1q5133y0cgba" path="res://Addings/Farts/art/audio/Fart's 1.wav" id="2_vl182"]
+[ext_resource type="AudioStream" uid="uid://bxl6ksiooptni" path="res://Addings/Farts/art/audio/Fart's a.wav" id="3_c25i7"]
+[ext_resource type="AudioStream" uid="uid://dgnap7hah56id" path="res://Addings/Farts/art/audio/Fart's b.wav" id="4_4qs6h"]
+[ext_resource type="AudioStream" uid="uid://cmxhn8883tp7h" path="res://Addings/Farts/art/audio/Fart's 2.wav" id="5_j02b3"]
+[ext_resource type="AudioStream" uid="uid://cfta8mfev7pq6" path="res://Addings/Farts/art/audio/Fart's 3.wav" id="6_o03t5"]
+[ext_resource type="AudioStream" uid="uid://dyxn4rfdpmoyt" path="res://Addings/Farts/art/audio/Fart's 4.wav" id="7_lhtaw"]
+[ext_resource type="AudioStream" uid="uid://q7c52xe5b6fi" path="res://Addings/Farts/art/audio/Fart's 5.wav" id="8_xv2n7"]
+[ext_resource type="AudioStream" uid="uid://bgmmjp6kaudlt" path="res://Addings/Farts/art/audio/Fart's 6.wav" id="9_wo777"]
+[ext_resource type="AudioStream" uid="uid://da54jmwpyk2o8" path="res://Addings/Farts/art/audio/Fart's 7.wav" id="10_xks0k"]
+[ext_resource type="AudioStream" uid="uid://b1ojmvvub5885" path="res://Addings/Farts/art/audio/Fart's 8.wav" id="11_w1nma"]
+[ext_resource type="AudioStream" uid="uid://bh0jhgi43oi1w" path="res://Addings/Farts/art/audio/Fart's 9.wav" id="12_3n5l1"]
+[ext_resource type="Script" path="res://Addings/Farts/art/audio/base_sounds.gd" id="13_8xr16"]
+
+[sub_resource type="AudioStreamPlaylist" id="AudioStreamPlaylist_7uccc"]
+shuffle = true
+fade_time = 0.2
+stream_count = 12
+stream_0 = ExtResource("1_lm686")
+stream_1 = ExtResource("2_vl182")
+stream_2 = ExtResource("5_j02b3")
+stream_3 = ExtResource("6_o03t5")
+stream_4 = ExtResource("7_lhtaw")
+stream_5 = ExtResource("8_xv2n7")
+stream_6 = ExtResource("9_wo777")
+stream_7 = ExtResource("10_xks0k")
+stream_8 = ExtResource("11_w1nma")
+stream_9 = ExtResource("12_3n5l1")
+stream_10 = ExtResource("3_c25i7")
+stream_11 = ExtResource("4_4qs6h")
+
+[node name="Sounds" type="AudioStreamPlayer2D"]
+stream = SubResource("AudioStreamPlaylist_7uccc")
+volume_db = -6.0
+pitch_scale = 2.0
+attenuation = 0.6
+max_polyphony = 4
+panning_strength = 4.0
+script = ExtResource("13_8xr16")

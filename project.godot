@@ -19,9 +19,13 @@ config/description="2d Cars Proto"
 config/tags=PackedStringArray("v4.00")
 run/main_scene="res://Main.tscn"
 config/features=PackedStringArray("4.3")
-boot_splash/image="res://backs/ground.png"
+boot_splash/image="res://Parts/ground.png"
 boot_splash/fullsize=false
 config/icon="res://icon.png"
+
+[audio]
+
+buses/default_bus_layout="res://Parts/default_bus_layout.tres"
 
 [display]
 
@@ -104,5 +108,5 @@ file_logging/log_path="res://project.log"
 
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
-environment/defaults/default_environment="res://default_env.tres"
+environment/defaults/default_environment="res://Parts/default_env.tres"
 quality/driver/driver_name="GLES2"
