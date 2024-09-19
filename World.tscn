@@ -1,7 +1,7 @@
 [gd_scene load_steps=2 format=3 uid="uid://dlsl72se1aed6"]
 
-[ext_resource type="PackedScene" uid="uid://3ujj6oc0alnj" path="res://Main.tscn" id="1_blwpb"]
+[ext_resource type="PackedScene" uid="uid://3ujj6oc0alnj" path="res://MainScene.tscn" id="1_blwpb"]
 
 [node name="World" type="Node"]
 
-[node name="Main" parent="." instance=ExtResource("1_blwpb")]
+[node name="MainScene" parent="." instance=ExtResource("1_blwpb")]

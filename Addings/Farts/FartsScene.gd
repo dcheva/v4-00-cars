@@ -5,13 +5,16 @@ extends Node2D
 
 @onready var astar: Node = $Astar
 @onready var statics: TileMapLayer = $Statics
-@onready var camera: Camera2D = $Camera2D
+@onready var camera: Camera2D = get_parent().find_child("Camera2D")
 
 func _ready() -> void:
 	## Instantiate NPC's
 	inst_npcs(10)
 	
-	astar.global_center = get_viewport().get_visible_rect().get_center()
+	##get_viewport().get_visible_rect().get_center()
+	astar.global_center = Vector2.ZERO
+	
+	print_debug(astar.global_center)
 	astar.static_tilemap_layer = statics
 	astar.static_tile_size = statics.tile_set.tile_size
 	astar.set_astar()
@@ -42,7 +45,7 @@ func init_npcs() -> void:
 			child.camera = camera
 			child.func_get_astar_path = astar.get_astar_path
 			child.func_get_free_static_cells = astar.get_free_static_cells
-			child.global_center = get_viewport().get_visible_rect().get_center()
+			child.global_center = astar.global_center
 			## Start FSM 
 			child.state_machine = child.find_child("FSM")
 			child.state_machine.start()
@@ -59,12 +62,7 @@ func init_npcs() -> void:
 
 
 func _input(_event: InputEvent) -> void:
-	if Input.is_action_just_pressed("alt_enter"):
-		DisplayServer.window_set_mode(4 if (
-			DisplayServer.window_get_mode()!=4) else 0)
-	if Input.is_action_just_pressed("space"):
+	if Input.is_action_just_pressed("Spawn"):
 		inst_npcs(1)
 		init_npcs()
-	if Input.is_action_just_pressed("Restart"):
-		get_tree().reload_current_scene()
 		

@@ -42,8 +42,10 @@ func _ready():
 
 func _process(_delta):
 	if Input.is_action_just_pressed("alt_enter"):
-		get_window().mode = Window.MODE_EXCLUSIVE_FULLSCREEN if (!((get_window().mode == Window.MODE_EXCLUSIVE_FULLSCREEN) or (get_window().mode == Window.MODE_FULLSCREEN))  ) else Window.MODE_WINDOWED
-
+		DisplayServer.window_set_mode(4 if (
+			DisplayServer.window_get_mode()!=4) else 0)
+	if Input.is_action_just_pressed("Restart"):
+		get_tree().reload_current_scene()
 
 func start_drivers() -> void:
 	player_driver_timer.start()
