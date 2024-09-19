@@ -1,14 +1,4 @@
 # Godot 3 Cars 2d with Physics prototype
-#### Create pull requests via:
-* https://bitbucket.org/dcheva/v4-00-cars/pull-requests/new?source=_BRANCH_&t=1
-* https://github.com/dcheva/v4-00-cars/pull/new/_BRANCH_
----
-- Draw the car
-- Implement simple arcade car physics 
-- Add fonts
-- Implement on_Player_set_hud(), set Camera.position, set_label(args)
-- Begin generate sand background
-- Fix sand "Browny" BG, overlay and variables
 ## Branch traces
 - Add prototype tracks
 - Add fullscreen to Main process
@@ -47,3 +37,4 @@
 - Add hide_npc and hide_cpu to improve testing efficiency
 - Test final FSM with gearbox and Merge Sounds branch
 ## Start compose
+- Instantiate Farts in the World and test It Works!
