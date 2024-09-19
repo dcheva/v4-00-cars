@@ -2,23 +2,35 @@ extends Node2D
 
 @export var base_npc_tscn: PackedScene
 @export var base_npc_gd: Script
-
 @onready var astar: Node = $Astar
-@onready var statics: TileMapLayer = $Statics
-@onready var camera: Camera2D = get_parent().find_child("Camera2D")
+
+## @HERE STUCKS thease wars are null in _ready()
+var main: Node
+@onready var camera: Camera2D 
+@onready var generator: Node2D 
+@onready var static_tile_size: Vector2
+@onready var statics : TileMapLayer
+
+
+func mfind() -> Node:
+	return get_parent().get_parent()
+
 
 func _ready() -> void:
+	## @HERE it works
+	main = get_parent().get_parent()
+	camera = main.find_child("Camera2D")
+	generator = main.find_child("proc_gen_world")
+	static_tile_size = main.static_tile_size
+	statics = generator.find_child("StaticTileMapLayer")
+	astar.global_center = Vector2.ZERO
+	astar.static_tilemap_layer = statics
+	astar.static_tile_size = static_tile_size
+	
 	## Instantiate NPC's
 	inst_npcs(10)
-	
-	##get_viewport().get_visible_rect().get_center()
-	astar.global_center = Vector2.ZERO
-	
-	print_debug(astar.global_center)
-	astar.static_tilemap_layer = statics
-	astar.static_tile_size = statics.tile_set.tile_size
+	## Set AStar
 	astar.set_astar()
-
 	## Init all in group NPC's
 	init_npcs()
 

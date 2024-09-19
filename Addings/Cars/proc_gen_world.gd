@@ -7,8 +7,8 @@ extends Node2D
 @onready var ground_tilemap_layer: TileMapLayer = $GroundTileMapLayer
 @onready var static_tilemap_layer: TileMapLayer = $StaticTileMapLayer
 @onready var tilemap_debug_path: Line2D = $DebugLine2D
-var static_tile_size := 64
-var tilemap_path := []
+var static_tile_size: Vector2
+var tilemap_path: Array
 
 @export var chunk_size: int = 256
 var half_chunk: int
@@ -223,7 +223,7 @@ func draw_wall(global_coords: Vector2i, wall_direction, wall_length) -> int:
 func set_astar() -> void:
 	# Set up parameters, then update the grid.
 	astar_grid.region = static_tilemap_layer.get_used_rect()
-	astar_grid.cell_size = Vector2(static_tile_size, static_tile_size)
+	astar_grid.cell_size = static_tile_size
 	astar_grid.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_ONLY_IF_NO_OBSTACLES
 	astar_grid.update()
 	# All used cells are obstacles

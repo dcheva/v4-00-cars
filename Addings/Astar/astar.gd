@@ -13,7 +13,7 @@ var free_static_cells: Array[Vector2]
 func set_astar() -> void:
 	# Set up parameters, then update the grid.
 	astar_grid.region = static_tilemap_layer.get_used_rect()
-	astar_grid.cell_size = Vector2(static_tile_size)
+	astar_grid.cell_size = static_tile_size
 	astar_grid.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_ONLY_IF_NO_OBSTACLES
 	# I want to fly to Manhattan, so
 	astar_grid.default_compute_heuristic = AStarGrid2D.HEURISTIC_MANHATTAN
@@ -56,7 +56,7 @@ func get_used_static_cells() -> Array[Vector2]:
 	for x in range(ax.min(), ax.max()):
 		for y in range(ay.min(), ay.max()):
 			var ctdata := static_tilemap_layer.get_cell_tile_data(Vector2(x, y))
-			if ctdata.get_collision_polygons_count(0) > 0:
+			if ctdata and ctdata.get_collision_polygons_count(0) > 0:
 				obst_static_cells_array.append(Vector2(x, y))
 			else:
 				free_static_cells_array.append(Vector2(x, y))

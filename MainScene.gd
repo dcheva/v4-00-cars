@@ -18,6 +18,10 @@ var cam := Vector2()
 @onready var audioplayer = $Canvas/AudioPlayer
 @onready var npc_driver := $NPC
 @onready var npc_driver_timer := $NPC/DrawTrack
+@onready var farts_scene_root = $FartsScene
+
+var static_tilemap_layer: TileMapLayer
+var static_tile_size = Vector2(64, 64)
 
 
 func _ready():
