@@ -154,5 +154,7 @@ func draw_track_timer_formula():
 	else:
 		return track_k_time
 
+
+## @TODO Its @BUG!!!
 func _on_draw_track_timeout() -> void:
-	get_tree().get_root().get_node("Main")._on_draw_track_timeout("Main/NPC")
+	get_parent()._on_draw_track_timeout("NPC")

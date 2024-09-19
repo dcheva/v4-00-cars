@@ -135,4 +135,4 @@ func draw_track_timer_formula():
 
 
 func _on_draw_track_timeout() -> void:
-	get_tree().get_root().get_node("Main")._on_draw_track_timeout("Main/Player")
+	get_parent()._on_draw_track_timeout("Player")

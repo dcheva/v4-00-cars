@@ -93,10 +93,11 @@ func _set_draw_timer(author: CharacterBody2D):
 		DrawTrack.start(DrawTime)
 
 
+## @TODO _on_draw_track_timeout Its @BUG!!!
 func _on_draw_track_timeout(arg: String) -> void:
 	# Instantiate and draw tracks on the main scene
 	var track
-	var author = get_tree().get_root().get_node(arg)
+	var author = find_child(arg)
 	if abs(author.speed) > author.opt_speed:
 		track = author.Track_L.instantiate()
 	else:
