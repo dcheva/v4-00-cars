@@ -46,13 +46,13 @@ func start_actor_logic(_timer: float, actor: Node, _blackboard: Blackboard) -> v
 			or world_child.leader
 			)
 		):
-			var t = ""
+			var t := ""
 			if world_child.leader: 
-				t = "...Found LEADER!!!"
+				t += "...Found LEADER!!!"
 				## Get Global Target from Leader
-				actor.global_target = world_child.global_target
+				actor.global_target_map = world_child.global_target_map
 			else:
-				t = "...Found Speaking"
+				t += "...Found Speaking"
 			print (t, ": ", world_child.name, 
 			" at ", world_child.global_position)
 			## Set world_child as current target to start Move

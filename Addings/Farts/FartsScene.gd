@@ -78,7 +78,6 @@ func init_npcs() -> void:
 			child.set_current_target(child.get_random_position(farts_burning_area))
 			## Global target is the Burning Area
 			child.set_global_target_map(farts_burning_area)
-			pass
 
 
 func _input(_event: InputEvent) -> void:

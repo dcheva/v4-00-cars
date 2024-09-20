@@ -139,16 +139,22 @@ func set_global_target_map(new_target: Vector2) -> bool:
 func update_current_target() -> bool:
 	if target_obj is CharacterBody2D:
 		target = target_obj.global_position
+	elif global_target_map != Vector2.ZERO:
+		target =  get_random_position(global_target_map)
+		pass
 	else:
 		return false
 	astar_array = get_static_astar(target)
 	if astar_array.size() <= 2:
-		var t: StringName
-		if target_obj.leader:
-			t = "Leader: "
+		var t := ""
+		if target_obj:
+			if target_obj.leader:
+				t += "Leader: "
+			else:
+				t += "Target Obj: "
+			t += target_obj.name + " Pos: "
 		else:
-			t = "Target: "
-		t += target_obj.name
+			t += "Target Pos: "
 		print(name, " Reached ", t, " in time: ",
 		"now" if int(timer) == 0 else "%s" % int(timer))
 		target_obj = null
@@ -177,8 +183,6 @@ func get_random_position(def_pos := Vector2.ZERO) -> Vector2:
 
 func set_random_global_position(def_pos := Vector2.ZERO) -> void:
 	global_position = get_random_position(def_pos) * tile_size + tile_size / 2
-	var gp = global_position
-	pass
 
 
 func get_static_astar(targeted: Vector2) -> Array:
