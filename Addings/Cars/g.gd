@@ -40,7 +40,11 @@ func half_chunk(chunk_size: int) -> int:
 
 func quarter_chunk(chunk_size: int) -> int:
 	return int(float(chunk_size)/4)
-		
+
+
+func eighth_chunk(chunk_size: int) -> int:
+	return int(float(chunk_size)/4)
+
 
 func rarr(directions: Array) -> Vector2:
 	var index = randi() % directions.size()
