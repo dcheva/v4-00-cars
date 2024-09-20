@@ -1,6 +1,9 @@
 extends ResourcePreloader
 
 
+## @TODO refactor and add more methods
+
+
 # Math
 func get_byte(num: int, pos: int) -> int:
 	for i in range (1, pos):
@@ -24,7 +27,12 @@ func fdiv(a, b) -> float:
 	b = float(b)
 	if b!=0: return a/b
 	else: return 0
-	
+
+
+func positive(i) -> int:
+	if i < 0: return -1
+	else: return 1
+
 	
 func half_chunk(chunk_size: int) -> int:
 	return int(float(chunk_size)/2)
@@ -32,8 +40,10 @@ func half_chunk(chunk_size: int) -> int:
 
 func quarter_chunk(chunk_size: int) -> int:
 	return int(float(chunk_size)/4)
+		
 
-
-func positive(i) -> int:
-	if i < 0: return -1
-	else: return 1
+func rarr(directions: Array) -> Vector2:
+	var index = randi() % directions.size()
+	var direction = directions[index]
+	directions.remove_at(index)
+	return direction

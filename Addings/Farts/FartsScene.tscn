@@ -9,7 +9,6 @@
 [node name="Farts" type="Node"]
 
 [node name="Scene" type="Node2D" parent="."]
-position = Vector2(640, 384)
 script = ExtResource("1_m4xuy")
 base_npc_tscn = ExtResource("2_y0lrl")
 base_npc_gd = ExtResource("3_x6ed5")

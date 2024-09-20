@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 
-@export var dexta := 5.0
+@export var dexta := 2.0
 @export var speed := 200.0 * 50 /Engine.physics_ticks_per_second
 @export var shift := 400.0 * 50 /Engine.physics_ticks_per_second
 @export var lead_vector := Vector3.ZERO
@@ -20,7 +20,7 @@ var astar_array: Array
 var timer: float = 0.0
 var global_center : Vector2
 var target : Vector2
-var target_obj: Node
+var target_obj: CharacterBody2D
 var state_machine : FiniteStateMachine
 var animations : AnimationPlayer
 var particles : CPUParticles2D
@@ -199,7 +199,7 @@ func _on_sens_body_entered(body: Node2D) -> void:
 		print(name, " is hearing ", body.name, " speak ", body.color)
 
 		var color_vector = diffuse_rand_color(self, body.color).normalized()
-		var color_amount = int(color_vector.length() * 5 + 5)
+		var color_amount = int(color_vector.length() * 5 + 5) # 5..10..15
 
 		body.lead_vector += color_vector * 2
 		var resize: float = body.lead_vector.length()

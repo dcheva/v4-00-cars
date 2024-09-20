@@ -25,6 +25,14 @@ var grassg: int
 var grassd: int
 var noise_val
 
+var directions := [
+	Vector2.UP + Vector2.LEFT,
+	Vector2.UP + Vector2.RIGHT,
+	Vector2.DOWN + Vector2.LEFT,
+	Vector2.DOWN + Vector2.RIGHT,
+	]
+	
+
 func _ready() -> void:
 	half_chunk = g.half_chunk(chunk_size)
 	quarter_chunk = g.quarter_chunk(chunk_size)
@@ -39,8 +47,10 @@ func generate_world() -> void:
 	var piles := draw_piles()
 	print("3 Draw walls:")
 	var walls = draw_walls()
-	print("4 Add Astar:")
+	print("4 Set Astar:")
 	set_astar()
+	print("5 Set zones:")
+	set_zones()
 
 	# Print stats to console
 	var arr := [gravel, ground, grassg, grassd] 
@@ -233,6 +243,16 @@ func set_astar() -> void:
 	# Test Astar
 	tilemap_path = astar_grid.get_point_path(Vector2i(0,0), Vector2i(-50, -50))
 	tilemap_debug_path.points = tilemap_path
+	
+
+func set_zones() -> void:
+	## Create 4 zones: Farts-burning, Fart-targeting, Drop-off and Starting
+	## 1. Farts-burning
+	var direction = g.rarr(directions)
+	print("set_zones() ", direction)
+	print("directions: ", directions)
+	var farts_burning_area = Vector2(quarter_chunk, quarter_chunk)
+	
 	
 func get_apath(from_position, to_position) -> PackedVector2Array:
 	var from = static_tilemap_layer.local_to_map(from_position)
