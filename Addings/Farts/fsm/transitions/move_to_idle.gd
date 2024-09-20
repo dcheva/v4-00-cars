@@ -20,11 +20,13 @@ func is_valid(actor: Node, _blackboard: Blackboard) -> bool:
 	if (actor.velocity.length() < actor.speed / 2
 		and actor.astar_array.size() <= 1):
 		if actor.leader:
-			print("Leader ", actor.name, " Reached Global Target: ", actor.global_target, 
+			print("Leader ", actor.name, " Reached Global Target: ", 
+			actor.global_target_map, 
 			": now" if int(actor.timer) == 0 else ": %s" % int(actor.timer))
 			actor.set_global_target(Vector2.ZERO)
 		else:
-			print(actor.name, " Reached position: ", actor.target, 
+			print(actor.name, " Reached position: ", 
+			actor.target, 
 			": now" if int(actor.timer) == 0 else ": %s" % int(actor.timer))
 		return true
 	return false

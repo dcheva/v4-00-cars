@@ -5,7 +5,7 @@ extends CharacterBody2D
 @export var speed := 200.0 * 50 /Engine.physics_ticks_per_second
 @export var shift := 400.0 * 50 /Engine.physics_ticks_per_second
 @export var lead_vector := Vector3.ZERO
-@export var global_target := Vector2.ZERO
+@export var global_target_map := Vector2.ZERO
 @export var state : StringName
 
 
@@ -78,8 +78,8 @@ func set_color(mod_color: Color) -> Color:
 
 
 func pick_random_color() -> Color:
-	var rv = Vector3(randf(),randf(),randf()).normalized()
-	return Color(rv.x, rv.y, rv.z)
+	var rand_vect = Vector3(randf(),randf(),randf()).normalized()
+	return Color(rand_vect.x, rand_vect.y, rand_vect.z)
 
 
 func get_input(delta) -> Vector2:
@@ -120,19 +120,19 @@ func get_current_star() -> Vector2:
 
 
 func set_current_target(new_target: Vector2) -> bool:
-	target = new_target
+	target = new_target * tile_size + tile_size / 2
 	astar_array = get_static_astar(target)
 	return astar_array.size() > 0
 	
-func set_global_target(new_target: Vector2) -> bool:
+func set_global_target_map(new_target: Vector2) -> bool:
 	if new_target != Vector2.ZERO:
-		global_target = new_target
-		target = new_target
+		global_target_map = new_target
+		target = new_target * tile_size + tile_size / 2
 		astar_array = get_static_astar(new_target)
 		return astar_array.size() > 0
 	else: 
-		global_target = global_position
-		target = global_position
+		global_target_map = global_position / (tile_size + tile_size / 2)
+		target = global_position 
 		return false
 	
 
@@ -164,25 +164,27 @@ func get_random_position(def_pos := Vector2.ZERO) -> Vector2:
 	var rand_pos = free_cells.pick_random()
 	var test_area := quarter_chunk - eighth_chunk
 	if def_pos != Vector2.ZERO:
-		while (rand_pos - def_pos).length() > (test_area):
-			
-			
-			
-			
-			##!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		var i := 0
+		while (rand_pos - def_pos).length() > test_area:
+			i += 1
+			test_area += i
+			if(i % 1000):##!!!@OOPS
+				break
 			rand_pos = free_cells.pick_random()
-	var res_pos = global_center + rand_pos * tile_size + tile_size / 2
+	var res_pos = global_center / (tile_size + tile_size / 2) + rand_pos 
 	return res_pos
 
 
 func set_random_global_position(def_pos := Vector2.ZERO) -> void:
-	global_position = get_random_position(def_pos)
+	global_position = get_random_position(def_pos) * tile_size + tile_size / 2
+	var gp = global_position
+	pass
 
 
 func get_static_astar(targeted: Vector2) -> Array:
 	## Get Astar Statics navigation array from Current position to Target position
 	var targeted_astar_array = func_get_astar_path.call(
-		self.global_position, targeted)
+		global_position, targeted)
 	return targeted_astar_array
 
 

@@ -20,13 +20,13 @@ func _on_enter(actor: Node, _blackboard: Blackboard) -> void:
 			while !res:
 				## The Leader must Set Global Target at the farts_liveing_area
 				## @TODO If the Leader is changed than the Area must be changed
-				res = actor.set_global_target(
+				res = actor.set_global_target_map(
 					actor.get_random_position(actor.farts_liveing_area))
 		elif !actor.update_current_target():
 			actor.set_current_target(
 				## If the Actor has found the Leader he must have the Global Target
 				## Else the Global Target is ZERO and fully random will generated
-				actor.get_random_position(actor.global_target))
+				actor.get_random_position(actor.global_target_map))
 		actor.animations.play("Move")
 
 
@@ -35,7 +35,7 @@ func _on_update(delta: float, actor: Node, _blackboard: Blackboard) -> void:
 	move_timer += delta
 	if move_timer > 0.1:
 		if (actor.update_current_target()
-		or actor.leader and actor.global_target != Vector2.ZERO):
+		or actor.leader and actor.global_target_map != Vector2.ZERO):
 			actor.animations.play("Target")
 		move_timer = 0.0
 	

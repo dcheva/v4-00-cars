@@ -74,10 +74,11 @@ func init_npcs() -> void:
 			child._ready()
 			child.set_as_leader(child, false)
 			## Randomise position and target
-			child.set_random_global_position()
-			child.set_current_target(child.get_random_position())
+			child.set_random_global_position(farts_burning_area)
+			child.set_current_target(child.get_random_position(farts_burning_area))
 			## Global target is the Burning Area
-			child.set_global_target(child.farts_burning_area)
+			child.set_global_target_map(farts_burning_area)
+			pass
 
 
 func _input(_event: InputEvent) -> void:
