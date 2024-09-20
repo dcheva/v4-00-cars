@@ -124,11 +124,11 @@ func set_current_target(new_target: Vector2) -> bool:
 	astar_array = get_static_astar(target)
 	return astar_array.size() > 0
 	
-func set_global_target_map(new_target: Vector2) -> bool:
+func set_global_target_map(new_target: Vector2 = Vector2.ZERO) -> bool:
 	if new_target != Vector2.ZERO:
-		global_target_map = new_target
-		target = new_target * tile_size + tile_size / 2
-		astar_array = get_static_astar(new_target)
+		global_target_map = get_random_position(new_target)
+		target = global_target_map * tile_size + tile_size / 2
+		astar_array = get_static_astar(target)
 		return astar_array.size() > 0
 	else: 
 		global_target_map = global_position / (tile_size + tile_size / 2)
@@ -140,8 +140,7 @@ func update_current_target() -> bool:
 	if target_obj is CharacterBody2D:
 		target = target_obj.global_position
 	elif global_target_map != Vector2.ZERO:
-		target =  get_random_position(global_target_map)
-		pass
+		target =  get_random_position(global_target_map) * tile_size + tile_size/2
 	else:
 		return false
 	astar_array = get_static_astar(target)
@@ -174,8 +173,6 @@ func get_random_position(def_pos := Vector2.ZERO) -> Vector2:
 		while (rand_pos - def_pos).length() > test_area:
 			i += 1
 			test_area += i
-			if(i % 1000):##!!!@OOPS
-				break
 			rand_pos = free_cells.pick_random()
 	var res_pos = global_center / (tile_size + tile_size / 2) + rand_pos 
 	return res_pos
