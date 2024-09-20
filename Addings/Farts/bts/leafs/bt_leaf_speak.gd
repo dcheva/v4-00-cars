@@ -21,7 +21,7 @@ func tick(_delta: float, actor: Node, blackboard: Blackboard) -> BTStatus:
 		
 	## Start speak in 1%3 ticks and not leader
 	## Or start speak in 1%6 ticks if is leader
-	if (bt_tick % 3 < 1):
+	if (bt_tick % 5 < 4):
 		start_actor_logic(timer, actor, blackboard)
 	
 	## Update ticker and exit with SUCCESS

@@ -38,3 +38,4 @@
 - Test final FSM with gearbox and Merge Sounds branch
 ## Start compose
 - Instantiate Farts in the World and test It Works!
+- Just Try to Find'em - Tested and ready to Discuss

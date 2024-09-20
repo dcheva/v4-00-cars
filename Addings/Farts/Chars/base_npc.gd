@@ -73,9 +73,9 @@ func get_input(delta) -> Vector2:
 		get_current_target()).normalized()
 	
 	# Speed shift
-	if astar_array.size() > 1:
+	if astar_array.size() > 1 and !leader:
 		velocity_to *= shift / speed
-		
+	
 	# Collisions !!!HERE because FSM cant process slide_collisions
 	if get_slide_collision_count() > 0:
 		var normal = get_last_slide_collision().get_normal()

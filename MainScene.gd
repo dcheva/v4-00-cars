@@ -51,6 +51,7 @@ func _process(_delta):
 	if Input.is_action_just_pressed("Restart"):
 		get_tree().reload_current_scene()
 
+
 func start_drivers() -> void:
 	player_driver_timer.start()
 	if not hide_npc:
