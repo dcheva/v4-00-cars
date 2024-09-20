@@ -30,7 +30,7 @@ func _ready() -> void:
 	astar.static_tile_size = static_tile_size
 	
 	## Instantiate NPC's
-	inst_npcs(15)
+	inst_npcs(25)
 	## Set AStar
 	astar.set_astar()
 	## Init all in group NPC's
