@@ -24,20 +24,22 @@ func set_astar() -> void:
 
 
 func get_astar_path(from_position, to_position) -> Array:
+	var arr_pos: Array[Vector2]
 	## Double convert to fix offset and global coordinates
 	# Position to astar map
 	var from = static_tilemap_layer.local_to_map(from_position - global_center)
 	var to = static_tilemap_layer.local_to_map(to_position - global_center)
-	var arr_ids: Array = astar_grid.get_id_path(from, to)
-	# Map coords to global position with shifted center
-	var arr_pos: Array[Vector2]
-	for i in arr_ids:
-		var pos := Vector2(
-			global_center + 
-			Vector2(i) * static_tile_size + 
-			static_tile_size / 2
-			)
-		arr_pos.append(pos)
+	if  (astar_grid.is_in_bounds(from.x, from.y) 
+	and astar_grid.is_in_bounds(to.x, to.y)):
+		var arr_ids: Array = astar_grid.get_id_path(from, to)
+		# Map coords to global position with shifted center
+		for i in arr_ids:
+			var pos := Vector2(
+				global_center + 
+				Vector2(i) * static_tile_size + 
+				static_tile_size / 2
+				)
+			arr_pos.append(pos)
 	return arr_pos
 
 ## Find obstacles via get_collision_polygons_count for each tile
