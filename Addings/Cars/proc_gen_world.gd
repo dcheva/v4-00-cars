@@ -13,6 +13,7 @@ var tilemap_path: Array
 @export var chunk_size: int = 256
 var half_chunk: int
 var quarter_chunk: int
+var eighth_chunk: int
 
 @export var noise_height_texture: NoiseTexture2D
 var noise: Noise
@@ -32,10 +33,13 @@ var directions := [
 	Vector2.DOWN + Vector2.RIGHT,
 	]
 var farts_burning_area: Vector2
+var farts_liveing_area: Vector2
+var farts_droping_area: Vector2
 
 func _ready() -> void:
 	half_chunk = g.half_chunk(chunk_size)
 	quarter_chunk = g.quarter_chunk(chunk_size)
+	eighth_chunk = g.eighth_chunk(chunk_size)
 	noise = noise_height_texture.noise
 	generate_world()
 	
@@ -248,10 +252,16 @@ func set_astar() -> void:
 func set_zones() -> void:
 	## Create 4 zones: Farts-burning, Fart-targeting, Drop-off and Starting
 	## 1. Farts-burning
-	var direction = g.rarr(directions)
-	print("set_zones() ", direction)
-	print("directions: ", directions)
-	farts_burning_area = Vector2(quarter_chunk, quarter_chunk) * direction
+	var dir_burn = g.rarr(directions)
+	print("farts_burning_area: ", dir_burn)
+	farts_burning_area = Vector2(quarter_chunk, quarter_chunk) * dir_burn
+	var dir_live = g.rarr(directions)
+	print("farts_living_area: ", dir_live)
+	farts_liveing_area = Vector2(quarter_chunk, quarter_chunk) * dir_live
+	var dir_drop = g.rarr(directions)
+	print("farts_droping_area: ", dir_drop)
+	farts_droping_area = Vector2(quarter_chunk, quarter_chunk) * dir_drop
+	
 	
 	
 func get_apath(from_position, to_position) -> PackedVector2Array:

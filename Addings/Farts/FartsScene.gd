@@ -11,6 +11,8 @@ var main: Node
 @onready var static_tile_size: Vector2
 @onready var statics : TileMapLayer
 @onready var farts_burning_area: Vector2
+@onready var farts_liveing_area: Vector2
+@onready var farts_droping_area: Vector2
 
 
 func _ready() -> void:
@@ -21,6 +23,8 @@ func _ready() -> void:
 	static_tile_size = main.static_tile_size
 	statics = generator.find_child("StaticTileMapLayer")
 	farts_burning_area = generator.farts_burning_area
+	farts_liveing_area = generator.farts_liveing_area
+	farts_droping_area = generator.farts_droping_area
 	astar.global_center = Vector2.ZERO
 	astar.static_tilemap_layer = statics
 	astar.static_tile_size = static_tile_size
@@ -38,7 +42,7 @@ func inst_npcs(q:int) -> void:
 	for i in q:
 		var new_npc = base_npc_tscn.instantiate()
 		## Randomise spawn initial position
-		new_npc.position = Vector2(10000,10000)
+		new_npc.position = Vector2(999999,999999)
 		add_child(new_npc, true)
 		new_npc.add_to_group("NPC")
 		new_npc.set_script(base_npc_gd)
@@ -57,6 +61,8 @@ func init_npcs() -> void:
 			child.func_get_free_static_cells = astar.get_free_static_cells
 			child.global_center = astar.global_center
 			child.farts_burning_area = farts_burning_area
+			child.farts_liveing_area = farts_liveing_area
+			child.farts_droping_area = farts_droping_area
 			## Start FSM 
 			child.state_machine = child.find_child("FSM")
 			child.state_machine.start()
@@ -68,8 +74,10 @@ func init_npcs() -> void:
 			child._ready()
 			child.set_as_leader(child, false)
 			## Randomise position and target
-			child.set_random_position(farts_burning_area)
-			child.set_current_target(child.get_random_position(farts_burning_area))
+			child.set_random_global_position()
+			child.set_current_target(child.get_random_position())
+			## Global target is the Burning Area
+			child.set_global_target(child.farts_burning_area)
 
 
 func _input(_event: InputEvent) -> void:

@@ -17,6 +17,7 @@ var tile_size: Vector2
 var chunk_size: int
 var half_chunk: int
 var quarter_chunk: int
+var eighth_chunk: int
 
 var camera: Camera2D
 var func_get_astar_path: Callable
@@ -27,6 +28,8 @@ var global_center : Vector2
 var target : Vector2
 var target_obj: CharacterBody2D
 var farts_burning_area: Vector2
+var farts_liveing_area: Vector2
+var farts_droping_area: Vector2
 var state_machine : FiniteStateMachine
 var animations : AnimationPlayer
 var particles : CPUParticles2D
@@ -44,8 +47,9 @@ func _ready() -> void:
 	chunk_size = generator.chunk_size
 	half_chunk = generator.half_chunk
 	quarter_chunk = generator.quarter_chunk
-	
-	print(name, " ready: ", set_color(pick_random_color()))
+	eighth_chunk = generator.eighth_chunk
+	set_color(pick_random_color())
+	#print(name, " ready: ", color)
 	## Append attachable
 	abes.append(attachable("Diffuse"))
 
@@ -158,15 +162,21 @@ func get_random_position(def_pos := Vector2.ZERO) -> Vector2:
 	randomize()
 	var free_cells: Array[Vector2] = func_get_free_static_cells.call()
 	var rand_pos = free_cells.pick_random()
+	var test_area := quarter_chunk - eighth_chunk
 	if def_pos != Vector2.ZERO:
-		while (rand_pos - def_pos).length() > quarter_chunk:
+		while (rand_pos - def_pos).length() > (test_area):
+			
+			
+			
+			
+			##!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 			rand_pos = free_cells.pick_random()
 	var res_pos = global_center + rand_pos * tile_size + tile_size / 2
 	return res_pos
 
 
-func set_random_position(def_pos := Vector2.ZERO) -> void:
-	self.global_position = self.get_random_position(def_pos)
+func set_random_global_position(def_pos := Vector2.ZERO) -> void:
+	global_position = get_random_position(def_pos)
 
 
 func get_static_astar(targeted: Vector2) -> Array:
@@ -287,7 +297,7 @@ func find_leaders() -> int:
 	return leaders_count
 
 	
-func attachable(abe_name: StringName, args: Array = []) -> Node:
+func attachable(abe_name: StringName, _args: Array = []) -> Node:
 	## Instantiate ability
 	var fname := "res://Addings/Abes/Abilities/" + abe_name + "/" + abe_name
 	var scene = load(fname + ".tscn")
@@ -298,7 +308,7 @@ func attachable(abe_name: StringName, args: Array = []) -> Node:
 	instance.set_script(script)
 	## Force calling _process()
 	instance.set_process(true)
-	print("Node \"", name, "\" attached ", abe_name, args)
+	#print("Node \"", name, "\" attached ", abe_name, _args)
 	return instance
 
 

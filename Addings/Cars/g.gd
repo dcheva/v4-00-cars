@@ -35,15 +35,19 @@ func positive(i) -> int:
 
 	
 func half_chunk(chunk_size: int) -> int:
-	return int(float(chunk_size)/2)
+	return int_to_int(chunk_size,2)
 
 
 func quarter_chunk(chunk_size: int) -> int:
-	return int(float(chunk_size)/4)
+	return int_to_int(chunk_size,4)
 
 
 func eighth_chunk(chunk_size: int) -> int:
-	return int(float(chunk_size)/4)
+	return int_to_int(chunk_size,8)
+	
+	
+func int_to_int(size: int, to_size: int) -> int:
+	return int(float(size)/to_size)
 
 
 func rarr(directions: Array) -> Vector2:

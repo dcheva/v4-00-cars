@@ -49,6 +49,8 @@ func start_actor_logic(_timer: float, actor: Node, _blackboard: Blackboard) -> v
 			var t = ""
 			if world_child.leader: 
 				t = "...Found LEADER!!!"
+				## Get Global Target from Leader
+				actor.global_target = world_child.global_target
 			else:
 				t = "...Found Speaking"
 			print (t, ": ", world_child.name, 

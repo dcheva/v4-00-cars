@@ -16,14 +16,17 @@ func _on_enter(actor: Node, _blackboard: Blackboard) -> void:
 	#### Continue from BaseNPC script	
 	if actor.velocity.length() < 200:
 		if actor.leader:
-			var res = actor.set_global_target(
-				actor.get_random_position(actor.farts_burning_area))
+			var res := false
 			while !res:
+				## The Leader must Set Global Target at the farts_liveing_area
+				## @TODO If the Leader is changed than the Area must be changed
 				res = actor.set_global_target(
-					actor.get_random_position(actor.farts_burning_area))
+					actor.get_random_position(actor.farts_liveing_area))
 		elif !actor.update_current_target():
 			actor.set_current_target(
-				actor.get_random_position(actor.farts_burning_area))
+				## If the Actor has found the Leader he must have the Global Target
+				## Else the Global Target is ZERO and fully random will generated
+				actor.get_random_position(actor.global_target))
 		actor.animations.play("Move")
 
 
