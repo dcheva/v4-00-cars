@@ -252,7 +252,6 @@ func set_zones() -> void:
 	print("set_zones() ", direction)
 	print("directions: ", directions)
 	farts_burning_area = Vector2(quarter_chunk, quarter_chunk) * direction
-	print(var_to_str(farts_burning_area))
 	
 	
 func get_apath(from_position, to_position) -> PackedVector2Array:

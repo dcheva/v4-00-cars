@@ -56,6 +56,7 @@ func init_npcs() -> void:
 			child.func_get_astar_path = astar.get_astar_path
 			child.func_get_free_static_cells = astar.get_free_static_cells
 			child.global_center = astar.global_center
+			child.farts_burning_area = farts_burning_area
 			## Start FSM 
 			child.state_machine = child.find_child("FSM")
 			child.state_machine.start()
@@ -67,7 +68,7 @@ func init_npcs() -> void:
 			child._ready()
 			child.set_as_leader(child, false)
 			## Randomise position and target
-			child.set_random_position()
+			child.set_random_position(farts_burning_area)
 			child.set_current_target(child.get_random_position(farts_burning_area))
 
 

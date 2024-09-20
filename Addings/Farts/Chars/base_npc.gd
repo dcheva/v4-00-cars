@@ -26,6 +26,7 @@ var timer: float = 0.0
 var global_center : Vector2
 var target : Vector2
 var target_obj: CharacterBody2D
+var farts_burning_area: Vector2
 var state_machine : FiniteStateMachine
 var animations : AnimationPlayer
 var particles : CPUParticles2D
@@ -164,8 +165,8 @@ func get_random_position(def_pos := Vector2.ZERO) -> Vector2:
 	return res_pos
 
 
-func set_random_position() -> void:
-	self.global_position = self.get_random_position()
+func set_random_position(def_pos := Vector2.ZERO) -> void:
+	self.global_position = self.get_random_position(def_pos)
 
 
 func get_static_astar(targeted: Vector2) -> Array:

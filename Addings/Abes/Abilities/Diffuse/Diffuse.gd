@@ -31,7 +31,6 @@ func execute(args: Dictionary) -> Dictionary:
 	for i in amount:
 		var square_node = square.duplicate()
 		## Add to global positioned node
-		print(child_to)
 		child_to.add_child(square_node)
 		square_node.add_to_group("diffuse")
 		square_node.add_to_group("to" + to.name)

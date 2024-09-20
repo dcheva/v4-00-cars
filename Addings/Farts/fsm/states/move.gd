@@ -16,11 +16,14 @@ func _on_enter(actor: Node, _blackboard: Blackboard) -> void:
 	#### Continue from BaseNPC script	
 	if actor.velocity.length() < 200:
 		if actor.leader:
-			var res = actor.set_global_target(actor.get_random_position())
+			var res = actor.set_global_target(
+				actor.get_random_position(actor.farts_burning_area))
 			while !res:
-				res = actor.set_global_target(actor.get_random_position())
+				res = actor.set_global_target(
+					actor.get_random_position(actor.farts_burning_area))
 		elif !actor.update_current_target():
-			actor.set_current_target(actor.get_random_position())
+			actor.set_current_target(
+				actor.get_random_position(actor.farts_burning_area))
 		actor.animations.play("Move")
 
 
