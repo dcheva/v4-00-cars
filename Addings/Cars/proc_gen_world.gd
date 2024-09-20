@@ -31,7 +31,7 @@ var directions := [
 	Vector2.DOWN + Vector2.LEFT,
 	Vector2.DOWN + Vector2.RIGHT,
 	]
-	
+var farts_burning_area: Vector2
 
 func _ready() -> void:
 	half_chunk = g.half_chunk(chunk_size)
@@ -251,7 +251,7 @@ func set_zones() -> void:
 	var direction = g.rarr(directions)
 	print("set_zones() ", direction)
 	print("directions: ", directions)
-	var farts_burning_area = Vector2(quarter_chunk, quarter_chunk) * direction
+	farts_burning_area = Vector2(quarter_chunk, quarter_chunk) * direction
 	print(var_to_str(farts_burning_area))
 	
 	

@@ -11,8 +11,13 @@ extends CharacterBody2D
 
 var leader := false
 
-
+var main: Node
+var generator: Node
 var tile_size: Vector2
+var chunk_size: int
+var half_chunk: int
+var quarter_chunk: int
+
 var camera: Camera2D
 var func_get_astar_path: Callable
 var func_get_free_static_cells: Callable
@@ -32,7 +37,13 @@ var color : Color:
 		color = val
 
 
-func _init() -> void:
+func _ready() -> void:
+	main = get_parent().get_parent().get_parent()
+	generator = main.find_child("proc_gen_world")
+	chunk_size = generator.chunk_size
+	half_chunk = generator.half_chunk
+	quarter_chunk = generator.quarter_chunk
+	
 	print(name, " ready: ", set_color(pick_random_color()))
 	## Append attachable
 	abes.append(attachable("Diffuse"))
@@ -142,11 +153,15 @@ func update_current_target() -> bool:
 		return true
 	
 	
-func get_random_position() -> Vector2:
+func get_random_position(def_pos := Vector2.ZERO) -> Vector2:
 	randomize()
 	var free_cells: Array[Vector2] = func_get_free_static_cells.call()
 	var rand_pos = free_cells.pick_random()
-	return global_center + rand_pos * tile_size + tile_size / 2
+	if def_pos != Vector2.ZERO:
+		while (rand_pos - def_pos).length() > quarter_chunk:
+			rand_pos = free_cells.pick_random()
+	var res_pos = global_center + rand_pos * tile_size + tile_size / 2
+	return res_pos
 
 
 func set_random_position() -> void:
@@ -316,7 +331,10 @@ func normalize_color(raw_color: Color) -> Color:
 
 
 func paint_color(body:CharacterBody2D, new_color:Color) -> void:
-	body.find_child("Sprite2D").modulate = new_color
-	body.find_child("Particles").color =  new_color * 0.8
-	body.find_child("Cross").default_color = new_color * 0.8
-	body.find_child("Cross").hide()
+	if (body.find_child("Sprite2D") 
+	and body.find_child("Particles")
+	and body.find_child("Cross")):
+		body.find_child("Sprite2D").modulate = new_color
+		body.find_child("Particles").color =  new_color * 0.8
+		body.find_child("Cross").default_color = new_color * 0.8
+		body.find_child("Cross").hide()

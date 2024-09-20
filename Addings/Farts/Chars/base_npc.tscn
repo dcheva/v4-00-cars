@@ -1,5 +1,6 @@
-[gd_scene load_steps=33 format=3 uid="uid://ni8xdf8rqmxb"]
+[gd_scene load_steps=34 format=3 uid="uid://ni8xdf8rqmxb"]
 
+[ext_resource type="Script" path="res://Addings/Farts/Chars/base_npc.gd" id="1_0oeit"]
 [ext_resource type="Script" path="res://addons/behaviour_toolkit/finite_state_machine/fsm.gd" id="2_em1tw"]
 [ext_resource type="Texture2D" uid="uid://djy1mp42k45ne" path="res://Addings/Farts/art/chars/square/base_character.png" id="2_kncas"]
 [ext_resource type="Resource" uid="uid://br6ou5fblkmy6" path="res://Addings/Farts/fsm/blackboard.tres" id="3_x6n50"]
@@ -396,6 +397,7 @@ radius = 15.0
 
 [node name="BaseNPC" type="CharacterBody2D"]
 motion_mode = 1
+script = ExtResource("1_0oeit")
 
 [node name="Animations" type="AnimationPlayer" parent="."]
 deterministic = true

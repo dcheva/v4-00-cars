@@ -10,10 +10,7 @@ var main: Node
 @onready var generator: Node2D 
 @onready var static_tile_size: Vector2
 @onready var statics : TileMapLayer
-
-
-func mfind() -> Node:
-	return get_parent().get_parent()
+@onready var farts_burning_area: Vector2
 
 
 func _ready() -> void:
@@ -23,6 +20,7 @@ func _ready() -> void:
 	generator = main.find_child("proc_gen_world")
 	static_tile_size = main.static_tile_size
 	statics = generator.find_child("StaticTileMapLayer")
+	farts_burning_area = generator.farts_burning_area
 	astar.global_center = Vector2.ZERO
 	astar.static_tilemap_layer = statics
 	astar.static_tile_size = static_tile_size
@@ -62,15 +60,15 @@ func init_npcs() -> void:
 			child.state_machine = child.find_child("FSM")
 			child.state_machine.start()
 			## Animation player
-			child.animations = child.find_child("Animations")
-			child.particles = child.find_child("Particles")
 			child.sounds = child.find_child("Sounds")
+			child.particles = child.find_child("Particles")
 			child.animations = child.find_child("Animations")
 			child.animations.play("Idle")
+			child._ready()
 			child.set_as_leader(child, false)
 			## Randomise position and target
 			child.set_random_position()
-			child.set_current_target(child.get_random_position())
+			child.set_current_target(child.get_random_position(farts_burning_area))
 
 
 func _input(_event: InputEvent) -> void:
