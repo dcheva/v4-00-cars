@@ -1,6 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://dfunbkpmfkc74"]
+[gd_scene load_steps=7 format=3 uid="uid://dfunbkpmfkc74"]
 
 [ext_resource type="Script" path="res://Addings/Abes/Pawns.gd" id="1_pyxfb"]
+[ext_resource type="Texture2D" uid="uid://bhd5kpd6rvqt3" path="res://Addings/Farts/art/chars/anima/anima101.png" id="2_u1k1p"]
+[ext_resource type="Texture2D" uid="uid://dmdjv2n8d25l3" path="res://Addings/Farts/art/chars/anima/anima012.png" id="3_ah2hv"]
+[ext_resource type="Script" path="res://addons/ropesim/Rope.gd" id="4_1uxby"]
+[ext_resource type="Script" path="res://addons/ropesim/RopeInteraction.gd" id="5_jfh4q"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_uuawj"]
 
@@ -10,22 +14,59 @@
 
 [node name="Camera2D" type="Camera2D" parent="World"]
 visibility_layer = 513
-position = Vector2(640, 360)
+position = Vector2(550, 330)
 
-[node name="p1" type="CharacterBody2D" parent="."]
-position = Vector2(256, 192)
+[node name="p1" type="CharacterBody2D" parent="World"]
+position = Vector2(250, 200)
+scale = Vector2(0.5, 0.5)
 script = ExtResource("1_pyxfb")
+metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="p1"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/p1"]
 shape = SubResource("CircleShape2D_uuawj")
 
-[node name="Sprite2D" type="Sprite2D" parent="p1"]
+[node name="Sprite2D" type="Sprite2D" parent="World/p1"]
+texture = ExtResource("2_u1k1p")
 
-[node name="p2" type="CharacterBody2D" parent="."]
-position = Vector2(1024, 512)
+[node name="p2" type="CharacterBody2D" parent="World"]
+position = Vector2(800, 460)
+scale = Vector2(0.5, 0.5)
+collision_layer = 2
+collision_mask = 2
 script = ExtResource("1_pyxfb")
+metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="p2"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/p2"]
 shape = SubResource("CircleShape2D_uuawj")
 
-[node name="Sprite2D" type="Sprite2D" parent="p2"]
+[node name="Sprite2D" type="Sprite2D" parent="World/p2"]
+texture = ExtResource("3_ah2hv")
+
+[node name="Rope" type="Node2D" parent="World"]
+position = Vector2(38, 156)
+script = ExtResource("4_1uxby")
+num_segments = 40
+rope_length = 350.0
+max_endpoint_distance = 450.0
+stiffness = 0.2
+gravity = 0.0
+gravity_direction = Vector2(0, 0)
+num_constraint_iterations = 20
+fixate_begin = false
+line_width = 6.0
+color = Color(0.533333, 0.384314, 0.258824, 1)
+
+[node name="RopeInteractionBegin" type="Node" parent="World/Rope" node_paths=PackedStringArray("target_node", "rope")]
+script = ExtResource("5_jfh4q")
+position_update_mode = 1
+target_node = NodePath("../../p1")
+rope = NodePath("..")
+rope_position = 0.0
+strength = 1.0
+
+[node name="RopeInteractionEnd" type="Node" parent="World/Rope" node_paths=PackedStringArray("target_node", "rope")]
+script = ExtResource("5_jfh4q")
+position_update_mode = 1
+target_node = NodePath("../../p2")
+rope = NodePath("..")
+strength = 1.0

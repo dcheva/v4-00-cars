@@ -1,33 +1,44 @@
 extends CharacterBody2D
 
 
-var speed      := 640.0
+var speed      := 500.0
 var direction  := Vector2.ZERO
 var abes       := []
 	
 
 func _ready() -> void:
 	## Initial direction
-	if(global_position.x < 640):
+	direction = Vector2.ZERO
+	if(global_position.x < 550):
 		direction = Vector2.RIGHT
 	else:
 		direction = Vector2.LEFT
+	if(global_position.y < 330):
+		direction += Vector2.DOWN
+	else:
+		direction += Vector2.UP
 	## A little bit random
-	velocity.x  += direction.x * speed * randf()
 	speed *= randf_range(0.8,1.2)
+	velocity  += direction * speed
 	
 	## Append attachable
 	abes.append(attachable("Diffuse"))
 
 
 func _physics_process(delta: float) -> void:
-	## Bob movement
-	if global_position.x <= (512):
+	## Bob movement 2d
+	direction = Vector2.ZERO
+	if global_position.x <= (400):
 		direction = Vector2.RIGHT
-	if global_position.x >= (1280-512):
+	if global_position.x >= (1100-400):
 		direction = Vector2.LEFT
+	if global_position.y <= (250):
+		direction = Vector2.DOWN
+	if global_position.y >= (660-250):
+		direction = Vector2.UP
 	velocity  += direction * speed * delta
 	velocity.x = clamp(velocity.x, -speed, speed)
+	velocity.y = clamp(velocity.y, -speed, speed)
 	move_and_slide()
 	
 	## Call attachable.execute()
