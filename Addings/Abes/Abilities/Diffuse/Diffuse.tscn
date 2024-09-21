@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://cv1hns07p3v2"]
+
+[node name="Diffuse" type="Node2D"]
+z_index = 555
+
+[node name="Square" type="Polygon2D" parent="."]
+visible = false
+color = Color(1, 0, 1, 1)
+polygon = PackedVector2Array(0, -8, 8, 0, 0, 9, -8, 0)

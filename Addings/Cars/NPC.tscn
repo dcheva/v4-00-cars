@@ -1,0 +1,31 @@
+[gd_scene load_steps=6 format=3 uid="uid://dclwvh1bc0tvq"]
+
+[ext_resource type="Script" path="res://Addings/Cars/NPC.gd" id="1_1ensh"]
+[ext_resource type="Texture2D" uid="uid://ri1bg7v55yno" path="res://art/car-01.png" id="2_geuje"]
+[ext_resource type="PackedScene" uid="uid://b3ovwvmuotx6e" path="res://Addings/Cars/g.tscn" id="3_o38id"]
+[ext_resource type="PackedScene" uid="uid://bjflkrd554110" path="res://Parts/mark.tscn" id="4_cnlls"]
+
+[sub_resource type="RectangleShape2D" id="1"]
+size = Vector2(28, 61)
+
+[node name="NPC" type="CharacterBody2D"]
+script = ExtResource("1_1ensh")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -17)
+texture = ExtResource("2_geuje")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -16.5)
+shape = SubResource("1")
+
+[node name="DrawTrack" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+
+[node name="loader" parent="." instance=ExtResource("3_o38id")]
+
+[node name="Mark" parent="." instance=ExtResource("4_cnlls")]
+visible = false
+
+[connection signal="timeout" from="DrawTrack" to="." method="_on_draw_track_timeout"]

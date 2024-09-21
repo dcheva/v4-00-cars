@@ -1,0 +1,17 @@
+[gd_scene load_steps=6 format=3 uid="uid://casaun3x6mbe0"]
+
+[ext_resource type="Script" path="res://Addings/Farts/FartsScene.gd" id="1_m4xuy"]
+[ext_resource type="PackedScene" uid="uid://ni8xdf8rqmxb" path="res://Addings/Farts/Chars/base_npc.tscn" id="2_y0lrl"]
+[ext_resource type="Script" path="res://Addings/Farts/Chars/base_npc.gd" id="3_x6ed5"]
+[ext_resource type="PackedScene" uid="uid://b28mcglj74pf3" path="res://Addings/Astar/Astar.tscn" id="5_xopmf"]
+[ext_resource type="Script" path="res://Addings/Astar/astar.gd" id="6_7tpe7"]
+
+[node name="Farts" type="Node"]
+
+[node name="Scene" type="Node2D" parent="."]
+script = ExtResource("1_m4xuy")
+base_npc_tscn = ExtResource("2_y0lrl")
+base_npc_gd = ExtResource("3_x6ed5")
+
+[node name="Astar" parent="Scene" instance=ExtResource("5_xopmf")]
+script = ExtResource("6_7tpe7")

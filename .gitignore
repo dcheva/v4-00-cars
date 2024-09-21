@@ -28,6 +28,11 @@ dist/
 # Tmp files
 *.tmp
 
+# Src files
+*.src 
+*.src/
+*.src/*
+
 # Package files
 *.jar
 

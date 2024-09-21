@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://bjflkrd554110"]
+
+[ext_resource type="Texture2D" uid="uid://csmcpmomgl58e" path="res://art/mark.png" id="1_o08jk"]
+
+[node name="Mark" type="Node2D"]
+z_index = 555
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(2, 2)
+texture = ExtResource("1_o08jk")
