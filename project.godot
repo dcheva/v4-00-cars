@@ -15,7 +15,7 @@ warnings/check_invalid_track_paths=false
 [application]
 
 config/name="V4-00-cars"
-config/description="2d Cars Proto"
+config/description="2d Cars Hunting"
 config/tags=PackedStringArray("v4.00")
 run/main_scene="res://World.tscn"
 config/features=PackedStringArray("4.3")
@@ -35,7 +35,7 @@ window/stretch/aspect="ignore"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/behaviour_toolkit/plugin.cfg")
+enabled=PackedStringArray("res://addons/behaviour_toolkit/plugin.cfg", "res://addons/ropesim/plugin.cfg")
 
 [gui]
 
