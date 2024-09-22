@@ -1,6 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://ru0mxq44tbh5"]
+[gd_scene load_steps=3 format=3 ]
 
-[ext_resource type="AudioStream" uid="uid://b8ujoseaght3u" path="res://Addings/Farts/art/audio/Eepy Boy Elastique.wav" id="1_norma"]
+[ext_resource type="AudioStream"  path="res://Addings/Farts/art/audio/Eepy Boy Elastique.wav" id="1_norma"]
 [ext_resource type="Script" path="res://Addings/Farts/art/audio/player.gd" id="2_oy1ep"]
 
 [node name="Player" type="AudioStreamPlayer2D"]

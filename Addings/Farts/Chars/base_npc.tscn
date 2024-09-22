@@ -1,9 +1,9 @@
-[gd_scene load_steps=34 format=3 uid="uid://ni8xdf8rqmxb"]
+[gd_scene load_steps=34 format=3 ]
 
 [ext_resource type="Script" path="res://Addings/Farts/Chars/base_npc.gd" id="1_0oeit"]
 [ext_resource type="Script" path="res://addons/behaviour_toolkit/finite_state_machine/fsm.gd" id="2_em1tw"]
-[ext_resource type="Texture2D" uid="uid://djy1mp42k45ne" path="res://Addings/Farts/art/chars/square/base_character.png" id="2_kncas"]
-[ext_resource type="Resource" uid="uid://br6ou5fblkmy6" path="res://Addings/Farts/fsm/blackboard.tres" id="3_x6n50"]
+[ext_resource type="Texture2D"  path="res://Addings/Farts/art/chars/square/base_character.png" id="2_kncas"]
+[ext_resource type="Resource"  path="res://Addings/Farts/fsm/blackboard.tres" id="3_x6n50"]
 [ext_resource type="Script" path="res://Addings/Farts/bts/leafs/bt_leaf_init.gd" id="4_pg6d5"]
 [ext_resource type="Script" path="res://addons/behaviour_toolkit/behaviour_tree/bt_root.gd" id="5_w0a14"]
 [ext_resource type="Script" path="res://Addings/Farts/fsm/states/idle.gd" id="8_w2wc1"]

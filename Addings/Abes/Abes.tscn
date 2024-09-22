@@ -1,8 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://dfunbkpmfkc74"]
+[gd_scene load_steps=7 format=3 ]
 
 [ext_resource type="Script" path="res://Addings/Abes/Pawns.gd" id="1_pyxfb"]
-[ext_resource type="Texture2D" uid="uid://bhd5kpd6rvqt3" path="res://Addings/Farts/art/chars/anima/anima101.png" id="2_u1k1p"]
-[ext_resource type="Texture2D" uid="uid://dmdjv2n8d25l3" path="res://Addings/Farts/art/chars/anima/anima012.png" id="3_ah2hv"]
+[ext_resource type="Texture2D"  path="res://Addings/Farts/art/chars/anima/anima101.png" id="2_u1k1p"]
+[ext_resource type="Texture2D"  path="res://Addings/Farts/art/chars/anima/anima012.png" id="3_ah2hv"]
 [ext_resource type="Script" path="res://addons/ropesim/Rope.gd" id="4_1uxby"]
 [ext_resource type="Script" path="res://addons/ropesim/RopeInteraction.gd" id="5_jfh4q"]
 

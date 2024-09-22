@@ -1,9 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://dclwvh1bc0tvq"]
+[gd_scene load_steps=6 format=3 ]
 
 [ext_resource type="Script" path="res://Addings/Cars/NPC.gd" id="1_1ensh"]
-[ext_resource type="Texture2D" uid="uid://ri1bg7v55yno" path="res://art/car-01.png" id="2_geuje"]
-[ext_resource type="PackedScene" uid="uid://b3ovwvmuotx6e" path="res://Addings/Cars/g.tscn" id="3_o38id"]
-[ext_resource type="PackedScene" uid="uid://bjflkrd554110" path="res://Parts/mark.tscn" id="4_cnlls"]
+[ext_resource type="Texture2D"  path="res://art/car-01.png" id="2_geuje"]
+[ext_resource type="PackedScene"  path="res://Addings/Cars/g.tscn" id="3_o38id"]
+[ext_resource type="PackedScene"  path="res://Parts/mark.tscn" id="4_cnlls"]
 
 [sub_resource type="RectangleShape2D" id="1"]
 size = Vector2(28, 61)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://dk21lve4cidf2"]
+[gd_scene load_steps=22 format=3 ]
 
 [ext_resource type="Script" path="res://FSM/finite_state_machine.gd" id="1_fqqn5"]
 [ext_resource type="Script" path="res://addons/behaviour_toolkit/blackboard.gd" id="2_uaops"]
