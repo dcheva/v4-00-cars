@@ -14,4 +14,5 @@
 - Instantiate Farts in the World and test It Works!
 - Deploy Zones and Boss Tatgeting in Farters
 - Totally fixed startup errors see BACKLOG
+* Deploy Simple player's ability in Abes repo
 * Deploy Rope ability
