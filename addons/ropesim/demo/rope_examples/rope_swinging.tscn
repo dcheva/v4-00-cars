@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://ccmtsgb1odr13"]
+[gd_scene load_steps=8 format=3 uid="uid://bdm3ftf6jghmq"]
 
 [ext_resource type="Script" path="res://rope_examples/scripts/character_body_2d_platformer.gd" id="1_kf7l7"]
 [ext_resource type="Texture2D" uid="uid://criwv6nuivcxy" path="res://rope_examples/icon.svg" id="2_3o1qr"]
@@ -76,12 +76,11 @@ monitoring = false
 
 [node name="RopeCollisionShapeGenerator" type="Node" parent="Rope/Area2D"]
 script = ExtResource("5_wx3wk")
-enable = false
 rope_path = NodePath("../..")
 
 [node name="wall" type="StaticBody2D" parent="."]
 z_index = -1
-position = Vector2(362, 329)
+position = Vector2(146, 330)
 scale = Vector2(2.2, 0.519999)
 metadata/_edit_group_ = true
 
@@ -93,7 +92,7 @@ texture = ExtResource("2_3o1qr")
 
 [node name="wall4" type="StaticBody2D" parent="."]
 z_index = -1
-position = Vector2(177, 412)
+position = Vector2(219, 422)
 scale = Vector2(2.2, 0.519999)
 metadata/_edit_group_ = true
 
@@ -117,7 +116,7 @@ texture = ExtResource("2_3o1qr")
 
 [node name="wall2" type="StaticBody2D" parent="."]
 z_index = -1
-position = Vector2(486, 411)
+position = Vector2(829, 330)
 scale = Vector2(2.2, 0.519999)
 metadata/_edit_group_ = true
 
