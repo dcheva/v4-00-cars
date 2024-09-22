@@ -1,6 +1,8 @@
 __*
 __*/
 
+addons/ropesim/bin/~libropesim.windows.template_debug.x86_64.dll
+
 .import
 *.import
 */*.import
