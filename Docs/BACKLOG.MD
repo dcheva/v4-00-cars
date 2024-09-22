@@ -14,7 +14,7 @@ ___________
 * Realize fully-functional code-controlled AnimationPlayer with various engine sounds dependent on engine RPM
 * Design menus and HUD
 * Juicyfy Hunting gameplay with dialogues, sounds and scripted animatios
-__________
+___________
 # Finished
 	#### Create pull requests via:
 	https://bitbucket.org/dcheva/v4-00-cars/pull-requests/new?source=_BRANCH_&t=1
@@ -50,3 +50,9 @@ __________
 - It works! \_on_timer_timeout(author)
 - It works! Signals with ExtraCallArgument arg:string Main/NodeName->get_tree().get_root().get_node(arg)
 - Implement NPC car with tracks. Now it needts to be refactored!
+___________
+- Totally fixed startup errors Used Replace in files with regexp
+	uid=\"[^\"]+\"
+	replace with "" in *.tscn files
+	than delete all *.import files
+	than restart and resave project
