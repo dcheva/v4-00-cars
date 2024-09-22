@@ -12,47 +12,47 @@ extends RopeInteraction
 ## 3. Set target node position to [RopeAnchor] position.
 
 ## Emitted when the target node should be moved and [member RopeInteraction.position_update_mode] is [enum RopeInteraction.Signal].
-# esignal on_movement_request(target: Node2D, anchor: RopeAnchor)
+#signal on_movement_request(target: Node2D, anchor: RopeAnchor)
 
 
 ## Determines how the position of the target node is updated.
-# eenum PositionUpdateMode {
+#enum PositionUpdateMode {
 	## Set [member Node2D.global_position] directly.
-#	SetGlobalPosition,
+	#SetGlobalPosition,
 
 	## Use [method CharacterBody2D.move_and_slide]. Only applicable to [CharacterBody2D] targets.
-#	MoveAndSlide,
+	#MoveAndSlide,
 
 	## Do not set the position automatically, but emit the [signal RopeInteraction.on_movement_request]
 	## signal to allow manual handling.
-#		EmitSignal,
-#	}
+	#EmitSignal,
+#}
 
 ## Enable or disable.
-#	@export var enable: bool = true : set = set_enable
+#@export var enable: bool = true : set = set_enable
 
 ## Determines how the position of the target node should be updated.
-#	@export var position_update_mode: PositionUpdateMode = PositionUpdateMode.EmitSignal
+#@export var position_update_mode: PositionUpdateMode = PositionUpdateMode.EmitSignal
 
 ## Target node that should be attached to the rope.
-#	@export var target_node: Node2D
+#@export var target_node: Node2D
 
 ## (Optional) Use the given node instead of the target node to update the rope point's position.
 ## If set, the target node will only be snapped to the rope, but it will not affect it.
-#	@export var input_node_override: Node2D
+#@export var input_node_override: Node2D
 
 ## Target rope.
-#	@export var rope: Rope : set = set_rope
+#@export var rope: Rope : set = set_rope
 
 ## Position on the rope between 0 and 1.
-#	@export_range(0.0, 1.0) var rope_position: float = 1.0 : set = set_rope_position
+#@export_range(0.0, 1.0) var rope_position: float = 1.0 : set = set_rope_position
 
 ## Handle strength. See also [member RopeHandle.strength].
 ## Usually only useful when the rope_position is either 0.0 or 1.0, i.e. one of the endpoints.
-#	@export_range(0.0, 1.0) var strength: float = 0.0 : set = set_strength
+#@export_range(0.0, 1.0) var strength: float = 0.0 : set = set_strength
 
-#	var _anchor: RopeAnchor
-#	var _handle: RopeHandle
+#var _anchor: RopeAnchor
+#var _handle: RopeHandle
 
 
 func _init() -> void:

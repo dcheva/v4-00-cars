@@ -3,83 +3,83 @@ extends Rope
 # TODO: Split line rendering into a separate node
 
 ## Triggered when the rope has been registered at the NativeRopeServer.
-# signal on_registered()
+#signal on_registered()
 
 ## Triggered when the rope has been unregistered from the NativeRopeServer.
-# signal on_unregistered()
+#signal on_unregistered()
 
 ## Triggered when the point count changes, i.e. when the number of segments changes.
-# signal on_point_count_changed()
+#signal on_point_count_changed()
 
 
 ## Pause the simulation.
-# @export var pause: bool = false: set = _set_pause
+#@export var pause: bool = false: set = _set_pause
 
 ## Number of rope segments. More segments results in smoother quality but also higher computation cost.
-# @export var num_segments: int = 10: set = _set_num_segs
+#@export var num_segments: int = 10: set = _set_num_segs
 
 ## Overall rope length. Will be distributed uniformly among all segments.
-# @export var rope_length: float = 100: set = _set_length
+#@export var rope_length: float = 100: set = _set_length
 
 ## Maximum euclidean distance between rope endpoints. Zero or negative for no limitation.
 ## This is an approximation and not 100% accurate.
 ## It is intended as a simple way to constraint the rope length when both endpoints are fixed by a RopeHandle.
 ## The actual length of the rope might differ depending on the number of constraint iterations.
 ## Fixed points in between are not taken into account.
-# @export var max_endpoint_distance: float = -1
+#@export var max_endpoint_distance: float = -1
 
 ## (Optional) Allows to distribute the length of rope segment in a non-uniform manner.
 ## Useful when certain parts of the rope should be more detailed than the rest.
 ## For example, if it is known that most movement happens at the beginning of the rope, a curve with
 ## smaller values at the beginning and larger values towards the end can improve the overall quality
 ## significantly by providing more segments at the beginning and less segments to the end.
-# @export var segment_length_distribution: Curve: set = _set_seg_dist
+#@export var segment_length_distribution: Curve: set = _set_seg_dist
 
 ## Stiffness forces the rope to return to its resting position.
 ## The resting direction is downwards and affected by the the node's rotation.
 ## Might not produce 100% realistic results with fixed points.
-# @export var stiffness: float = 0.0
+#@export var stiffness: float = 0.0
 
 ## Gravity
-# @export var gravity: float = 100
+#@export var gravity: float = 100
 
 ## Gravity direction. Will not be normalized.
-# @export var gravity_direction: Vector2 = Vector2.DOWN
+#@export var gravity_direction: Vector2 = Vector2.DOWN
 
 ## Dampens the velocity of the rope.
-# @export var damping: float = 0
+#@export var damping: float = 0
 
 ## (Optional) Apply different amounts of damping along the rope.
-# @export var damping_curve: Curve
+#@export var damping_curve: Curve
 
 ## Constraints the rope to its intended length. Less constraint iterations effectively makes the rope more elastic.
-# @export_range(0, 1000) var num_constraint_iterations: int = 10
+#@export_range(0, 1000) var num_constraint_iterations: int = 10
 
 ## Whether to fixate the first point at the rope's node position.
-# @export var fixate_begin: bool = true
+#@export var fixate_begin: bool = true
 
 ## Render rope points for debugging purposes.
-# @export var render_debug: bool = false: set = _set_draw_debug
+#@export var render_debug: bool = false: set = _set_draw_debug
 
 ## Render the rope as line.
-# @export var render_line: bool = true: set = _set_render_line
+#@export var render_line: bool = true: set = _set_render_line
 
 ## Rendered line width.
-# @export var line_width: float = 2: set = _set_line_width
+#@export var line_width: float = 2: set = _set_line_width
 
 ## Rendered line color.
-# @export var color: Color = Color.WHITE: set = _set_color
+#@export var color: Color = Color.WHITE: set = _set_color
 
 ## Color gradient along the rendered line.
-# @export var color_gradient: Gradient: set = _set_gradient
+#@export var color_gradient: Gradient: set = _set_gradient
 
-# var _registered: bool = false
-# var _colors := PackedColorArray()
-# var _seg_lengths := PackedFloat32Array()
-# var _points := PackedVector2Array()
-# var _oldpoints := PackedVector2Array()
+#var _registered: bool = false
+#var _colors := PackedColorArray()
+#var _seg_lengths := PackedFloat32Array()
+#var _points := PackedVector2Array()
+#var _oldpoints := PackedVector2Array()
 # NOTE: Not @exported on purpose to prevent accidentally saving a scene with unintended weights, e.g. due to bugs or user errors.
-# var _simulation_weights := PackedFloat32Array()
+#var _simulation_weights := PackedFloat32Array()
 
 
 # General
