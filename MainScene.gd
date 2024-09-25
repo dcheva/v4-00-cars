@@ -2,7 +2,7 @@ extends Node2D
 
 var hide_npc := true
 var hide_cpu := true
-var hide_snd := true
+var hide_snd := false
 
 var cam_sensitivity = 0.05
 var cam_distance = 1

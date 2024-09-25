@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Addings/Abes/Pawns.gd" id="1_pyxfb"]
 [ext_resource type="Texture2D" uid="uid://c7khx0iql06jq" path="res://Addings/Farts/art/chars/anima/anima101.png" id="2_u1k1p"]
 [ext_resource type="Texture2D" uid="uid://bmg3s7p1pqth" path="res://Addings/Farts/art/chars/anima/anima012.png" id="3_ah2hv"]
-[ext_resource type="Script" path="res://Addings/Abes/Abilities/Rope/Rope.gd" id="4_x8b2x"]
+[ext_resource type="Script" path="res://Addings/Abes/Abilities/Rope/RopeMain.gd" id="4_x8b2x"]
 [ext_resource type="Script" path="res://Addings/Abes/Abilities/Rope/RopePoint.gd" id="5_lcold"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_uuawj"]

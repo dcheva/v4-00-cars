@@ -1,9 +1,9 @@
-[gd_scene load_steps=6 format=3 ]
+[gd_scene load_steps=6 format=3 uid="uid://bqkmy7dbwfnvl"]
 
 [ext_resource type="Script" path="res://Addings/Farts/FartsScene.gd" id="1_m4xuy"]
-[ext_resource type="PackedScene"  path="res://Addings/Farts/Chars/base_npc.tscn" id="2_y0lrl"]
+[ext_resource type="PackedScene" uid="uid://wufxni504v7w" path="res://Addings/Farts/Chars/base_npc.tscn" id="2_y0lrl"]
 [ext_resource type="Script" path="res://Addings/Farts/Chars/base_npc.gd" id="3_x6ed5"]
-[ext_resource type="PackedScene"  path="res://Addings/Astar/Astar.tscn" id="5_xopmf"]
+[ext_resource type="PackedScene" path="res://Addings/Astar/Astar.tscn" id="5_xopmf"]
 [ext_resource type="Script" path="res://Addings/Astar/astar.gd" id="6_7tpe7"]
 
 [node name="Farts" type="Node"]

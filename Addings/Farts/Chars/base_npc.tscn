@@ -1,9 +1,10 @@
-[gd_scene load_steps=34 format=3 ]
+[gd_scene load_steps=35 format=3 uid="uid://wufxni504v7w"]
 
 [ext_resource type="Script" path="res://Addings/Farts/Chars/base_npc.gd" id="1_0oeit"]
+[ext_resource type="PackedScene" uid="uid://u4a8b4ofae7m" path="res://Addings/Farts/art/audio/base_sounds.tscn" id="2_cjond"]
 [ext_resource type="Script" path="res://addons/behaviour_toolkit/finite_state_machine/fsm.gd" id="2_em1tw"]
-[ext_resource type="Texture2D"  path="res://Addings/Farts/art/chars/square/base_character.png" id="2_kncas"]
-[ext_resource type="Resource"  path="res://Addings/Farts/fsm/blackboard.tres" id="3_x6n50"]
+[ext_resource type="Texture2D" uid="uid://b3slpmfe1428n" path="res://Addings/Farts/art/chars/square/base_character.png" id="2_kncas"]
+[ext_resource type="Resource" uid="uid://br6ou5fblkmy6" path="res://Addings/Farts/fsm/blackboard.tres" id="3_x6n50"]
 [ext_resource type="Script" path="res://Addings/Farts/bts/leafs/bt_leaf_init.gd" id="4_pg6d5"]
 [ext_resource type="Script" path="res://addons/behaviour_toolkit/behaviour_tree/bt_root.gd" id="5_w0a14"]
 [ext_resource type="Script" path="res://Addings/Farts/fsm/states/idle.gd" id="8_w2wc1"]
@@ -192,6 +193,18 @@ tracks/6/keys = {
 "update": 0,
 "values": [6.0]
 }
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Sounds:playing")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_4w31y"]
 resource_name = "Speak"
@@ -244,6 +257,18 @@ tracks/3/keys = {
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [8.0, 8.0, 6.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Sounds:playing")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.99),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
 }
 
 [sub_resource type="Animation" id="Animation_eu742"]
@@ -398,6 +423,8 @@ radius = 15.0
 [node name="BaseNPC" type="CharacterBody2D"]
 motion_mode = 1
 script = ExtResource("1_0oeit")
+
+[node name="Sounds" parent="." instance=ExtResource("2_cjond")]
 
 [node name="Animations" type="AnimationPlayer" parent="."]
 deterministic = true
