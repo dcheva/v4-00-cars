@@ -1,6 +1,11 @@
 __*
 __*/
 
+## Add-Ons used
+addons
+addons/
+addons/*
+
 .import
 *.import
 */*.import
