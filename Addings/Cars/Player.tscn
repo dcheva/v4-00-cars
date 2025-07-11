@@ -1,17 +1,17 @@
 [gd_scene load_steps=25 format=3 uid="uid://dq83bbgjp2u0q"]
 
-[ext_resource type="Texture2D" uid="uid://dir7cluak2a2a" path="res://art/car-00.png" id="1"]
-[ext_resource type="Script" path="res://Addings/Cars/Player.gd" id="2"]
-[ext_resource type="AudioStream" uid="uid://f25huyv3ipwi" path="res://art/Sounds/loops/volvo_ext_engine_0800.wav" id="3_fkrpq"]
-[ext_resource type="AudioStream" uid="uid://bxqnaaedns1uq" path="res://art/Sounds/loops/volvo_ext_engine_1200.wav" id="4_456wl"]
-[ext_resource type="AudioStream" uid="uid://q11o0qtrq3j2" path="res://art/Sounds/loops/volvo_ext_engine_0800_idle.wav" id="4_npkbn"]
-[ext_resource type="AudioStream" uid="uid://d15cd5x3acqlf" path="res://art/Sounds/loops/volvo_ext_engine_1600.wav" id="4_ygugr"]
-[ext_resource type="AudioStream" uid="uid://csf0vm3t3o4qg" path="res://art/Sounds/loops/engine_on.wav" id="5_vlaec"]
-[ext_resource type="AudioStream" uid="uid://crk0beghyiyc8" path="res://art/Sounds/loops/engine_off.wav" id="6_inyy0"]
-[ext_resource type="AudioStream" uid="uid://d3vhb88sf1sc" path="res://art/Sounds/loops/gear_air_1.wav" id="8_1o5vi"]
-[ext_resource type="AudioStream" uid="uid://c6ymu421812c7" path="res://art/Sounds/loops/gear_air_2.wav" id="10_g31ti"]
+[ext_resource type="Texture2D" uid="uid://ds34e1rfclpm5" path="res://art/car-00.png" id="1"]
+[ext_resource type="Script" uid="uid://qdhj0gw04lpa" path="res://Addings/Cars/Player.gd" id="2"]
+[ext_resource type="AudioStream" uid="uid://c8e0r23f66s8w" path="res://art/Sounds/loops/volvo_ext_engine_0800.wav" id="3_fkrpq"]
+[ext_resource type="AudioStream" uid="uid://de3hemciqrjxp" path="res://art/Sounds/loops/volvo_ext_engine_1200.wav" id="4_456wl"]
+[ext_resource type="AudioStream" uid="uid://tqkg6hj0ku" path="res://art/Sounds/loops/volvo_ext_engine_0800_idle.wav" id="4_npkbn"]
+[ext_resource type="AudioStream" uid="uid://brwy6b5pyhi5f" path="res://art/Sounds/loops/volvo_ext_engine_1600.wav" id="4_ygugr"]
+[ext_resource type="AudioStream" uid="uid://bunj3vbj26crv" path="res://art/Sounds/loops/engine_on.wav" id="5_vlaec"]
+[ext_resource type="AudioStream" uid="uid://s86t8piinr3q" path="res://art/Sounds/loops/engine_off.wav" id="6_inyy0"]
+[ext_resource type="AudioStream" uid="uid://bb0kpueshp76d" path="res://art/Sounds/loops/gear_air_1.wav" id="8_1o5vi"]
+[ext_resource type="AudioStream" uid="uid://d4eblc3kmyjlc" path="res://art/Sounds/loops/gear_air_2.wav" id="10_g31ti"]
 [ext_resource type="PackedScene" uid="uid://dk21lve4cidf2" path="res://FSM/finite_state_machine.tscn" id="10_pi5mk"]
-[ext_resource type="AudioStream" uid="uid://cj1bx1xbrq1eu" path="res://art/Sounds/loops/gear_air_3.wav" id="11_uu4lt"]
+[ext_resource type="AudioStream" uid="uid://cfu5feaegs5at" path="res://art/Sounds/loops/gear_air_3.wav" id="11_uu4lt"]
 
 [sub_resource type="RectangleShape2D" id="1"]
 size = Vector2(42, 58)
@@ -1231,16 +1231,16 @@ tracks/8/use_blend = true
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_cisow"]
 _data = {
-"Bang": SubResource("Animation_4jksr"),
-"Idle": SubResource("Animation_xojan"),
-"Load": SubResource("Animation_tr81x"),
-"Power": SubResource("Animation_h04s4"),
-"RESET": SubResource("Animation_hxywy"),
-"Run": SubResource("Animation_v73eh"),
-"ShiftDown": SubResource("Animation_nps3i"),
-"ShiftUp": SubResource("Animation_hea84"),
-"Start": SubResource("Animation_kvdap"),
-"Stop": SubResource("Animation_4puvq")
+&"Bang": SubResource("Animation_4jksr"),
+&"Idle": SubResource("Animation_xojan"),
+&"Load": SubResource("Animation_tr81x"),
+&"Power": SubResource("Animation_h04s4"),
+&"RESET": SubResource("Animation_hxywy"),
+&"Run": SubResource("Animation_v73eh"),
+&"ShiftDown": SubResource("Animation_nps3i"),
+&"ShiftUp": SubResource("Animation_hea84"),
+&"Start": SubResource("Animation_kvdap"),
+&"Stop": SubResource("Animation_4puvq")
 }
 
 [node name="Player" type="CharacterBody2D"]

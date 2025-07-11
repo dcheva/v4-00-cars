@@ -1,28 +1,28 @@
 [gd_scene load_steps=34 format=3 uid="uid://ni8xdf8rqmxb"]
 
-[ext_resource type="Script" path="res://Addings/Farts/Chars/base_npc.gd" id="1_0oeit"]
-[ext_resource type="Script" path="res://addons/behaviour_toolkit/finite_state_machine/fsm.gd" id="2_em1tw"]
-[ext_resource type="Texture2D" uid="uid://djy1mp42k45ne" path="res://Addings/Farts/art/chars/square/base_character.png" id="2_kncas"]
+[ext_resource type="Script" uid="uid://dipeqxu8ikw7i" path="res://Addings/Farts/Chars/base_npc.gd" id="1_0oeit"]
+[ext_resource type="Script" uid="uid://b2knqpp7gsikb" path="res://addons/behaviour_toolkit/finite_state_machine/fsm.gd" id="2_em1tw"]
+[ext_resource type="Texture2D" uid="uid://dwt3xo2xoito6" path="res://Addings/Farts/art/chars/square/base_character.png" id="2_kncas"]
 [ext_resource type="Resource" uid="uid://br6ou5fblkmy6" path="res://Addings/Farts/fsm/blackboard.tres" id="3_x6n50"]
-[ext_resource type="Script" path="res://Addings/Farts/bts/leafs/bt_leaf_init.gd" id="4_pg6d5"]
-[ext_resource type="Script" path="res://addons/behaviour_toolkit/behaviour_tree/bt_root.gd" id="5_w0a14"]
-[ext_resource type="Script" path="res://Addings/Farts/fsm/states/idle.gd" id="8_w2wc1"]
-[ext_resource type="Script" path="res://Addings/Farts/fsm/transitions/target_to_move.gd" id="9_6hs22"]
-[ext_resource type="Script" path="res://Addings/Farts/fsm/states/target.gd" id="9_n3e2m"]
-[ext_resource type="Script" path="res://Addings/Farts/fsm/states/move.gd" id="9_rfftv"]
-[ext_resource type="Script" path="res://Addings/Farts/fsm/transitions/idle_to_move.gd" id="10_0mkst"]
-[ext_resource type="Script" path="res://Addings/Farts/fsm/transitions/idle_to_FSMBT.gd" id="10_7mix7"]
-[ext_resource type="Script" path="res://Addings/Farts/fsm/states/stuck.gd" id="10_s57x2"]
-[ext_resource type="Script" path="res://Addings/Farts/fsm/states/success.gd" id="11_q4nlu"]
-[ext_resource type="Script" path="res://addons/behaviour_toolkit/finite_state_machine/fsm_state_integrated_bt.gd" id="11_sbyhp"]
-[ext_resource type="Script" path="res://Addings/Farts/fsm/transitions/success_to_idle.gd" id="12_rittn"]
-[ext_resource type="Script" path="res://Addings/Farts/fsm/transitions/move_to_idle.gd" id="12_uf31i"]
-[ext_resource type="Script" path="res://Addings/Farts/fsm/transitions/_to_stuck.gd" id="13_a13s7"]
-[ext_resource type="Script" path="res://Addings/Farts/fsm/transitions/stuck_to_idle.gd" id="16_lujs4"]
-[ext_resource type="Script" path="res://addons/behaviour_toolkit/behaviour_tree/composites/bt_random_selector.gd" id="16_nwklx"]
-[ext_resource type="Script" path="res://Addings/Farts/bts/leafs/bt_leaf_speak.gd" id="17_exky8"]
-[ext_resource type="Script" path="res://Addings/Farts/bts/leafs/bt_leaf_listen.gd" id="18_rcitu"]
-[ext_resource type="Script" path="res://Addings/Farts/fsm/transitions/fsmbt_to_idle.gd" id="20_nxdvd"]
+[ext_resource type="Script" uid="uid://ktnd4gam0mf" path="res://Addings/Farts/bts/leafs/bt_leaf_init.gd" id="4_pg6d5"]
+[ext_resource type="Script" uid="uid://bkoxqsgn3xrhc" path="res://addons/behaviour_toolkit/behaviour_tree/bt_root.gd" id="5_w0a14"]
+[ext_resource type="Script" uid="uid://d2wwoil6w51y6" path="res://Addings/Farts/fsm/states/idle.gd" id="8_w2wc1"]
+[ext_resource type="Script" uid="uid://d3y52mcnq0h4o" path="res://Addings/Farts/fsm/transitions/target_to_move.gd" id="9_6hs22"]
+[ext_resource type="Script" uid="uid://c4j346m630ww0" path="res://Addings/Farts/fsm/states/target.gd" id="9_n3e2m"]
+[ext_resource type="Script" uid="uid://r6fugmmq8044" path="res://Addings/Farts/fsm/states/move.gd" id="9_rfftv"]
+[ext_resource type="Script" uid="uid://cvu6eitrvovwx" path="res://Addings/Farts/fsm/transitions/idle_to_move.gd" id="10_0mkst"]
+[ext_resource type="Script" uid="uid://47d206n2q81p" path="res://Addings/Farts/fsm/transitions/idle_to_FSMBT.gd" id="10_7mix7"]
+[ext_resource type="Script" uid="uid://cdhya6562ocl7" path="res://Addings/Farts/fsm/states/stuck.gd" id="10_s57x2"]
+[ext_resource type="Script" uid="uid://b4op80kjx58r7" path="res://Addings/Farts/fsm/states/success.gd" id="11_q4nlu"]
+[ext_resource type="Script" uid="uid://btb35exyc3tcu" path="res://addons/behaviour_toolkit/finite_state_machine/fsm_state_integrated_bt.gd" id="11_sbyhp"]
+[ext_resource type="Script" uid="uid://bcxxwjmde61wd" path="res://Addings/Farts/fsm/transitions/success_to_idle.gd" id="12_rittn"]
+[ext_resource type="Script" uid="uid://cqk633pvr885k" path="res://Addings/Farts/fsm/transitions/move_to_idle.gd" id="12_uf31i"]
+[ext_resource type="Script" uid="uid://shs2lcdne4wp" path="res://Addings/Farts/fsm/transitions/_to_stuck.gd" id="13_a13s7"]
+[ext_resource type="Script" uid="uid://c4n4vd771hxbt" path="res://Addings/Farts/fsm/transitions/stuck_to_idle.gd" id="16_lujs4"]
+[ext_resource type="Script" uid="uid://cqjyj6dlywf50" path="res://addons/behaviour_toolkit/behaviour_tree/composites/bt_random_selector.gd" id="16_nwklx"]
+[ext_resource type="Script" uid="uid://ntlqmpaaeaa3" path="res://Addings/Farts/bts/leafs/bt_leaf_speak.gd" id="17_exky8"]
+[ext_resource type="Script" uid="uid://hng38tpwuu8g" path="res://Addings/Farts/bts/leafs/bt_leaf_listen.gd" id="18_rcitu"]
+[ext_resource type="Script" uid="uid://b2gf8j6k5wx7n" path="res://Addings/Farts/fsm/transitions/fsmbt_to_idle.gd" id="20_nxdvd"]
 
 [sub_resource type="Animation" id="Animation_2kq5y"]
 resource_name = "Idle"
@@ -376,12 +376,12 @@ tracks/4/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_e67pj"]
 _data = {
-"Idle": SubResource("Animation_2kq5y"),
-"Move": SubResource("Animation_o6oo2"),
-"RESET": SubResource("Animation_af5p6"),
-"Speak": SubResource("Animation_4w31y"),
-"Success": SubResource("Animation_eu742"),
-"Target": SubResource("Animation_7f1d5")
+&"Idle": SubResource("Animation_2kq5y"),
+&"Move": SubResource("Animation_o6oo2"),
+&"RESET": SubResource("Animation_af5p6"),
+&"Speak": SubResource("Animation_4w31y"),
+&"Success": SubResource("Animation_eu742"),
+&"Target": SubResource("Animation_7f1d5")
 }
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_v7b26"]
