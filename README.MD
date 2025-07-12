@@ -1,4 +1,8 @@
 # Godot 3 Cars 2d with Physics prototype
+
+## 25-07-12
+- Merge local into branch -local-
+
 ## Separate MD's for Branches: "statics", "physics" and "npc"
 - Implement preload functions via g = $loader
 - Merge refactored Okama barber into initial
