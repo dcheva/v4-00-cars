@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="Blackboard" load_steps=2 format=3 uid="uid://br6ou5fblkmy6"]
 
-[ext_resource type="Script" path="res://addons/behaviour_toolkit/blackboard.gd" id="1_chyvh"]
+[ext_resource type="Script" uid="uid://j6ec7xjurn3v" path="res://addons/behaviour_toolkit/blackboard.gd" id="1_chyvh"]
 
 [resource]
 script = ExtResource("1_chyvh")
